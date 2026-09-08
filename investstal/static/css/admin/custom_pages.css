@@ -1,0 +1,85 @@
+@charset "UTF-8";
+/* страница редактирования переделана в одну колонку (потому что сайтбар отнимает много полезного пространства) */
+.change-form .sidebar {
+    width: 100%;
+    position:relative;
+}
+
+#change-page-content {
+    margin-left:0;
+}
+
+#content {
+    padding: 20px 10px;
+}
+
+.change-form .sidebar input {
+    width: 300px;
+    font-size:14px;
+}
+.sidebar .form-row.field-title input,
+.sidebar .form-row.field-slug input {
+    width: 500px !important
+}
+.sidebar .form-row.field-status select,
+.sidebar .form-row.field-template select {
+    width: 515px !important
+}
+
+.sidebar .form-row.field-status img {
+    display: none
+}
+
+.change-form .sidebar select {
+    width: 312px !important;
+}
+
+.form-row.field-language,
+.form-row.field-redirect_to,
+.form-row.field-redirect_to_url,
+.form-row.field-freeze_date{
+    position: absolute;
+    left: calc(50% + 50px);
+    border: none;
+}
+
+.form-row.field-language {top: 33px}
+.form-row.field-freeze_date {top: 85px}
+.form-row.field-redirect_to {top: 153px}
+.form-row.field-redirect_to_url {top: 204px}
+
+.form-row {border-bottom: 0px !important}
+
+.inline-related .field-box {
+    display: block;
+    width: auto;
+    margin-right: 20px;
+}
+
+#change-page-content > fieldset input[type="text"] {
+    width: 857px
+}
+
+#change-page-content > fieldset select:not(.revisions) {
+    width: 870px
+}
+
+#change-page-content > fieldset .selector input[type="text"] {
+    width: 25em
+}
+
+#change-page-content > fieldset .selector select {
+    width: 380px
+}
+
+#change-page-content > fieldset .selector .selector-available {
+    width: 384px
+}
+
+.change-form .module-content textarea {
+    width: 857px
+}
+
+#change-page-content > fieldset input[type='checkbox'] + label {
+    margin-right: 72px;
+}

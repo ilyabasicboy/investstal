@@ -1,0 +1,13 @@
+{% load pages_tags %}
+{% for page in pages_navigation %}
+    <li class="breadcrumbs__item">
+        <a class="breadcrumbs__content" href="{{ page.get_absolute_url }}">
+            <span>
+                {{ page.title }}
+            </span>
+        </a>
+        <span class="breadcrumbs__content">
+            /
+        </span>
+    </li>
+{% endfor %}

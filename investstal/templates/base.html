@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+{% load static feedback_tags treemenus_tags seo_tags base_tags %}
+{% smart_spaceless %}
+<html lang="ru">
+    <head>
+        {% block seo %}
+            {% seo object title_default=object.title|default:"" %}
+        {% endblock %}
+
+        <meta name="theme-color" class="theme-color" content="#fff">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="utf-8">
+
+        {% if request.GET.page > 1 %}
+            <link rel="canonical" href="{{ request.path }}">
+        {% endif %}
+
+        {% include 'parts/block_favicon.html' %}
+
+        {{ chunks.end_of_head.content }}
+
+        {% block css %}
+            <link rel="stylesheet" href="{% static 'bundle/bundle.b0b6b6191686d97a9011.css' %}">
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body class="body fix-anim">
+            {{ chunks.top_of_body.content }}
+
+            <header class="header">
+                <div class="container">
+                    {% block header_menu %}
+                        {% show_menu 'header_menu' %}
+                    {% endblock %}
+                </div>
+            </header>
+
+            <main class="page">
+                {% block breadcrumbs_section %}
+                    <section class="section-breadcrumbs">
+                        <div class="container">
+                            <ul class="breadcrumbs scroll-custom-x-hidden--xs">
+                                {% block breadcrumbs %}
+                                    <li class="breadcrumbs__item">
+                                        <a class="breadcrumbs__content" href="/">
+                                            <span>
+                                                Главная
+                                            </span>
+                                        </a>
+                                        <span class="breadcrumbs__content">
+                                            /
+                                        </span>
+                                    </li>
+                                {% endblock %}
+                            </ul>
+                        </div>
+                    </section>
+                {% endblock %}
+
+                {% block title_section %}
+                    <section class="section-title">
+                        <div class="container">
+                            <div class="title-content">
+                                <h1 class="title">
+                                    {% block content_title %}
+                                        {{ object.title|default:"" }}
+                                    {% endblock %}
+                                </h1>
+                            </div>
+                        </div>
+                    </section>
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+            </main>
+
+            <footer class="footer">
+                <div class="container">
+                    {% show_menu 'footer_menu' %}
+                </div>
+            </footer>
+
+            {% block js %}
+                <script src="{% static 'bundle/bundle.b0b6b6191686d97a9011.js' %}"></script>
+            {% endblock %}
+
+            {{ chunks.end_of_body.content }}
+        </body>
+    {% endblock body %}
+</html>
+{% end_smart_spaceless %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load base_tags treemenus_tags %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block footer_nav %}
+<div class="footer__nav page__500">
+    <div class="footer__overlay">
+        <div class="container">
+            <div class="footer__col footer__info">
+                {% if chunks.description_footer %}
+                    <div>{{ chunks.description_footer.content }}</div>
+                {% endif %}
+
+                <div>Copyright © {% now "Y" %} АО «Ленснабпечать»</div>
+                <div class="footer__social">
+                {% show_menu 'social_menu' %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

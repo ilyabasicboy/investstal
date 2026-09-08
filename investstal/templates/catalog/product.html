@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+{% load base_tags attachment_tags %}
+
+{% block content %}
+
+    <section class="item__block">
+        {% get_images for object as images %}
+        <div class="item__slider">
+        {% if images %}
+            <div class="item__slider-for mfp-gallery">
+                {% for image in images %}
+                    <a href="{{ image.display.url }}" class="item__slide">
+                        <picture>
+                            <source srcset="{{ image.img300x300.url }}" media="(min-width: 1024px)"/>
+                            <source srcset="{{ image.imgautox200.url }}" media="(min-width: 768px)"/>
+                            <source srcset="{{ image.img100x100.url }}" media="(min-width: 320px)"/>
+                            <img src="{{ image.img300x300.url }}" title="{{ image.title|default:'' }}"  alt="{{ image.title|default:'' }}">
+                        </picture>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="item__slider-nav">
+                {% for image in images %}
+                    <div class="item__slide">
+                        <img src="{{ image.img100x100.url }}" title="{{ image.title|default:'' }}"  alt="{{ image.title|default:'' }}">
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+        </div>
+
+        <div class="item__description">
+            {% if object.price %}
+                <div class="item__price">{{ object.price }}</div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}

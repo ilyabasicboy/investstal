@@ -1,0 +1,13 @@
+{% load pagination_tags %}
+
+{% if object_list %}
+    <section class="page__block-cards">
+        {% autopaginate object_list 12 %}
+        {% for obj in object_list %}
+            {% include 'easy_news/parts/card.html' %}
+        {% endfor %}
+    </section>
+
+    {% paginate %}
+
+{% endif %}

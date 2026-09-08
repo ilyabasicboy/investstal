@@ -1,0 +1,21 @@
+{% extends "easy_news/base.html" %}
+{% load base_tags custom_news_tags %}
+
+{% block breadcrumbs %}
+    {% get_news_root as root %}
+    {{ block.super }}
+    <li class="breadcrumbs__item">
+        <a class="breadcrumbs__content" href="{% url 'news_root' %}">
+            <span>
+                {{ root.title }}
+            </span>
+        </a>
+        <span class="breadcrumbs__content">
+            /
+        </span>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div>{{ object.date|date:"d.m.Y" }} </div>
+{% endblock %}

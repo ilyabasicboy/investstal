@@ -1,0 +1,36 @@
+{% load base_tags %}
+
+{% if input_type == 'hidden' %}
+     {{ field }}
+{% elif field.name == 'captcha' %}
+     <div class="{{ attrs.class }}{% if field.errors %} error{% endif %}">
+        <label>
+            {% if field.label %}<span class="form-field__title">{{ field.label }}</span>{% endif %}
+            {{ field }}
+        </label>
+    </div>
+{% elif input_type == 'select' %}
+     <div class="{{ attrs.class }}{% if field.errors %} error{% endif %}">
+        <label>
+            {% if field.label %}<span class="form-field__title">{{ field.label }}</span>{% endif %}
+            <select required name="{{ field.html_name }}" id="id_{{ field.html_name }}">
+              {% for value, name in field.field.choices %}
+                    <option {% if field.value|equal:value %}selected{% endif %} value="{{ value }}">{{ name }}</option>
+              {% endfor %}
+            </select>
+        </label>
+    </div>
+{% else %}
+     <div class="{{ attrs.class }}{% if field.errors %} error{% endif %}">
+        <label>
+            {% if field.label %}<span class="form-field__title">{{ field.label }}</span>{% endif %}
+            <input required type="{{ input_type }}" name="{{ field.html_name }}" id="id_{{ field.html_name }}" value="{{ field.value|default:'' }}">
+        </label>
+    </div>
+{% endif %}
+
+{% comment %}
+    Для разделения разных типов полей использовать input_type
+    input_type принимает значение типа поля "text", "number", "select", "textarea" и др.
+    Для разделения полей одного типа использовать field.name
+{% endcomment %}

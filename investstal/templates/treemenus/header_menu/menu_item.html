@@ -1,0 +1,21 @@
+{% load static %}
+{% with item.children as children %}
+    <li class="menu__item {% if children %}menu__item--drop{% endif %}">
+        <div class="submenu__line">
+            <a href="{{ item.url }}"><span>{{ item.caption }}</span>
+            </a>
+            {% if children %}
+            <img src="{% static 'img/icon-arrow.svg' %}" class="submenu-img" alt="drop-icon">
+            {% endif %}
+        </div>
+        {% if children %}
+            <ul class="submenu">
+                {% for child in children %}
+                    {% if child.show %}
+                       <li><a href="{{ child.url }}"><span>{{ child.caption }}</span></a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endwith %}

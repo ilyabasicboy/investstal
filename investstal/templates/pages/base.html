@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load pages_tags custom_pages_tags seo_tags %}
+
+{% block seo %}
+    {% seo current_page title_default=current_page.title %}
+{% endblock %}
+
+{% block content_title %}
+    {% placeholder long_title label 'Длинный заголовок' as long_title %}
+    {{ long_title|default:current_page.title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% pages_breadcrumb current_page %}
+{% endblock %}

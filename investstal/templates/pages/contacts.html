@@ -1,0 +1,13 @@
+{% extends 'pages/base.html' %}
+{% load pages_tags base_tags %}
+
+{% block content %}
+
+    {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
+
+    {% placeholder map with LargeTextarea label 'Скрипт карты' as map %}
+    {{ map|safe }}
+
+    {% placeholder bottom_content with TinyMCE label 'Контент внизу страницы' as bottom_content %}
+
+{% endblock %}

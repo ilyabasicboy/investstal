@@ -1,0 +1,65 @@
+{
+    "name": "project",
+    "version": "1.0.0",
+    "description": "project description",
+    "main": "index.js",
+    "scripts": {
+        "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
+        "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+        "watch": "cross-env NODE_ENV=production webpack --watch --config config/webpack.prod.js"
+    },
+    "repository": {
+        "type": "git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.20.7",
+        "@babel/plugin-transform-class-properties": "^7.25.9",
+        "@babel/preset-env": "^7.20.2",
+        "babel-loader": "^9.1.0",
+        "cross-env": "^7.0.3",
+        "css-loader": "^6.7.3",
+        "css-minimizer-webpack-plugin": "^4.2.2",
+        "filemanager-webpack-plugin": "^8.0.0",
+        "mini-css-extract-plugin": "^2.7.2",
+        "path": "^0.12.7",
+        "postcss-loader": "^7.0.2",
+        "postcss-preset-env": "^7.8.3",
+        "replace-hash-in-file-webpack-plugin": "^1.0.8",
+        "sass": "1.71.1",
+        "sass-loader": "^16.0.4",
+        "style-loader": "^3.3.1",
+        "terser-webpack-plugin": "^5.3.11",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1",
+        "webpack-dev-server": "^4.11.1"
+    },
+    "dependencies": {
+        "jquery": "^3.3.1",
+        "jquery.maskedinput": "^1.4.1",
+        "jquery-bridget": "^3.0.1",
+
+        "swiper": "^8.4.7",
+        "slick-carousel": "^1.8.1",
+
+        "gsap": "^3.9.0",
+        "locomotive-scroll": "^4.1.4",
+        "aos": "^3.0.0-beta.6",
+        "walkway.js": "^0.0.9",
+        "split-type": "^0.3.4",
+
+        "masonry-layout": "^4.2.2",
+        "imagesloaded": "^5.0.0",
+
+        "magnific-popup": "^1.1.0",
+        "@fancyapps/ui": "^5.0.19",
+
+        "tooltipster": "^4.2.8",
+        "ukiyojs": "^4.2.0",
+        "nouislider": "^15.6.1",
+        "ion-rangeslider": "^2.3.1",
+        "simplebar": "^5.3.8"
+    }
+}

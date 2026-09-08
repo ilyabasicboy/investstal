@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load seo_tags %}
+
+{% block seo %}
+    {% seo object title_default='Поиск по сайту' %}
+{% endblock %}
+
+{% block content_title %}Поиск по сайту{% endblock %}
+
+{% block content %}
+
+    {% if chunks.yandex_search_form.content %}
+        {{ chunks.yandex_search_form.content }}
+    {% endif %}
+
+    {% if chunks.yandex_search_results.content %}
+        {{ chunks.yandex_search_results.content }}
+    {% endif %}
+
+{% endblock %}

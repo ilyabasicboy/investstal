@@ -1,0 +1,18 @@
+<a href="{{ obj.get_absolute_url }}" class="card card__product">
+    <div class="card__item">
+        {% if obj.image %}
+            <picture>
+                <source srcset="{{ obj.image.img300x300.url }}" media="(min-width: 1024px)"/>
+                <source srcset="{{ obj.image.imgautox200.url }}" media="(min-width: 768px)"/>
+                <source srcset="{{ obj.image.img100x100.url }}" media="(min-width: 320px)"/>
+                <img src="{{ obj.image.img300x300.url }}" alt="{{ obj.image.title }}"/>
+            </picture>
+        {% endif %}
+        <div class="card__info">
+            <div class="card__title">{{ obj.title }}</div>
+            {% if obj.description %}
+                <div class="card__description">{{ obj.description|safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+</a>

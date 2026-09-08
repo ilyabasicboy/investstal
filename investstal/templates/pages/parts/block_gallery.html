@@ -1,0 +1,18 @@
+
+{% if object_dict %}
+    <section class="page__gallery">
+        {% for group, images in object_dict.iteritems %}
+            {% if group %}<h2>{{ group }}</h2>{% endif %}
+            <div class="mfp-gallery gallery">
+                {% for image in images %}
+                        <a href="{{ image.display.url }}" class="gallery__item">
+                            <img src="{{ image.img300x300.url }}" class="gallery__image" alt="{{ image.title }}">
+                           {% if image.title %}
+                                <div class="gallery__info">{{ image.title }}</div>
+                            {% endif %}
+                        </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}

@@ -1,0 +1,12 @@
+{% load pagination_tags %}
+
+{% if object_list %}
+    <section class="page__block-cards">
+        {% autopaginate object_list 10 %}
+        {% for obj in object_list %}
+            {% include 'pages/parts/card.html' %}
+        {% endfor %}
+    </section>
+
+    {% paginate %}
+{% endif %}

@@ -1,0 +1,16 @@
+{% load static %}
+{% with item.children as children %}
+    <div class="menu__item">
+        <span>{{ item.caption }}</span>
+        <img src="{% static 'img/icon-arrow.svg' %}" class="arrow-img" alt="drop-icon">
+        {% if children %}
+            <ul>
+            {% for child in children %}
+                {% if child.show %}
+                    <li><a href="{{ child.url }}">{{ child.caption }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endwith %}

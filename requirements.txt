@@ -1,0 +1,24 @@
+# system wide packages
+psycopg2-binary==2.8.6
+
+django==2.2.*
+six==1.10.0
+unidecode==1.1.0
+xlsxwriter==1.1.8
+unicodecsv==0.14.1
+requests==2.20
+django-mptt==0.9.1
+dj-pagination==2.4.0
+django-modeladmin-reorder==0.3.1
+django-filebrowser-no-grappelli==3.8.0
+django-admin-sortable2==1.0.2
+
+git+https://github.com/redsolution/django-catalog-tree@2.2
+git+https://github.com/redsolution/django-treemenus@2.2
+git+https://github.com/redsolution/django-simple-feedback.git@2.2
+git+https://github.com/redsolution/django-tinymce-attachment.git@2.2
+git+https://github.com/redsolution/django-chunks.git@2.2
+git+https://github.com/redsolution/django-seo.git@2.2
+git+https://github.com/redsolution/django-import-redirects@2.2
+git+https://github.com/redsolution/django-page-cms@2.2
+git+https://github.com/redsolution/django-easy-news.git@2.2

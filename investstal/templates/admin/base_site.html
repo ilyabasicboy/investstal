@@ -1,0 +1,7 @@
+{% extends "admin/base_site.html" %}
+{% load staticfiles %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% include 'parts/block_favicon.html' %}
+{% endblock %}

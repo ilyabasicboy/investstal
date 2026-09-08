@@ -1,0 +1,17 @@
+{% load pagination_tags %}
+
+{% if object_list %}
+    <div>
+        {% if products_title %}
+            <h2>{{ products_title }}</h2>
+        {% endif %}
+
+        {% autopaginate object_list 10 %}
+        {% for obj in object_list %}
+            {% include 'catalog/parts/card.html' %}
+        {% endfor %}
+    </div>
+
+    {% paginate %}
+
+{% endif %}

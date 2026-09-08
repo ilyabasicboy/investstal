@@ -1,0 +1,11 @@
+{% extends 'pages/base.html' %}
+{% load custom_pages_tags pages_tags  base_tags %}
+
+{% block content %}
+
+    {% placeholder description with LargeTextarea label 'Короткое описание' as description %}
+    {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
+
+    {% show_block_gallery %}
+
+{% endblock %}

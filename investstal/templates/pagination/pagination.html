@@ -1,0 +1,31 @@
+{% load base_tags %}
+{% if pages|length > 1 %}
+   {% get_custom_pagination page_obj.number pages as nav %}
+
+    <div class="pagination">
+        {% if nav.prev %}
+            <a class="pagination__option pagination__prev" href="?{% if page != 1 %}page={{ nav.prev }}{% endif %}{{ getvars }}{{ hashtag }}">
+                Назад
+            </a>
+        {% endif %}
+
+        {% for page in nav.pages %}
+            {% ifequal page page_obj.number %}
+                <span class="pagination__link active">
+                    {{ page_obj.number }}
+                </span>
+            {% else %}
+                <a class="pagination__link" href="{% if page != 1 %}?page={{ page }}{{ getvars }}{{ hashtag }}{% else %}{{ request.path }}{% endif %}">
+                    {{ page }}
+                </a>
+            {% endifequal %}
+        {% endfor %}
+
+        {% if nav.next %}
+            <a class="pagination__option pagination__next" href="?{% if page != 1 %}page={{ nav.next }}{% endif %}{{ getvars }}{{ hashtag }}">
+                Вперед
+            </a>
+        {% endif %}
+
+    </div>
+{% endif %}

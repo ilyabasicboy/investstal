@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% load base_tags %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumbs__item">
+        <a class="breadcrumbs__content" href="/">
+            <span>
+                Главная
+            </span>
+        </a>
+        <span class="breadcrumbs__content">
+            /
+        </span>
+    </li>
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        {% for obj in object.root_sections %}
+            {% include 'catalog/parts/card.html' %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

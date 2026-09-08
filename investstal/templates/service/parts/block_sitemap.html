@@ -1,0 +1,18 @@
+{% if object_list %}
+    <section>
+        <ul>
+        {% for obj in object_list %}
+            <li>
+                <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
+                {% if obj.children %}
+                    <ul>
+                        {% for child in obj.children %}
+                            {% include 'service/parts/item_sitemap.html' with obj=child %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
+{% endif %}

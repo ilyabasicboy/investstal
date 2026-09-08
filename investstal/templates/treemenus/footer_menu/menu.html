@@ -1,0 +1,9 @@
+{% load treemenus_tags %}
+
+<nav class="footer__menu">
+    {% for item in menu.root_item.children %}
+        {% if item.show %}
+          {% show_menu_item item %}
+        {% endif %}
+    {% endfor %}
+</nav>
