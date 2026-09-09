@@ -21,3 +21,4 @@ package-lock.json
 /investstal/templates/service/500.html
 /investstal/templates/service/404.html
 /investstal/templates/service/robots.txt
+/investstal-sketch/*

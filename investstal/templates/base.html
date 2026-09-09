@@ -28,6 +28,7 @@
     {% block body %}
         <body class="body fix-anim">
             {{ chunks.top_of_body.content }}
+            {% get_items_by_model_name 'root' as root %}
 
             <header class="header">
                 <div class="container">

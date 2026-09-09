@@ -112,7 +112,7 @@ ADMIN_REORDER = (
     {
         'app': 'pages', 'label': u'Контент сайта',
         'models': (
-            'pages.Page', 'easy_news.News', 'catalog.TreeItem', 'custom_catalog.Section',
+            'pages.Page', 'easy_news.News', 'catalog.TreeItem', 'custom_catalog.Section', 'custom_catalog.Category',
             'custom_catalog.Product', 'chunks.Chunk', 'treemenus.Menu', 'filebrowser.FileBrowser',
         )
     },
@@ -237,6 +237,7 @@ CATALOG_MODELS = [
     'custom_catalog.Section',
     'custom_catalog.Category',
     'custom_catalog.Product',
+    'custom_catalog.Root'
 ]
 
 CATALOG_SITEMAP_HTML_MODELS = ['Section']
@@ -263,7 +264,8 @@ ATTACHMENT_FOR_MODELS = [
     'service.ErrorPage',
     'custom_catalog.Root',
     'custom_catalog.Section',
-    'custom_catalog.Product',
+    'custom_catalog.Category',
+    'custom_catalog.Product'
 ]
 ATTACHMENT_LINK_MODELS = [
     'pages.Page',
@@ -272,7 +274,7 @@ ATTACHMENT_LINK_MODELS = [
     'service.ErrorPage',
     'custom_catalog.Root',
     'custom_catalog.Section',
-    'custom_catalog.Product',
+    'custom_catalog.Product'
 ]
 
 # ~======== SEO =================~
@@ -280,7 +282,6 @@ INSTALLED_APPS += ['seo']
 SEO_FOR_MODELS = [
     'pages.Page',
     'easy_news.News',
-    'custom_news.NewsRoot',
     'custom_news.NewsRoot',
     'service.ErrorPage',
     'custom_catalog.Product',

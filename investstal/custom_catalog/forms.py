@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Section, Product, Root
+from .models import Category, Product, Root, Section
 
 
 class RootAdminForm(forms.ModelForm):
@@ -37,3 +37,12 @@ class SectionAdminForm(forms.ModelForm):
         }
 
 
+class CategoryAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'large-input'}),
+            'slug': forms.TextInput(attrs={'class': 'large-input'}),
+        }

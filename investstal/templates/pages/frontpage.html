@@ -60,7 +60,7 @@
         </section>
     {% endif %}
 
-    {% get_catalog_items as catalog_items %}
+    {% get_catalog_items type=0 role='обложка' as catalog_items %}
     {% if catalog_items %}
         <section>
             <div>
@@ -72,10 +72,16 @@
                 </div>
                 <div>
                     {% for item in catalog_items %}
-
+                        {% if item.catalog_item.images %}
+                            <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
+                        {% endif %}
+                        {{ item.catalog_item.title }}
+                        {{ item.catalog_item.get_products_count }}
                     {% endfor %}
                 </div>
             </div>
         </section>
     {% endif %}
+
+    {% include 'parts/popular_products_block.html' %}
 {% endblock %}

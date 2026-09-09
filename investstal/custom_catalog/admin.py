@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
 from catalog.admin import CatalogItemBaseAdmin
-from .models import Section, Product, Root, CatalogItem
-from .forms import ProductAdminForm, SectionAdminForm, RootAdminForm
+from .models import Category, CatalogItem, Product, Root, Section
+from .forms import CategoryAdminForm, ProductAdminForm, RootAdminForm, SectionAdminForm
 
 from adminsortable2.admin import SortableAdminMixin
 
@@ -18,7 +18,7 @@ class RootAdmin(CatalogItemBaseAdmin):
 
     model = Root
     form = RootAdminForm
-    fields = ['title', 'long_title', 'main_content', 'bottom_content']
+    fields = ['title', 'long_title']
 
 
 @admin.register(Product)
@@ -38,11 +38,20 @@ class SectionAdmin(CatalogItemBaseAdmin):
     form = SectionAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'description', 'main_content', 'bottom_content']
+    fields = ['title', 'slug', 'show', 'long_title']
+
+
+@admin.register(Category)
+class CategoryAdmin(CatalogItemBaseAdmin):
+
+    model = Category
+    form = CategoryAdminForm
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ("title", )
+    fields = ['title', 'slug', 'show', 'long_title']
 
 
 @admin.register(CatalogItem)
-class CatalogItemAdmin(SortableAdminMixin, CatalogItemBaseAdmin):
+class CatalogItemAdmin(SortableAdminMixin, admin.ModelAdmin):
     extra = 0
     list_display = ['type', 'section', 'category']
-

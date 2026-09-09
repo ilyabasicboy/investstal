@@ -2,7 +2,7 @@
 <nav class="hamburger__menu">
     <ul>
         {% with catalog_data=root.0.get_catalog_data %}
-            {% if catalog_data %}
+            
                 <li class="header__menu-item header__menu-item--catalog">
                     <div class="header__menu-content">
                         <a class="header__menu-link" href="{{ root.0.get_absolute_url }}" cursor-class="link-hover">
@@ -19,7 +19,7 @@
                             </svg>
                         </div>
                     </div>
-
+                    {% if catalog_data %}
                     <div class="header__submenu header__submenu--full scroll-custom-y active-mobile">
                         <div class="header__submenu-wrapper">
                             {% for group_name, sections in catalog_data.items %}
@@ -58,8 +58,8 @@
                             {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
                 </li>
-            {% endif %}
         {% endwith %}
 
         {% for item in menu.root_item.children %}

@@ -10,9 +10,21 @@ from attachment.models import AttachmentImage
 from django.contrib.contenttypes.models import ContentType
 from catalog.utils import get_content_objects, get_sorted_content_objects
 from django.core.exceptions import ValidationError
+from itertools import chain
+
+
+GROUP_CHOICES = (
+    (1, 'По ценовому сегменту'),
+    (2, 'По назначению'),
+    (3, 'По особенностям'),
+    (4, 'По отделке')
+)
 
 
 class CatalogMixin:
+
+    def get_products(self):
+        raise NotImplemented
 
     def get_products_count(self):
         result = cache.get(self.cache_key()+'_products_count', None)
@@ -82,6 +94,47 @@ class Root(CatalogBase, CatalogMixin):
             get_content_objects(self.tree.get().get_children(), allowed_models=(Section,))
         )
 
+    def get_products(self):
+        result = cache.get(self.cache_key() + '_products')
+        if result is None:
+            result = Product.objects.filter(show=True).order_by('-id')
+            cache.set(self.cache_key() + '_products', result, 600000)
+        return result
+
+    def get_catalog_data(self):
+        result = cache.get(self.cache_key() + '_catalog_data')
+        if result is None:
+            result = {}
+            for group_type, group_name in GROUP_CHOICES:
+                group = get_sorted_content_objects(
+                    list(
+                        chain(
+                            Category.objects.filter(group=group_type, show=True),
+                            Section.objects.filter(group=group_type, show=True)
+                        )
+                    )
+                )
+
+                if group:
+                    result[group_name] = group
+            cache.set(self.cache_key() + '_catalog_data', result, 600000)
+        return result
+
+    def get_products_new(self):
+        result = cache.get(self.cache_key() + '_products_new')
+        if result is None:
+            result = self.get_products().order_by('-created')[:150]
+            cache.set(self.cache_key() + '_products_new', result, 600000)
+        return result
+
+    def get_products_new_categories(self):
+        result = cache.get(self.cache_key() + '_products_new_categories')
+        if result is None:
+            products = self.get_products_new()
+            result = Category.objects.filter(products__in=products).distinct()
+            cache.set(self.cache_key() + '_products_new_categories', result, 600000)
+        return result
+
 
 class Product(CatalogBase):
     class Meta:
@@ -124,6 +177,13 @@ class Section(CatalogBase, CatalogMixin):
         blank=True
     )
 
+    def get_products(self):
+        result = cache.get(self.cache_key() + '_products')
+        if result is None:
+            result = Product.objects.filter(tree__parent__object_id=self.id, show=True)
+            cache.set(self.cache_key() + '_products', result, 600000)
+        return result
+
     def __str__(self):
         return self.title
 
@@ -134,12 +194,24 @@ class Category(CatalogBase, CatalogMixin):
         verbose_name_plural = u'категории'
 
     title = models.CharField(verbose_name=u'название', max_length=400)
+    products = models.ManyToManyField(
+        Product,
+        blank=True,
+        verbose_name='товары'
+    )
     long_title = models.CharField(
         verbose_name=u'длинное название',
         max_length=400,
         null=True,
         blank=True
     )
+
+    def get_products(self):
+        result = cache.get(self.cache_key() + '_products')
+        if result is None:
+            result = self.products.filter(show=True)
+            cache.set(self.cache_key() + '_products', result, 600000)
+        return result
 
     def __str__(self):
         return self.title

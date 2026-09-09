@@ -91,3 +91,5 @@ def get_catalog_items(type=None, role=u'обложка', group=None):
       attach_images(catalog_objects, role=role, group=group)
 
       return items
+
+
