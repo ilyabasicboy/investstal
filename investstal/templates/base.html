@@ -31,6 +31,36 @@
 
             <header class="header">
                 <div class="container">
+                    <div>
+                        {% if chunks.address.content %}
+                            <div>
+                                {{ chunks.address.content }}
+                            </div>
+                        {% endif %}
+                        {% if chunks.email.content %}
+                            <div>
+                                {{ chunks.email.content }}
+                            </div>
+                        {% endif %}
+                        {% if chunks.working_hours.content %}
+                            <div>
+                                {{ chunks.working_hours.content }}
+                            </div>
+                        {% endif %}
+                        {% if chunks.max.content %}
+                            <a class="social__link" href="{{ chunks.max.content }}" target="_blank" cursor-class="link-hover">max</a>
+                        {% endif %}
+                        {% if chunks.telegram.content %}
+                            <a class="social__link" href="{{ chunks.telegram.content }}" target="_blank" cursor-class="link-hover">tg</a>
+                        {% endif %}
+                        {% if chunks.vk.content %}
+                            <a class="social__link" href="{{ chunks.vk.content }}" target="_blank" cursor-class="link-hover">vk</a>
+                        {% endif %}
+                        {% if chunks.ok.content %}
+                            <a class="social__link" href="{{ chunks.ok.content }}" target="_blank" cursor-class="link-hover">ok</a>
+                        {% endif %}
+                    </div>
+                    
                     {% block header_menu %}
                         {% show_menu 'header_menu' %}
                     {% endblock %}
@@ -80,6 +110,57 @@
                 <div class="container">
                     {% show_menu 'footer_menu' %}
                 </div>
+
+                <div>
+                    Для связи
+                    {% if chunks.address.content %}
+                        {{ chunks.address.content }}
+                    {% endif %}
+                    {% if chunks.phone.content %}
+                        {{ chunks.phone.content }}
+                    {% endif %}
+                    
+                    
+
+                    {% if chunks.max.content %}
+                        <a class="social__link" href="{{ chunks.max.content }}" target="_blank" cursor-class="link-hover">max</a>
+                    {% endif %}
+                    {% if chunks.telegram.content %}
+                        <a class="social__link" href="{{ chunks.telegram.content }}" target="_blank" cursor-class="link-hover">tg</a>
+                    {% endif %}
+                    {% if chunks.vk.content %}
+                        <a class="social__link" href="{{ chunks.vk.content }}" target="_blank" cursor-class="link-hover">vk</a>
+                    {% endif %}
+                    {% if chunks.ok.content %}
+                        <a class="social__link" href="{{ chunks.ok.content }}" target="_blank" cursor-class="link-hover">ok</a>
+                    {% endif %}
+                </div>
+
+                {% if chunks.personal_policy_link.content or chunks.confirm_personal_policy_link.content or chunks.cookie_policy_link.content %}
+                    <div class="footer__links">
+                        {% if chunks.personal_policy_link.content %}
+                            <a href="{{ chunks.personal_policy_link.content }}" cursor-class="link-hover">
+                                Политика обработки персональных данных
+                            </a>
+                        {% endif %}
+                        {% if chunks.confirm_personal_policy_link.content %}
+                            <a href="{{ chunks.confirm_personal_policy_link.content }}" cursor-class="link-hover">
+                                Согласие на обработку персональных данных
+                            </a>
+                        {% endif %}
+                        {% if chunks.cookie_policy_link.content %}
+                            <a href="{{ chunks.cookie_policy_link.content }}" cursor-class="link-hover">
+                                Политика обработки Cookies
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if chunks.copyright.content %}
+                    <div class="footer__copy">
+                        {{ chunks.copyright.content }}-{% now 'Y' %} гг.
+                    </div>
+                {% endif %}
             </footer>
 
             {% block js %}

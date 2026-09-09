@@ -235,6 +235,7 @@ INSTALLED_APPS += ['catalog', 'investstal.custom_catalog']
 
 CATALOG_MODELS = [
     'custom_catalog.Section',
+    'custom_catalog.Category',
     'custom_catalog.Product',
 ]
 
@@ -252,7 +253,8 @@ ATTACHMENT_EXTRA_IMAGES = 0
 ATTACHMENT_EXTRA_FILES = 0
 ATTACHMENT_IKSPECS = 'investstal.custom_attachment.ikspecs'
 ROLE_GALLERY = u'галерея'
-ATTACHMENT_IMAGE_ROLES = [ROLE_GALLERY]
+ROLE_WRAPPER = u'обложка'
+ATTACHMENT_IMAGE_ROLES = [ROLE_GALLERY, ROLE_WRAPPER]
 # ATTACHMENT_SPECS_FOR_TINYMCE = ['displaywatermark']
 ATTACHMENT_FOR_MODELS = [
     'pages.Page',

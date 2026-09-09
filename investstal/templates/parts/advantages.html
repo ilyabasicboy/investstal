@@ -1,0 +1,23 @@
+<div class="advantages">
+    <div class="advantages__slider advantages--slider swiper">
+        <div class="swiper-wrapper">
+            {% for advantage in advantages %}
+                <div class="advantages__item swiper-slide">
+                    {% if advantage.icon %}
+                        <div class="advantages__item-icon">
+                            <img src="{{ advantage.icon.url }}" alt="{{ advantage.text|safe }}">
+                        </div>
+                    {% endif %}
+
+                    <div class="advantages__item-content">
+                        {% if advantage.text %}
+                            <div class="advantages__item-text">
+                                {{ advantage.text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -5,6 +5,18 @@ from django.contrib.admin.sites import NotRegistered
 from pages import settings
 from pages.admin import PageAdmin
 from pages.models import Page, PageAlias, Media
+from .models import Advantage
+
+from adminsortable2.admin import SortableAdminMixin
+
+
+@admin.register(Advantage)
+class AdvantageAdmin(SortableAdminMixin, admin.ModelAdmin):
+    model = Advantage
+    list_display = ['text', 'type']
+
+
+
 
 
 class CustomPageAdmin(PageAdmin):

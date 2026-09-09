@@ -1,6 +1,67 @@
 {% load treemenus_tags %}
 <nav class="hamburger__menu">
     <ul>
+        {% with catalog_data=root.0.get_catalog_data %}
+            {% if catalog_data %}
+                <li class="header__menu-item header__menu-item--catalog">
+                    <div class="header__menu-content">
+                        <a class="header__menu-link" href="{{ root.0.get_absolute_url }}" cursor-class="link-hover">
+                            <span class="header__menu-burger">
+                                <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0.833252 0.833252H15.8333M0.833252 5.83325H15.8333M0.833252 10.8333H15.8333" stroke="white" stroke-width="1.66667" stroke-miterlimit="10" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            Каталог дверей
+                        </a>
+                        <div class="header__menu-icon active">
+                            <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.51343 0.160816L3.2476 2.25303L1.01608 0.170241C0.779736 -0.0503532 0.41415 -0.054247 0.173159 0.161264C-0.0406514 0.352467 -0.0589778 0.680796 0.132226 0.894606C0.143132 0.906802 0.154609 0.918476 0.166617 0.929588L3.2476 3.7807L6.33635 0.922397C6.54653 0.727898 6.55924 0.399839 6.36474 0.189658C6.35565 0.17983 6.34617 0.170358 6.33635 0.161264C6.10418 -0.0535825 5.74583 -0.0537773 5.51343 0.160816Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="header__submenu header__submenu--full scroll-custom-y active-mobile">
+                        <div class="header__submenu-wrapper">
+                            {% for group_name, sections in catalog_data.items %}
+                                <div class="header__submenu-item">
+                                    <div class="header__submenu-content">
+                                        <div class="header__submenu-link">
+                                            {{ group_name }}
+                                        </div>
+
+                                        <div class="header__submenu-icon">
+                                            <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.51343 0.160816L3.2476 2.25303L1.01608 0.170241C0.779736 -0.0503532 0.41415 -0.054247 0.173159 0.161264C-0.0406514 0.352467 -0.0589778 0.680796 0.132226 0.894606C0.143132 0.906802 0.154609 0.918476 0.166617 0.929588L3.2476 3.7807L6.33635 0.922397C6.54653 0.727898 6.55924 0.399839 6.36474 0.189658C6.35565 0.17983 6.34617 0.170358 6.33635 0.161264C6.10418 -0.0535825 5.74583 -0.0537773 5.51343 0.160816Z" fill="white"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <div class="header__childmenu">
+                                        {% for section in sections %}
+                                            <div class="header__childmenu-item">
+                                                <div class="header__childmenu-content">
+                                                    <a class="header__childmenu-link" href="{{ section.get_absolute_url }}" cursor-class="link-hover">
+                                                        <span>
+                                                            {{ section.title }}
+                                                        </span>
+                                                        {% if section.get_products_count %}
+                                                            <sup class="header__childmenu-count">
+                                                                {{ section.get_products_count }}
+                                                            </sup>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+        {% endwith %}
+
         {% for item in menu.root_item.children %}
             {% if item.show %}
                 {% show_menu_item item %}

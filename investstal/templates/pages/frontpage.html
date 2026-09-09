@@ -1,8 +1,81 @@
 {% extends 'pages/base.html' %}
-{% load custom_pages_tags pages_tags base_tags %}
+{% load attachment_tags custom_catalog_tags custom_pages_tags pages_tags base_tags %}
 
 {% block content %}
+    {% if current_page.get_children_for_frontend %}
+        <section class="intro">
+            <canvas class="smoke-effect"></canvas>
+            <div class="intro__slider intro--slider swiper">
+                <div class="swiper-wrapper">
+                    {% for slide in current_page.get_children_for_frontend %}
+                        <div class="intro__item swiper-slide">
+                            <div class="container">
+                                <div class="intro__item-left">
+                                    <div class="intro__title">
+                                        {{ slide.title }}
+                                    </div>
 
-    {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
+                                    {% get_content slide 'text' as text %}
+                                    {% if text %}
+                                        <div class="intro__text">
+                                            {{ text|safe }}
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <a href="{% url 'catalog-root' %}">
+                                        Смотреть предложения
+                                    </a>
+                                    <a href="">
+                                        Запросить расчет стоимости
+                                    </a>
+                                    
+                                </div>
 
+                                {% get_images for slide as images %}
+                                {% if images %}
+                                    <div class="intro__item-right">
+                                        <div class="intro__preview">
+                                            <img src="{{ images.0.intro.url }}" alt="{{ images.0.title }}">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if current_page.get_children_for_frontend.count > 1 %}
+                        <div class="intro__pagination swiper-pagination"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% get_items_by_model_name 'advantage' type=0 as advantages %}
+    {% if advantages.exists %}
+        <section class="section-default section-default--min section-advantagesone section-relative section-overflow">
+            <div class="container">
+                {% include 'parts/advantages.html' %}
+            </div>
+        </section>
+    {% endif %}
+
+    {% get_catalog_items as catalog_items %}
+    {% if catalog_items %}
+        <section>
+            <div>
+                <div>
+                    Металлические двери на заказ
+                    <a href="{% url 'catalog-root' %}">
+                        Смотреть все
+                    </a>
+                </div>
+                <div>
+                    {% for item in catalog_items %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}
