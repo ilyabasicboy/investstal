@@ -107,12 +107,76 @@
         {% include 'parts/gallery_categories.html' with show_link=True %}
     {% endif %}
 
-    <section>
-        <div>
-            Также производим
-            Металлоконструкции для вашего объекта и усадьбы
-        </div>
+    {% get_catalog_items type=0 role='обложка' as catalog_items %}
+    {% if catalog_items %}
+        <section>
+            <div>
+                Также производим
+                Металлоконструкции для вашего объекта и усадьбы
+            </div>
 
-        
+            <div>
+                {% for item in catalog_items %}
+                    {% if item.catalog_item.images %}
+                        <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
+                    {% endif %}
+                    {{ item.catalog_item.title }}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    {% placeholder about_us_title label 'Заголовок блока О нас' as about_us_title %}
+    {% placeholder about_us_text label 'Текст блока О нас' with TinyMCE as about_us_text %}
+    {% if about_us_title or about_us_text %}
+        <section class="section-default section-overflow {% if about_us_gallery %}about--certificates{% endif %}">
+            <div class="container">
+                <div class="about">
+                    <div class="about__left">
+                        <div class="about__content">
+
+                            {% if about_us_title %}
+                                <div class="about__title">
+                                    {{ about_us_title|safe }}
+                                </div>
+                            {% endif %}
+
+                            {% if about_us_text %}
+                                <div class="about__text">
+                                    {{ about_us_text|safe }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% get_images for current_page as images %}
+                    {% with images_about_us=images|role:'обложка' %}
+                        {% if images_about_us %}
+                            <div class="about__right">
+                                <div class="about__preview">
+                                    <img src="{{ images_about_us.0.display.url }}" alt="{{ images_about_us.0.title|default:'' }}" title="{{ images_about_us.0.title|default:'' }}">
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% placeholder work_steps_title label 'Заголовок блока "Как мы работаем"' as work_steps_title %}
+    {% placeholder work_steps_text label 'Текст блока "Как мы работаем"' with Textarea as work_steps_text %}
+
+    <section>
+        {% if work_steps_title %}
+            <div>
+                {{ work_steps_title }}
+            </div>
+        {% endif %}
+        {% if work_steps_text %}
+            <div>
+                {{ work_steps_text }}
+            </div>
+        {% endif %}
     </section>
 {% endblock %}
