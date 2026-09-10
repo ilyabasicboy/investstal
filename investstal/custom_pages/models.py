@@ -42,3 +42,32 @@ class Advantage(models.Model):
 
     def __str__(self):
         return self.text or ''
+
+
+class WorkStep(models.Model):
+
+    class Meta:
+        verbose_name = u'Шаг работы'
+        verbose_name_plural = u'Шаги работы'
+        ordering = ['order_key']
+
+    page = models.ForeignKey(
+        Page,
+        verbose_name=u'страница',
+        related_name='work_steps',
+        on_delete=models.CASCADE
+    )
+    order_key = models.PositiveIntegerField(
+        verbose_name=u'',
+        default=0,
+        blank=False,
+        null=False
+    )
+    text = models.TextField(
+        verbose_name=u'Текст',
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.text or u''

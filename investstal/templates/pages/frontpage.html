@@ -117,10 +117,12 @@
 
             <div>
                 {% for item in catalog_items %}
-                    {% if item.catalog_item.images %}
-                        <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
-                    {% endif %}
-                    {{ item.catalog_item.title }}
+                    <a href="{{ item.catalog_item.get_absolute_url }}">
+                        {% if item.catalog_item.images %}
+                            <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
+                        {% endif %}
+                        {{ item.catalog_item.title }}
+                    </a>
                 {% endfor %}
             </div>
         </section>
@@ -167,16 +169,40 @@
     {% placeholder work_steps_title label 'Заголовок блока "Как мы работаем"' as work_steps_title %}
     {% placeholder work_steps_text label 'Текст блока "Как мы работаем"' with Textarea as work_steps_text %}
 
-    <section>
-        {% if work_steps_title %}
-            <div>
-                {{ work_steps_title }}
+    {% get_items_by_model_name 'workstep' page=current_page ordering='order_key' as work_steps %}
+    {% if work_steps_title or work_steps_text or work_steps.exists %}
+        <section class="section-default work-steps">
+            <div class="container">
+                {% if work_steps_title %}
+                    <div class="title">
+                        {{ work_steps_title }}
+                    </div>
+                {% endif %}
+                {% if work_steps_text %}
+                    <div class="work-steps__text">
+                        {{ work_steps_text }}
+                    </div>
+                {% endif %}
+
+                {% if work_steps.exists %}
+                    <div class="work-steps__list">
+                        {% for step in work_steps %}
+                            <div class="work-steps__item">
+                                <div class="work-steps__num">
+                                    {{ forloop.counter|stringformat:'02d' }}
+                                </div>
+                                {% if step.text %}
+                                    <div class="work-steps__content">
+                                        <div class="work-steps__description">
+                                            {{ step.text|linebreaksbr }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-        {% if work_steps_text %}
-            <div>
-                {{ work_steps_text }}
-            </div>
-        {% endif %}
-    </section>
+        </section>
+    {% endif %}
 {% endblock %}
