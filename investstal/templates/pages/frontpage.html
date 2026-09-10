@@ -1,5 +1,5 @@
 {% extends 'pages/base.html' %}
-{% load attachment_tags custom_catalog_tags custom_pages_tags pages_tags base_tags %}
+{% load attachment_tags feedback_tags custom_catalog_tags custom_pages_tags pages_tags base_tags %}
 
 {% block breadcrumbs_section %}{% endblock %}
 {% block title_section %}{% endblock %}
@@ -79,4 +79,16 @@
     {% endif %}
 
     {% include 'parts/popular_products_block.html' %}
+
+    <section>
+        Получить консультацию
+        Подскажем все нюансы выбора для экономии вашего времени и средств.
+        {% show_feedback 'consult' %}
+    </section>
+
+    {% placeholder gallery_ids label 'Блок галереи' with ImageGroupMultiSelect as gallery_ids %}
+    {% if gallery_ids %}
+        {% get_images_for_groups_list gallery_ids as images %}
+        {% include 'parts/gallery_categories.html' with show_link=True %}
+    {% endif %}
 {% endblock %}

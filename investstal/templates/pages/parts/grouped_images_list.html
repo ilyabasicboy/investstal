@@ -1,0 +1,27 @@
+{% load pagination_tags %}
+{% if images %}
+    {% autopaginate images 24 %}
+
+    {% for image in images %}
+        <div class="gallery__column-item">
+            <a class="gallery__column-img" href="{{ image.watermarkpicture.url }}" data-fancybox="gallery-column" data-caption="{{ image.title }}" cursor-class="img-hover">
+                <img src="{{ image.gallerycolumn.url }}" alt="{{ image.title }}" title="{{ image.title }}">
+            </a>
+
+            <div class="gallery__column-overlay">
+                {% if hide_buttons != 'True' %}
+                    <a class="btn btn--white btn--min gallery__column-btn modal-open" data-href="#pricedetails-modal" cursor-class="link-hover">
+                        Узнать цену
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="gallery__column-bottom loader__show-more show-more">
+        <div class="loader__content loader-js">
+            <div class="loader"></div>
+        </div>
+        {% paginate using 'pagination/show_more.html' %}
+    </div>
+{% endif %}

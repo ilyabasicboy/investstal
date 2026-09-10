@@ -213,10 +213,12 @@ FEEDBACK_ADMIN_EXTRA_CLASS = {'all': 'large-input'}
 FEEDBACK_ADMIN_EXTRA_CSS = {'all': ['css/admin/common.css']}
 FEEDBACK_FORMS = {
     'call': 'investstal.custom_feedback.forms.CallForm',
+    'consult': 'investstal.custom_feedback.forms.Consult',
 }
 
 FEEDBACK_FORMS_NAMES = {
     'call': u'Написать нам',
+    'consult': u'Получить консультацию',
 }
 
 # ~======== CHUNKS =================~

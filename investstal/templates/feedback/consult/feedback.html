@@ -1,0 +1,57 @@
+{% load feedback_tags %}
+<form action="{% url 'ajax_feedback' key=form.get_settings_key %}"
+      method="post" id="id_feedback_form_{{ form.get_settings_key }}"
+      class="form feedback-form {{ form.get_settings_key }}" novalidate>
+
+    {% csrf_token %}
+    {{ form.message_ }}
+    {{ form.flag }}
+
+    {{ form.errors }}
+    <div class="form__grid">
+        <div class="form__item form__grid-12">
+            <label class="input__label {% if form.name.errors %}error{% endif %}">
+                <div class="input__content input">
+                    {{ form.name }}
+                </div>
+            </label>
+        </div>
+        <div class="form__item form__grid-12">
+            <label class="input__label {% if form.phone.errors %}error{% endif %}">
+                <div class="input__content input">
+                    {{ form.phone }}
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="form__switcher">
+        {% include 'parts/figures_captcha.html' %}
+    </div>
+
+    {% if chunks.form_politica.content %}
+        <div class="form__privacy" cursor-class="link-hover">
+            <div class="default-checkbox {% if form.confirm.errors %}error{% endif %}">
+                <label class="default-checkbox__label">
+                    <input class="default-checkbox__input" type="checkbox" name="{{ form.get_settings_key }}-confirm" required="" id="id_{{ form.get_settings_key }}-confirm" {% if form.confirm.data %}checked{% endif %}>
+                    <div class="default-checkbox__content">
+                        <div class="default-checkbox__fake">
+                            <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.707031 5.20709L4.20703 8.70709L12.207 0.707092" stroke="#303030" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="default-checkbox__text">
+                            {{ chunks.form_politica.content }}
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="form__bottom">
+        <button class="btn btn--dark btn--full" type="submit" cursor-class="link-hover">
+            Отправить запрос
+        </button>
+    </div>
+</form>

@@ -1,0 +1,8 @@
+<div class="switcher {% if form.flag.errors %} error{% endif %}">
+    <div class="switcher__title">Выберите зелёный, если вы не робот:</div>
+    <div class="switcher__list">
+        <span class="switcher__item switcher__item--green switcher__item--circle switch on{% if form.flag.data == 'on' %} active{% endif %}">green</span>
+        <span class="switcher__item switcher__item--red switch fake1{% if form.flag.data == 'fake1' %} active{% endif %}"></span>
+        <span class="switcher__item switcher__item--yellow switcher__item--circle switch fake2{% if form.flag.data == 'fake2' %} active{% endif %}"></span>
+    </div>
+</div>

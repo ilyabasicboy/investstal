@@ -2,7 +2,22 @@
 from django import forms
 from django.core.mail.message import EmailMessage
 from feedback.forms import BaseFeedbackForm
-from nocaptcha_recaptcha.fields import NoReCaptchaField
+from django.core.exceptions import ValidationError
+
+
+def validate_is_human(value):
+    if value != 'on':
+        raise forms.ValidationError(':(')
+    return value
+
+
+def validate_file_size(value):
+    filesize = value.size
+
+    if filesize > 5242880:
+        raise ValidationError(u"Максимальный размер файла 5 мб")
+    else:
+        return value
 
 
 class BaseForm(BaseFeedbackForm):
@@ -11,6 +26,20 @@ class BaseForm(BaseFeedbackForm):
         'required': u'Заполните поле',
         'invalid': u'Неправильное значение'
     }
+
+    confirm = forms.BooleanField(
+        label=u'Согласие на обработку',
+        required=True,
+        initial=True
+    )
+
+    flag = forms.CharField(
+        label=u'Флаг',
+        required=False,
+        widget=forms.widgets.HiddenInput,
+        initial='none',
+        validators=[validate_is_human],
+    )
 
     def after_mail(self, **kwargs):
 
@@ -25,8 +54,6 @@ class BaseForm(BaseFeedbackForm):
         super(BaseForm, self).__init__(*args, **kwargs)
         for name in self.fields.keys():
             self.fields[name].error_messages = self.ERROR_MESSAGES
-
-    captcha = NoReCaptchaField(label='')
 
 
 class CallForm(BaseForm):
@@ -51,4 +78,28 @@ class CallForm(BaseForm):
     message = forms.CharField(
         label=u'Сообщение:', max_length=1000,
         widget=forms.Textarea(attrs={'data-set': 2}),
+    )
+
+
+class Consult(BaseForm):
+
+    """
+        Консультация
+    """
+
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваше имя'
+            }
+        ),
+    )
+    phone = forms.CharField(
+        label=u'Ваш телефон:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваш телефон'
+            }
+        ),
     )
