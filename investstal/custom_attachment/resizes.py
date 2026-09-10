@@ -29,20 +29,6 @@ class ResizeDisplay(Resize):
 class ResizeGalleryColumn(Resize):
     height = 600
 
-
-class ResizeImg300x300(Resize):
-    # test resize
-    width = 300
-    height = 300
-    crop = True
-
-
-class ResizeImgAutox200(Resize):
-    # test resize
-    height = 200
-
-
-class ResizeImg100x100(Resize):
-    # test resize
-    width = 100
-    height = 100
+    
+class ResizeIntro(Resize):
+    width = 2600

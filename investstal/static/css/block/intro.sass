@@ -1,0 +1,59 @@
+.intro
+	width: 100%
+	min-height: 420px
+	display: flex
+	&__slider
+		height: 100%
+		position: relative
+		&--padding
+			padding-bottom: 40px
+	&--slider
+		height: 100%
+	&__item
+		padding: 60px
+		padding-top: 100px
+		background-size: cover
+		background-position: center
+		background-repeat: no-repeat
+	&__content
+		display: flex
+		flex-direction: column
+	&__title
+		font-size: 40px
+		line-height: 48px
+		color: #fff
+		font-weight: 600
+		max-width: 560px
+		position: relative
+		&:after
+			content: ''
+			display: block
+			margin-top: 32px
+			background-color: #FBCC09
+			height: 3px
+			width: 40%
+	&__text
+		font-size: 18px
+		line-height: 24px
+		color: #fff
+		margin-top: 20px
+	&__buttons
+		display: flex
+		flex-wrap: wrap
+		margin-right: -16px
+		margin-bottom: -10px
+		margin-top: 40px
+		.btn
+			margin-right: 16px
+			margin-bottom: 10px
+	&__pagination
+		bottom: -32px!important
+		.swiper-pagination-bullet
+			background: #333
+			border-radius: 6px
+			opacity: 1
+			width: 8px
+			height: 8px
+			transition: width 0.2s ease-in-out
+			&.swiper-pagination-bullet-active
+				width: 24px

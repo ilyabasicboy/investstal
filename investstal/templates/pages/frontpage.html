@@ -8,39 +8,54 @@
     {% if current_page.get_children_for_frontend %}
         <section class="intro">
             <div class="container">
-                <div class="intro__slider intro--slider swiper">
-                    <div class="swiper-wrapper">
-                        {% for slide in current_page.get_children_for_frontend %}
-                            {% get_images for slide as images %}
-                            <div class="intro__item swiper-slide" {% if images %}style="background-image: url('{{ images.0.intro.url }}');"{% endif %}>
-                                <div class="intro__content">
-                                    <div class="intro__title">
-                                        {{ slide.title }}
-                                    </div>
-
-                                    {% get_content slide 'text' as text %}
-                                    {% if text %}
-                                        <div class="intro__text">
-                                            {{ text|safe }}
+                <div class="intro__slider">
+                    <div class="intro--slider swiper {% if current_page.get_children_for_frontend.count > 1 %}intro__slider--padding{% endif %}">
+                        <div class="swiper-wrapper">
+                            {% for slide in current_page.get_children_for_frontend %}
+                                {% get_images for slide as images %}
+                                <div class="intro__item swiper-slide" {% if images %}style="background-image: url('{{ images.0.intro.url }}');"{% endif %}>
+                                    <div class="intro__content">
+                                        <div class="intro__title">
+                                            {{ slide.title }}
                                         </div>
-                                    {% endif %}
 
-                                    <div class="intro__buttons">
-                                        <a class="btn btn--white" href="{% url 'catalog-root' %}">
-                                            Смотреть предложения
-                                        </a>
-                                        <a class="btn btn--yellow modal-open" data-href="#">
-                                            Запросить расчет стоимости
-                                        </a>
+                                        {% get_content slide 'text' as text %}
+                                        {% if text %}
+                                            <div class="intro__text">
+                                                {{ text|safe }}
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="intro__buttons">
+                                            <a class="btn btn--white" href="{% url 'catalog-root' %}">
+                                                Смотреть предложения
+                                            </a>
+                                            <a class="btn btn--yellow modal-open" data-href="#">
+                                                Запросить расчет стоимости
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
 
-                        {% if current_page.get_children_for_frontend.count > 1 %}
-                            <div class="intro__pagination swiper-pagination"></div>
-                        {% endif %}
+                            {% if current_page.get_children_for_frontend.count > 1 %}
+                                <div class="intro__pagination swiper-pagination"></div>
+                            {% endif %}
+                        </div>
                     </div>
+
+                    {% if current_page.get_children_for_frontend.count > 1 %}
+                        <div class="slider__nav-arrow slider__nav-arrow--posleft slider__nav-prev">
+                            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.96973 14.9697L0.969727 7.96973L8.96973 0.969726" stroke="#333333" stroke-width="1.93939" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="slider__nav-arrow slider__nav-arrow--posright slider__nav-next">
+                            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.969727 0.969727L8.96973 7.96973L0.969727 14.9697" stroke="#333333" stroke-width="1.93939" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -48,7 +63,7 @@
 
     {% get_items_by_model_name 'advantage' type=0 as advantages %}
     {% if advantages.exists %}
-        <section class="section-default section-default--min section-advantagesone section-relative section-overflow">
+        <section class="section-default section-default--bottom">
             <div class="container">
                 {% include 'parts/advantages.html' %}
             </div>
