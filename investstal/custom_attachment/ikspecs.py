@@ -19,17 +19,5 @@ class Display(ImageSpec):
     processors = [ResizeDisplay]
 
 
-class Img100x100(ImageSpec):
-    # test spec
-    quality = 50
-    processors = [ResizeImg100x100]
-
-
-class ImgAutox200(ImageSpec):
-    # test spec
-    processors = [ResizeImgAutox200]
-
-
-class Img300x300(ImageSpec):
-    # test spec
-    processors = [ResizeImg300x300]
+class Intro(ImageSpec):
+    processors = [ResizeIntro]
