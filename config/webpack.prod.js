@@ -51,6 +51,7 @@ module.exports = merge(common, {
                                 importLoaders: 2,
                                 sourceMap: false,
                                 modules: false,
+                                url: false
                             },
                         },
                         'postcss-loader',

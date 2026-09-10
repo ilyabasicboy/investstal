@@ -1,0 +1,54 @@
+.header
+	width: 100%
+	display: flex
+	flex-direction: column
+	height: calc(60px + 90px)
+	position: fixed
+	top: 0px
+	left: 0px
+	z-index: 102
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)
+	&__top
+		background: linear-gradient(270deg, rgba(245, 245, 245, 1) 0%, rgba(250, 250, 250, 1) 100%)
+		width: 100%
+		height: 60px
+		display: flex
+		align-items: center
+		.container
+			display: flex
+			align-items: center
+			justify-content: space-between
+
+	&__contacts
+		display: flex
+		align-items: center
+		justify-content: space-between
+		width: 100%
+		&-item + &-item
+			margin-left: 40px
+		&-item
+			display: flex
+			align-items: center
+			font-size: 18px
+			line-height: 22px
+			color: #333
+			span
+				border-bottom: 1px dashed #333
+			svg
+				flex-shrink: 0
+				margin-right: 6px
+		a.header__contacts-item
+			span
+				border-bottom: 1px solid #333
+				transition: border 0.5s ease-in-out
+			&:hover
+				span
+					border-color: transparent
+
+	&__social
+		margin-left: 40px
+
+	&__bottom
+		height: 90px
+		width: 100%
+		display: flex

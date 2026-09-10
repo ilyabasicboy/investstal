@@ -1,16 +1,24 @@
 {% load static %}
 {% with item.children as children %}
-    <div class="menu__item">
-        <span>{{ item.caption }}</span>
-        <img src="{% static 'img/icon-arrow.svg' %}" class="arrow-img" alt="drop-icon">
-        {% if children %}
-            <ul>
-            {% for child in children %}
-                {% if child.show %}
-                    <li><a href="{{ child.url }}">{{ child.caption }}</a></li>
-                {% endif %}
-            {% endfor %}
-            </ul>
-        {% endif %}
+    <div class="footer__grid-item">
+        <div class="footer__menu">
+            <span class="footer__menu-title">
+                {{ item.caption }}
+            </span>
+
+            {% if children %}
+                <ul class="footer__submenu">
+                    {% for child in children %}
+                        {% if child.show %}
+                            <li class="footer__submenu-item">
+                                <a class="footer__submenu-link" href="{{ child.url }}">
+                                    {{ child.caption }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
 {% endwith %}

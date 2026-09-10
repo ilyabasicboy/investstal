@@ -2,12 +2,20 @@
 	box-sizing: border-box
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0)
 
+html
+	display: flex
+	flex-direction: column
+	min-height: 100%
+
 body
-	font-family: 'Open Sans', sans-serif
+	font-family: '_NotoSansTC', sans-serif
 	font-weight: 400
 	line-height: 1.5
 	font-size: 14px
 	overflow-x: hidden
+	display: flex
+	flex-direction: column
+	flex-grow: 1
 	@media screen and (max-width: $xs-max)
 		min-width: 360px
 	&.fix-anim *
@@ -32,6 +40,7 @@ a
 img
 	max-width: 100%
 	height: auto
+	pointer-events: none
 
 sup
 	vertical-align: super
@@ -43,6 +52,8 @@ sup
 	margin: 0 auto
 	padding: 0 15px
 	position: relative
+	&--big
+		max-width: 1480px
 
 .section-default
 	padding: 80px 0
@@ -98,8 +109,12 @@ sup
 	overflow: clip
 	overflow-y: clip
 	overflow-x: clip
+	padding-top: calc(60px + 90px)
 	@media screen and (max-width: $xs-max)
 		overflow: hidden
 
 .noscroll
 	overflow: hidden
+
+.modal-open
+	cursor: pointer

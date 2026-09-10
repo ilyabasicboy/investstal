@@ -1,24 +1,38 @@
 .btn
-	background-color: #fff
+	background-color: transparent
 	border: none
 	box-shadow: none
 	border-radius: 0px
-	font-size: 24px
-	line-height: 33px
-	font-weight: 700
-	color: #000
+	font-size: 14px
+	line-height: 20px
+	font-weight: 600
+	color: transparent
 	font-family: inherit
 	text-decoration: none
 	cursor: pointer
-	padding: 13px 47px
-	height: 60px
+	padding: 8px 32px
+	height: 40px
 	display: flex
 	align-items: center
 	justify-content: center
 	text-align: center
 	position: relative
 	overflow: hidden
-	transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out, border 0.5s ease-in-out
-	&:hover
-		background-color: #000
-		color: #fff
+	transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out, border 0.5s ease-in-out, opacity 0.5s ease-in-out
+
+	&--white
+		background-color: #fff
+		color: #333
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08)
+		&:hover
+			background-color: #e5e5e5
+
+	&--yellow
+		background-color: #FDE011
+		color: #333
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08)
+		&:hover
+			background-color: #e5e5e5
+
+	&--uppercase
+		text-transform: uppercase
