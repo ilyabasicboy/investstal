@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^feedback/', include('feedback.urls')),
     url(r'^news/', include('investstal.custom_news.urls')),
     url(r'^catalog/', include('catalog.urls')),
+    url(r'^custom_catalog/', include('investstal.custom_catalog.urls')),
     url(r'^', include('investstal.service.urls')),
     url(r'^(?P<path>.*)/$', pages_views.details, name='pages-details-by-path'),
     url(r'^$', pages_views.details, name='pages-root', kwargs={'path': u''})

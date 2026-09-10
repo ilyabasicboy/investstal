@@ -1,0 +1,5 @@
+{% for product in product_list|slice:12 %}
+    <div class="goods__item swiper-slide">
+        {% include 'catalog/parts/product_card.html' %}
+    </div>
+{% endfor %}

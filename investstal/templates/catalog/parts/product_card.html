@@ -1,6 +1,6 @@
 {% load attachment_tags base_tags custom_catalog_tags %}
 <div class="product-card">
-    <div class="product-card__favorite favorite_product_btn {% if product.id in request.session.favorites.products %}active{% endif %}" data-product_id="{{ product.id }}" data-url="{% url 'toggle_favorites' product_id=product.id %}" cursor-class="link-hover">
+    <div class="product-card__favorite favorite_product_btn data-product_id="{{ product.id }}" cursor-class="link-hover">
         <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10.8093 19L9.38692 17.7052C4.33515 13.1243 1 10.0932 1 6.3951C1 3.36403 3.37384 1 6.3951 1C8.10191 1 9.74005 1.79455 10.8093 3.04033C11.8785 1.79455 13.5166 1 15.2234 1C18.2447 1 20.6185 3.36403 20.6185 6.3951C20.6185 10.0932 17.2834 13.1243 12.2316 17.7052L10.8093 19Z" fill="white"/>
             <path d="M10.8093 19L9.38692 17.7052C4.33515 13.1243 1 10.0932 1 6.3951C1 3.36403 3.37384 1 6.3951 1C8.10191 1 9.74005 1.79455 10.8093 3.04033C11.8785 1.79455 13.5166 1 15.2234 1C18.2447 1 20.6185 3.36403 20.6185 6.3951C20.6185 10.0932 17.2834 13.1243 12.2316 17.7052L10.8093 19Z" stroke="black" stroke-width="2" stroke-miterlimit="5"/>
@@ -8,41 +8,25 @@
     </div>
 
     <div class="product-card__body">
-        {% with images=product.get_product_images %}
+        {% with images=product.images %}
             {% if images %}
                 <div class="product-card__slider product-card--slider swiper">
                     <div class="swiper-wrapper">
-                        {% for image in images|slice:5 %}
-                            <div class="product-card__slide swiper-slide">
-                                <a class="product-card__img" href="{{ image.watermarkpicture.url }}" data-fancybox data-caption="{{ image.title|default:product.title }}" cursor-class="link-hover">
-                                    <img src="{{ image.productcard.url }}" alt="{{ image.title|default:product.title }}" title="{{ image.title|default:product.title }}">
-                                </a>
-                            </div>
-                        {% endfor %}
-                        {% if images.count > 1 %}
-                            <div class="slider__pagination swiper-pagination"></div>
-                        {% endif %}
+                        <div class="product-card__slide swiper-slide">
+                            <a class="product-card__img" href="{{ images.0.watermarkpicture.url }}" data-fancybox data-caption="{{ images.0.title|default:product.title }}" cursor-class="link-hover">
+                                <img src="{{ images.0.productcard.url }}" alt="{{ images.0.title|default:product.title }}" title="{{ images.0.title|default:product.title }}">
+                            </a>
+                        </div>
                     </div>
                 </div>
             {% endif %}
         {% endwith %}
 
         <a class="product-card__content" href="{{ product.get_absolute_url }}" cursor-class="link-hover">
-            <div class="product-card__rating rating--min">
-                {% include 'parts/rating_stars.html' with rating=product.get_rating %}
-
-                <div class="product-card__count">
-                    <span>
-                        {{ product.get_reviews.count }}
-                    </span>
-                    <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.62734 1.92912C7.32873 -0.832591 12.6155 -0.606859 16.0378 2.46349C19.5189 5.58877 19.9945 10.6917 17.1314 14.3473C14.4344 17.7902 9.57007 18.9249 5.52028 17.149L5.29909 17.0481L1.14678 17.978L1.1088 17.984L1.07558 17.991H1.05849L1.0376 17.996H1.00153L0.970203 18L0.950267 17.999L0.928433 18L0.897105 17.997H0.863879L0.842994 17.993L0.822109 17.991L0.788883 17.984L0.756606 17.979L0.741417 17.975L0.718634 17.97L0.672117 17.9541L0.649333 17.9491L0.638891 17.9441L0.618006 17.9371L0.575287 17.9171L0.546807 17.9051L0.536365 17.8991L0.523074 17.8931L0.493645 17.8751L0.450926 17.8512L0.435737 17.8402L0.400612 17.8142L0.362639 17.7873L0.360741 17.7833L0.3484 17.7743L0.307579 17.7343L0.283846 17.7143L0.27815 17.7073L0.224988 17.6454L0.212647 17.6314L0.202205 17.6175L0.165181 17.5615L0.151891 17.5425L0.147144 17.5326L0.107273 17.4596L0.100628 17.4477L0.0968304 17.4397L0.0901852 17.4277L0.0768947 17.3897L0.0579084 17.3478L0.0541111 17.3318L0.0503138 17.3218L0.0341754 17.2609L0.0275302 17.2429L0.0256316 17.2279L0.020885 17.2089L0.0161384 17.176L0.00854386 17.134L0.00664522 17.1031L0.00379727 17.0931V17.0771L0 17.0232L0.000949318 16.9872L0.00189864 16.9642L0.00379727 16.9113L0.00759454 16.8863V16.8673L0.0151891 16.8324L0.0199357 16.7984L0.0246823 16.7785L0.0284795 16.7585L0.0455673 16.6985L0.0484152 16.6856L1.14013 13.2397L1.11925 13.2027C-0.978747 9.46016 -0.0284796 4.82168 3.40995 2.09692L3.62734 1.92912Z" fill="#B5B5B5"/>
-                    </svg>
-                </div>
-            </div>
 
             <div class="product-card__title">
-                <span class="product-card__article"> {{ product.get_vendor_code }}</span> <span class="product-card__name">{{ product.long_title|default:product.title }}</span>
+                <span class="product-card__name">{{ product.long_title|default:product.title }}</span>
+                <span class="product-card__article"> {{ product.get_vendor_code }}</span>
             </div>
 
             <div class="product-card__price">
@@ -50,37 +34,19 @@
                     <div class="product-card__price-default">
                         от {{ product.price|price_format }} руб.
                     </div>
-                    {% if product.old_price %}
-                        <div class="product-card__price-old">
-                            {{ product.old_price|price_format }} руб.
-                        </div>
-                    {% endif %}
                 {% else %}
                     <div class="product-card__price-default">
                         Цена по запросу
                     </div>
                 {% endif %}
             </div>
-
-            {% if product.old_price %}
-                {% if product.calc_discount %}
-                    <div class="product-card__discount">
-                        {% if product.calc_discount.percent %}
-                            <div class="product-card__discount-percent">
-                                - {{ product.calc_discount.percent }}%
-                            </div>
-                        {% endif %}
-
-                        <div class="product-card__discount-money">
-                            Экономия {{ product.calc_discount.absolute|price_format }} руб.
-                        </div>
-                    </div>
-                {% endif %}
-            {% endif %}
         </a>
     </div>
 
     <div class="product-card__footer">
+        <a href="{{ product.get_absolute_url }}">
+            Подробнее
+        </a>
         <button class="product-card__btn btn btn--min btn--dark modal-open" data-href="#order-modal" cursor-class="link-hover">
             Заказать
         </button>

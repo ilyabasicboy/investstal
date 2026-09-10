@@ -11,6 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from catalog.utils import get_content_objects, get_sorted_content_objects
 from django.core.exceptions import ValidationError
 from itertools import chain
+from investstal.custom_attachment.utils import attach_images_queryset
 
 
 GROUP_CHOICES = (
@@ -124,6 +125,8 @@ class Root(CatalogBase, CatalogMixin):
         result = cache.get(self.cache_key() + '_products_new')
         if result is None:
             result = self.get_products().order_by('-created')[:150]
+            # Подгрузить изображения
+            result = attach_images_queryset(result)
             cache.set(self.cache_key() + '_products_new', result, 600000)
         return result
 
@@ -147,18 +150,18 @@ class Product(CatalogBase):
     description = models.TextField(verbose_name=u'короткое описание', default='', blank=True)
     main_content = HTMLField(verbose_name=u'основной контент', blank=True, null=True)
     created = models.DateTimeField(
-        verbose_name="Создан",
+        verbose_name="создан",
         auto_now_add=True,
         editable=False
     )
 
-    @property
-    def images(self):
-        return AttachmentImage.objects.filter(
-            object_id=self.id,
-            content_type=ContentType.objects.get_for_model(Product),
-            role=settings.ROLE_GALLERY
-        )
+    def get_product_images(self):
+        result = cache.get(self.cache_key() + '_product_images')
+        if result is None:
+            ct = ContentType.objects.get_for_model(Product)
+            result = AttachmentImage.objects.filter(content_type=ct.id, object_id=self.id)
+            cache.set(self.cache_key() + '_product_images', result, 600000)
+        return result
 
     def __str__(self):
         return self.title

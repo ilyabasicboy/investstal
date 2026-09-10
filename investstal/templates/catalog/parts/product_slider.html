@@ -1,0 +1,10 @@
+<div class="goods slider">
+    <div class="goods__slider">
+        <div class="goods--slider swiper">
+            <div class="swiper-wrapper {% if ajax_update %}ajax-update-slider filter-update-ajax{% endif %}">
+                {% include 'catalog/parts/product_slider_cards.html' %}
+            </div>
+            <div class="slider__pagination swiper-pagination"></div>
+        </div>
+    </div>
+</div>

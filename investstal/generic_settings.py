@@ -172,6 +172,7 @@ PAGE_TEMPLATES = (
     ('pages/default.html',   u'Шаблон по умолчанию'),
     ('pages/list.html',      u'Список'),
     ('pages/contacts.html',  u'Контакты'),
+    ('pages/slide.html',  u'Слайд')
 )
 
 # ~======== DJANGO TINYMCE ========~
