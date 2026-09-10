@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'dj_pagination',
     'investstal',
     'investstal.service',
+    'adminsortable2'
 ]
 
 MIDDLEWARE = [
@@ -113,7 +114,8 @@ ADMIN_REORDER = (
         'app': 'pages', 'label': u'Контент сайта',
         'models': (
             'pages.Page', 'easy_news.News', 'catalog.TreeItem', 'custom_catalog.Section', 'custom_catalog.Category',
-            'custom_catalog.Product', 'chunks.Chunk', 'treemenus.Menu', 'filebrowser.FileBrowser',
+            'custom_catalog.Product', 'chunks.Chunk', 'treemenus.Menu', 'filebrowser.FileBrowser', 'custom_pages.Advantage',
+            'custom_catalog.CatalogItem'
         )
     },
     {
