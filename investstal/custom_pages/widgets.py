@@ -4,8 +4,11 @@ from django.forms import Select, CheckboxInput, Textarea
 from pages.models import Page
 from pages.widgets_registry import register_widget
 from tinymce.widgets import TinyMCE
+from ..custom_attachment.models import CustomImageGroup
 
 register_widget(TinyMCE)
+
+basestring = str
 
 
 class LargeTextarea(Textarea):
@@ -70,6 +73,15 @@ class MultiSelect(FilteredSelectMultiple):
         return [int(str_id) for str_id in data.getlist(name)]
 
 
+class ImageGroupMultiSelect(MultiSelect):
+
+    def __init__(self, language=None, attrs=None, **kwargs):
+        super(ImageGroupMultiSelect, self).__init__(language, attrs, **kwargs)
+        groups = CustomImageGroup.objects.all()
+        self.choices = list(((group.id, group) for group in groups))
+
+
 register_widget(Checkbox)
 register_widget(GallerySelect)
 register_widget(MultiSelect)
+register_widget(ImageGroupMultiSelect)

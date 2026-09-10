@@ -26,6 +26,10 @@ class ResizeDisplay(Resize):
     height = 900
 
 
+class ResizeGalleryColumn(Resize):
+    height = 600
+
+
 class ResizeImg300x300(Resize):
     # test resize
     width = 300

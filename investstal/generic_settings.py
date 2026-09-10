@@ -120,6 +120,13 @@ ADMIN_REORDER = (
         'app': 'feedback', 'label': u'Обратная связь',
     },
     {
+        'app': 'attachment', 'label': u'Вложения',
+        'models': (
+            'custom_attachment.CustomImageGroup',
+            'custom_attachment.CustomAttachmentImage',
+        )
+    },
+    {
         'app': 'seo', 'label': u'Seo',
         'models': (
             'seo.Url', 'redirects.Redirect', 'redirects.ImportModel'

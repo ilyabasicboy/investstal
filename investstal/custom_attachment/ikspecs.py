@@ -19,6 +19,14 @@ class Display(ImageSpec):
     processors = [ResizeDisplay]
 
 
+class GalleryColumn(ImageSpec):
+    processors = [ResizeGalleryColumn]
+
+
+class WatermarkPicture(ImageSpec):
+    processors = [ResizeDisplay]
+
+
 class Img100x100(ImageSpec):
     # test spec
     quality = 50
