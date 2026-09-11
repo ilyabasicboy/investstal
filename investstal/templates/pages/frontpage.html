@@ -141,21 +141,44 @@
 
     {% get_catalog_items type=0 role='обложка' as catalog_items %}
     {% if catalog_items %}
-        <section>
-            <div>
-                Также производим
-                Металлоконструкции для вашего объекта и усадьбы
-            </div>
+        <section class="section-default">
+            <div class="container">
+                <div class="division">
+                    <div class="division__grid">
+                        <div class="division__grid-6 division__grid-12--xs">
+                            <div class="division__content division__content--sticky">
+                                <div class="division__content-title">
+                                    Также производим
+                                </div>
+                                <div class="division__content-text">
+                                    Металлоконструкции для вашего объекта и усадьбы
+                                </div>
+                            </div>
+                        </div>
 
-            <div>
-                {% for item in catalog_items %}
-                    <a href="{{ item.catalog_item.get_absolute_url }}">
-                        {% if item.catalog_item.images %}
-                            <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
-                        {% endif %}
-                        {{ item.catalog_item.title }}
-                    </a>
-                {% endfor %}
+                        <div class="division__grid-6 division__grid-12--xs">
+                            <div class="division__list">
+                                {% for item in catalog_items %}
+                                    <div class="division__item">
+                                        <a class="division-bigcard" href="{{ section.get_absolute_url }}">
+                                            <div class="division-bigcard__img">
+                                                {% if item.catalog_item.images %}
+                                                    <img src="{{ item.catalog_item.images.0.image.url }}" alt="{{ item.catalog_item.title }}">
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="division-bigcard__content">
+                                                <div class="division-bigcard__title">
+                                                    {{ item.catalog_item.title }}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     {% endif %}
@@ -163,12 +186,11 @@
     {% placeholder about_us_title label 'Заголовок блока О нас' as about_us_title %}
     {% placeholder about_us_text label 'Текст блока О нас' with TinyMCE as about_us_text %}
     {% if about_us_title or about_us_text %}
-        <section class="section-default section-overflow {% if about_us_gallery %}about--certificates{% endif %}">
+        <section class="section-default section-overflow">
             <div class="container">
                 <div class="about">
                     <div class="about__left">
                         <div class="about__content">
-
                             {% if about_us_title %}
                                 <div class="about__title">
                                     {{ about_us_title|safe }}
@@ -176,7 +198,7 @@
                             {% endif %}
 
                             {% if about_us_text %}
-                                <div class="about__text">
+                                <div class="about__text placeholder">
                                     {{ about_us_text|safe }}
                                 </div>
                             {% endif %}
@@ -200,7 +222,6 @@
 
     {% placeholder work_steps_title label 'Заголовок блока "Как мы работаем"' as work_steps_title %}
     {% placeholder work_steps_text label 'Текст блока "Как мы работаем"' with Textarea as work_steps_text %}
-
     {% get_items_by_model_name 'workstep' page=current_page ordering='order_key' as work_steps %}
     {% if work_steps_title or work_steps_text or work_steps.exists %}
         <section class="section-default work-steps">

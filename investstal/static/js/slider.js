@@ -77,7 +77,7 @@ $(function () {
 			let swiperGoods = new Swiper(el, {
 				slidesPerView: 'auto',
 				speed: 800,
-				loop: (swiperGoodsCount > 5) ? true : false,
+				loop: (swiperGoodsCount > 4) ? true : false,
 				observer: true,
 				observeSlideChildren: true,
 				pagination: {
@@ -95,19 +95,5 @@ $(function () {
 		});
 	};
 	swiperGoodsInit();
-
-	//Reinit Slider With Load Card
-	let target = document.querySelectorAll('.ajax-update-slider');
-	target.forEach(element => {
-		if (element) {
-			let observer = new MutationObserver(function(mutations) {
-				mutations.forEach(function(mutation) {
-					swiperProductCardInit();
-				});
-			});
-			let config = { childList: true, characterData: true };
-			observer.observe(element, config);
-		}
-	});
 
 });

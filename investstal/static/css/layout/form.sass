@@ -1,7 +1,7 @@
 .form__grid
 	display: grid
 	grid-template-columns: repeat(12, 1fr)
-	grid-gap: 20px 24px
+	grid-gap: 20px
 	@media screen and (max-width: $xs-max)
 		grid-gap: 16px 0px
 	&-5
@@ -32,13 +32,13 @@
 
 	&__privacy
 		margin-top: 20px
-		font-size: 14px
-		line-height: 20px
-		color: #949494
+		font-size: 11px
+		line-height: 15px
+		color: #666666
 		font-weight: 400
 		a
 			text-decoration: underline
-			color: #949494
+			color: #666666
 			&:hover
 				text-decoration: none
 		&--white
@@ -46,18 +46,8 @@
 			a
 				color: #D8D8D8
 			.default-checkbox__fake
-				border-color: #949494
-
-	&__options
-		display: flex
-		flex-wrap: wrap
-		margin-right: -24px
-		margin-bottom: -10px
-		.default-checkbox
-			margin-right: 24px
-			margin-bottom: 10px
-			max-width: calc(100% - 24px)
-			width: max-content
+				border-color: transparent
+				background-color: rgba(255, 255, 255, 0.8)
 
 	&__bottom
 		margin-top: 32px
@@ -68,80 +58,12 @@
 			width: 100%
 		@media screen and (max-width: $xs-max)
 			margin-top: 24px
+		&--min
+			margin-top: 20px
+			@media screen and (max-width: $xs-max)
+				margin-top: 16px
+		&--withprivacy
+			.form__privacy
+				margin-top: 0px
 		.btn
 			min-width: 200px
-
-	&__toggle
-		display: flex
-		align-items: center
-		&-link
-			font-size: 13px
-			line-height: 19px
-			color: #949494
-			cursor: pointer
-			transition: color 0.5s ease-in-out
-			&.active
-				color: #000
-		.toggle
-			margin: 0 10px
-
-	&__social
-		display: flex
-		flex-wrap: wrap
-		margin-right: -24px
-		margin-bottom: -10px
-		margin-top: 10px
-		@media screen and (max-width: $xs-max)
-			margin-right: -16px
-		&-item
-			margin-right: 24px
-			margin-bottom: 12px
-			cursor: pointer
-			@media screen and (max-width: $xs-max)
-				margin-right: 16px
-			input
-				display: none
-				&:checked + .form__social-option .form__social-content
-					background-color: transparent
-					color: #fff
-		&-option
-			position: relative
-			padding: 2px
-			border-radius: 20px
-			overflow: hidden
-			background: #373737
-			display: flex
-			height: 30px
-			&--telegram
-				background: linear-gradient(90deg, #1E96C8 0%, #4FC1FE 100%)
-				.form__social-content
-					color: #32AADD
-			&--max
-				background: linear-gradient(90deg, #52BBFD 0%, #8754E7 100%)
-				.form__social-content
-					color: #2FA6DA
-			&--whatsapp
-				background: #25D366
-				.form__social-content
-					color: #25D366
-		&-content
-			display: flex
-			align-items: center
-			background-color: #fff
-			width: 100%
-			padding: 4px 10px
-			color: #373737
-			font-size: 14px
-			line-height: 16px
-			font-weight: 600
-			border-radius: 20px
-			overflow: hidden
-			position: relative
-			z-index: 1
-			transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out
-			svg
-				width: 20px
-				height: 20px
-				object-fit: contain
-				flex-shrink: 0
-				margin-left: 6px

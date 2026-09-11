@@ -4,25 +4,20 @@
     <section class="section-default section-shadow">
         <div class="container">
             <div class="section-default__header">
-                <div class="title">
-                    Готовые входные двери на фото
+                <div class="section-default__title">
+                    Наши работы <span>последние фото с объектов</span>
                 </div>
 
                 {% if show_link %}
-                    <a class="link-line" href="{{ groups.0.images.all.0.page }}" cursor-class="link-hover">
-                        <span>
-                            Смотреть все
-                        </span>
-                        <svg width="29" height="9" viewBox="0 0 29 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.5369 0C20.6202 0 20.7024 0.0194049 20.777 0.0566778L28.7031 4.01976C28.9683 4.15236 29.0758 4.47483 28.9432 4.74003C28.8913 4.84393 28.807 4.92817 28.7031 4.98012L20.777 8.9432C20.5118 9.0758 20.1893 8.96831 20.0567 8.70311C20.0194 8.62857 20 8.54637 20 8.46302V5H0.5C0.223858 5 0 4.77614 0 4.5C0 4.22386 0.223858 4 0.5 4H20V0.53686C20 0.27001 20.1947 0.0486336 20.4498 0.00702667L20.5369 0Z" fill="#373737"/>
-                        </svg>
+                    <a class="section-default__btn" href="{{ groups.0.images.all.0.page }}">
+                        В галерею →
                     </a>
                 {% endif %}
             </div>
 
             <form class="categories gallery-form scroll-custom-x-hidden--xs" action="{% url 'filter_images_gallery' page_ids=gallery_ids %}" novalidate>
                 <div class="categories__list">
-                    <label class="categories__item" cursor-class="link-hover">
+                    <label class="categories__item">
                         <input type="radio" name="group" value="" checked>
                         <span class="categories__item-btn">
                             Все
@@ -30,32 +25,13 @@
                     </label>
 
                     {% for group in groups %}
-                        <label class="categories__item" cursor-class="link-hover">
+                        <label class="categories__item">
                             <input type="radio" name="group" value="{{ group.id }}">
                             <span class="categories__item-btn">
                                 {{ group.title }}
                             </span>
                         </label>
                     {% endfor %}
-                </div>
-
-                <div class="categories__more">
-                    <span>
-                        <svg width="36" height="8" viewBox="0 0 36 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_3011_4)">
-                                <path d="M32 8C34.2091 8 36 6.20914 36 4C36 1.79086 34.2091 0 32 0C29.7909 0 28 1.79086 28 4C28 6.20914 29.7909 8 32 8ZM18 8C20.2091 8 22 6.20914 22 4C22 1.79086 20.2091 0 18 0C15.7909 0 14 1.79086 14 4C14 6.20914 15.7909 8 18 8ZM4 8C6.20914 8 8 6.20914 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 6.20914 1.79086 8 4 8Z" fill="url(#paint0_linear_3011_4)"/>
-                            </g>
-                            <defs>
-                                <linearGradient id="paint0_linear_3011_4" x1="36" y1="4" x2="15.4473" y2="4" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#272727"/>
-                                    <stop offset="1" stop-color="#015AAA"/>
-                                </linearGradient>
-                                <clipPath id="clip0_3011_4">
-                                    <rect width="36" height="8" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </span>
                 </div>
             </form>
         </div>

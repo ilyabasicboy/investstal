@@ -15,7 +15,7 @@ function ajax_send($form, page='', callback=null) {
 };
 
 //Categories form
-$('.filter-form-short input, .filter-form-short select').on('change', function(e) {
+$('.filter-form-short input').on('change', function(e) {
     e.preventDefault();
     ajax_send($(this).closest('.filter-form-short'));
 });

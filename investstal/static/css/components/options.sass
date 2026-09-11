@@ -10,43 +10,44 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 
 .input
 	input
-		color: #000
+		color: #333
 		width: 100%
 		font-size: 14px
 		line-height: 20px
-		font-weight: 400
-		height: 36px
+		font-weight: 500
+		height: 38px
 		padding: 2px 16px
-		border: none
-		background-color: rgba(240, 240, 240, 0.7)
+		border: 1px solid #333
+		background-color: rgba(255, 255, 255, 0.3)
 		transition: border 0.7s ease-in-out, color 0.7s ease-in-out
 		font-family: inherit
 		box-shadow: none
-		border-radius: 20px
+		border-radius: 0px
 
 		&::-webkit-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&:-moz-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 			opacity: 1
 
 		&::-moz-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 			opacity: 1
 
 		&:-ms-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&::-ms-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&::placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 	&--white
 		input
-			background-color: rgba(240, 240, 240, 0.3)
+			background-color: rgba(255, 255, 255, 0.3)
+			border-color: rgba(255, 255, 255, 0)
 			color: #fff
 			&::-webkit-input-placeholder
 				color: rgba(255, 255, 255, 0.8)
@@ -70,43 +71,44 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 
 .textarea
 	textarea
-		color: #000
+		color: #333
 		width: 100%
 		font-size: 14px
 		line-height: 20px
-		font-weight: 400
-		height: 36px
+		font-weight: 500
+		height: 38px
 		padding: 8px 16px
-		border: none
-		background-color: rgba(240, 240, 240, 0.7)
+		border: 1px solid #333
+		background-color: rgba(255, 255, 255, 0.3)
 		transition: border 0.7s ease-in-out, color 0.7s ease-in-out
 		font-family: inherit
 		resize: none
-		border-radius: 20px
+		border-radius: 0px
 
 		&::-webkit-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&:-moz-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 			opacity: 1
 
 		&::-moz-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 			opacity: 1
 
 		&:-ms-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&::-ms-input-placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 		&::placeholder
-			color: rgba(0, 0, 0, 0.4)
+			color: #888888
 
 	&--white
 		textarea
-			background-color: rgba(240, 240, 240, 0.3)
+			background-color: rgba(255, 255, 255, 0.3)
+			border-color: rgba(255, 255, 255, 0)
 			color: #fff
 			&::-webkit-input-placeholder
 				color: rgba(255, 255, 255, 0.8)
@@ -141,7 +143,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 
 	&.error
 		input
-			background-color: #FFF0F0
 			&::-webkit-input-placeholder
 				color: #FF6B6B
 			&:-moz-placeholder
@@ -155,7 +156,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 			&::placeholder
 				color: #FF6B6B
 		textarea
-			background-color: #FFF0F0
 			&::-webkit-input-placeholder
 				color: #FF6B6B
 			&:-moz-placeholder
@@ -196,21 +196,20 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 		align-items: flex-start
 
 	&__fake
-		width: 20px
-		height: 20px
-		min-height: 20px
-		min-width: 20px
+		width: 16px
+		height: 16px
+		min-height: 16px
+		min-width: 16px
 		display: flex
 		align-items: center
 		justify-content: center
 		border: solid 1px #949494
-		border-radius: 4px
-		margin-right: 10px
+		margin-right: 8px
 		background-color: #fff
 		transition: border 0.5s ease-in-out
 		svg
-			width: 14px
-			height: 11px
+			width: 10px
+			height: 7px
 			object-fit: contain
 			height: auto
 			opacity: 0
@@ -223,10 +222,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 		transition: color 0.5s ease-in-out
 
 	&.error
-		.default-checkbox__text
-			color: #FF6B6B
-			a
-				color: #FF6B6B
 		.default-checkbox__fake
 			border-color: #FF6B6B
 

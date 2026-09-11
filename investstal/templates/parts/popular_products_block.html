@@ -9,7 +9,9 @@
                                 Выберите модель двери
                             </div>
 
-                            {% include 'catalog/parts/filter_fp.html' %}
+                            <div class="section-header__filter">
+                                {% include 'catalog/parts/filter_fp.html' %}
+                            </div>
                         </div>
 
                         <a class="section-header__link" href="{% url 'catalog-root' %}">

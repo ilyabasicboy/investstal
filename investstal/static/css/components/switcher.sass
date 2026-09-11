@@ -1,0 +1,61 @@
+.switcher
+	display: flex
+	align-items: center
+	@media screen and (max-width: $sm-max)
+		flex-direction: column
+		align-items: flex-start
+	&__title
+		font-size: 14px
+		line-height: 20px
+		color: #333
+		margin-right: 10px
+		transition: color .7s ease-in-out
+		@media screen and (max-width: $sm-max)
+			margin-right: 0px
+			margin-bottom: 6px
+
+	&__list
+		display: flex
+		align-items: center
+		margin-left: 10px
+
+	&__item
+		cursor: pointer
+		width: 24px
+		height: 24px
+		min-width: 24px
+		min-height: 24px
+		border-radius: 50%
+		display: flex
+		align-items: center
+		justify-content: center
+		border: 2px solid transparent
+		transition: border 0.5s ease-in-out
+		&--green
+			background-color: #1CB205
+			border-color: #1CB205
+		&--red
+			background-color: #DC0410
+			border-color: #DC0410
+		&--yellow
+			background-color: #FDE011
+			border-color: #FDE011
+
+		&.active
+			border-color: #333
+
+		& + .switcher__item
+			margin-left: 10px
+
+	&.error
+		.switcher
+			&__title
+				color: #FF6B6B
+
+	&--white
+		.switcher
+			&__title
+				color: #fff
+			&__item
+				&.active
+					border-color: #fff

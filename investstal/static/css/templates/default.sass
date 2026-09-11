@@ -84,7 +84,7 @@ sup
 		width: 100%
 		margin-bottom: 32px
 		display: flex
-		align-items: center
+		align-items: flex-start
 		justify-content: space-between
 		position: relative
 		&__title
@@ -114,8 +114,22 @@ sup
 			font-weight: 600
 			white-space: nowrap
 			margin-left: 20px
+			margin-top: 10px
 			&:hover
 				text-decoration: underline
+		&__group
+			display: flex
+			flex-wrap: wrap
+			flex-grow: 1
+			margin-right: -24px
+			margin-bottom: -24px
+			.section-header__title
+				margin-right: 24px
+				margin-bottom: 24px
+			.section-header__filter
+				margin-right: 24px
+				margin-bottom: 24px
+				margin-top: 4px
 
 .section-background
 	background-size: cover

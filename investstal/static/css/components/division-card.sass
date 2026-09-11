@@ -1,0 +1,34 @@
+.division-bigcard
+	width: 100%
+	display: flex
+	flex-direction: column
+	position: relative
+	overflow: hidden
+	&:hover
+		.division-bigcard__title
+			text-decoration: underline
+	&__img
+		width: 100%
+		background-color: #D8D8D8
+		display: flex
+		position: relative
+		&:before
+			content: ''
+			display: block
+			width: 100%
+			padding-bottom: 61%
+		img
+			position: absolute
+			top: 0px
+			left: 0px
+			bottom: 0px
+			right: 0px
+			width: 100%
+			height: 100%
+			object-fit: cover
+	&__title
+		margin-top: 12px
+		font-size: 26px
+		line-height: 32px
+		color: #333
+		font-weight: 900
