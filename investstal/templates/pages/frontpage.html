@@ -6,7 +6,7 @@
 
 {% block content %}
     {% if current_page.get_children_for_frontend %}
-        <section class="intro section-default section-default--top">
+        <section class="intro">
             <div class="container">
                 <div class="intro__slider">
                     <div class="intro--slider swiper {% if current_page.get_children_for_frontend.count > 1 %}intro__slider--padding{% endif %}">
@@ -63,7 +63,7 @@
 
     {% get_items_by_model_name 'advantage' type=0 as advantages %}
     {% if advantages.exists %}
-        <section class="section-default section-default--top section-overflow">
+        <section class="section-default section-overflow">
             <div class="container">
                 {% include 'parts/advantages.html' %}
             </div>
@@ -72,7 +72,7 @@
 
     {% get_catalog_items type=0 role='обложка' as catalog_items %}
     {% if catalog_items %}
-        <section class="section-default section-default--top">
+        <section class="section-default">
             <div class="container">
                 <div class="section-header">
                     <div class="section-header__title">
@@ -114,10 +114,23 @@
 
     {% include 'parts/popular_products_block.html' %}
 
-    <section>
-        Получить консультацию
-        Подскажем все нюансы выбора для экономии вашего времени и средств.
-        {% show_feedback 'consult' %}
+    <section class="section-default-margin">
+        <div class="container container--big">
+            <div class="consultation">
+                <div class="consultation__left">
+                    <div class="consultation__title">
+                        Получить консультацию
+                    </div>
+                    <div class="consultation__subtitle">
+                        Подскажем все нюансы выбора для экономии вашего времени и средств.
+                    </div>
+                </div>
+
+                <div class="consultation__right">
+                    {% show_feedback 'consult' %}
+                </div>
+            </div>
+        </div>
     </section>
 
     {% placeholder gallery_ids label 'Блок галереи' with ImageGroupMultiSelect as gallery_ids %}

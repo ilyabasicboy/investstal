@@ -1,0 +1,268 @@
+input[type=number]
+	-moz-appearance: textfield
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
+	-webkit-appearance: none
+	margin: 0
+
+.input-file
+	display: none
+
+.input
+	input
+		color: #000
+		width: 100%
+		font-size: 14px
+		line-height: 20px
+		font-weight: 400
+		height: 36px
+		padding: 2px 16px
+		border: none
+		background-color: rgba(240, 240, 240, 0.7)
+		transition: border 0.7s ease-in-out, color 0.7s ease-in-out
+		font-family: inherit
+		box-shadow: none
+		border-radius: 20px
+
+		&::-webkit-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&:-moz-placeholder
+			color: rgba(0, 0, 0, 0.4)
+			opacity: 1
+
+		&::-moz-placeholder
+			color: rgba(0, 0, 0, 0.4)
+			opacity: 1
+
+		&:-ms-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&::-ms-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&::placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+	&--white
+		input
+			background-color: rgba(240, 240, 240, 0.3)
+			color: #fff
+			&::-webkit-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&:-moz-placeholder
+				color: rgba(255, 255, 255, 0.8)
+				opacity: 1
+
+			&::-moz-placeholder
+				color: rgba(255, 255, 255, 0.8)
+				opacity: 1
+
+			&:-ms-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&::-ms-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&::placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+.textarea
+	textarea
+		color: #000
+		width: 100%
+		font-size: 14px
+		line-height: 20px
+		font-weight: 400
+		height: 36px
+		padding: 8px 16px
+		border: none
+		background-color: rgba(240, 240, 240, 0.7)
+		transition: border 0.7s ease-in-out, color 0.7s ease-in-out
+		font-family: inherit
+		resize: none
+		border-radius: 20px
+
+		&::-webkit-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&:-moz-placeholder
+			color: rgba(0, 0, 0, 0.4)
+			opacity: 1
+
+		&::-moz-placeholder
+			color: rgba(0, 0, 0, 0.4)
+			opacity: 1
+
+		&:-ms-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&::-ms-input-placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+		&::placeholder
+			color: rgba(0, 0, 0, 0.4)
+
+	&--white
+		textarea
+			background-color: rgba(240, 240, 240, 0.3)
+			color: #fff
+			&::-webkit-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&:-moz-placeholder
+				color: rgba(255, 255, 255, 0.8)
+				opacity: 1
+
+			&::-moz-placeholder
+				color: rgba(255, 255, 255, 0.8)
+				opacity: 1
+
+			&:-ms-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&::-ms-input-placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+			&::placeholder
+				color: rgba(255, 255, 255, 0.8)
+
+.textarea--dheight textarea
+	height: 80px
+
+.input__label
+	width: 100%
+	display: flex
+	flex-direction: column
+
+	&--center
+		align-items: center
+
+	&.error
+		input
+			background-color: #FFF0F0
+			&::-webkit-input-placeholder
+				color: #FF6B6B
+			&:-moz-placeholder
+				color: #FF6B6B
+			&::-moz-placeholder
+				color: #FF6B6B
+			&:-ms-input-placeholder
+				color: #FF6B6B
+			&::-ms-input-placeholder
+				color: #FF6B6B
+			&::placeholder
+				color: #FF6B6B
+		textarea
+			background-color: #FFF0F0
+			&::-webkit-input-placeholder
+				color: #FF6B6B
+			&:-moz-placeholder
+				color: #FF6B6B
+			&::-moz-placeholder
+				color: #FF6B6B
+			&:-ms-input-placeholder
+				color: #FF6B6B
+			&::-ms-input-placeholder
+				color: #FF6B6B
+			&::placeholder
+				color: #FF6B6B
+		.input__info
+			color: #FF6B6B
+
+.input__info
+	font-size: 14px
+	color: #000
+	margin-bottom: 4px
+
+.input__content
+	width: 100%
+	display: flex
+
+.default-checkbox
+	display: flex
+	width: 100%
+	&__label
+		display: flex
+		width: 100%
+		cursor: pointer
+
+	&__input
+		display: none
+
+	&__content
+		display: flex
+		align-items: flex-start
+
+	&__fake
+		width: 20px
+		height: 20px
+		min-height: 20px
+		min-width: 20px
+		display: flex
+		align-items: center
+		justify-content: center
+		border: solid 1px #949494
+		border-radius: 4px
+		margin-right: 10px
+		background-color: #fff
+		transition: border 0.5s ease-in-out
+		svg
+			width: 14px
+			height: 11px
+			object-fit: contain
+			height: auto
+			opacity: 0
+			transition: opacity 0.3s ease-in-out
+
+	.default-checkbox__input:checked + .default-checkbox__content .default-checkbox__fake svg
+		opacity: 1
+
+	&__text
+		transition: color 0.5s ease-in-out
+
+	&.error
+		.default-checkbox__text
+			color: #FF6B6B
+			a
+				color: #FF6B6B
+		.default-checkbox__fake
+			border-color: #FF6B6B
+
+.scroll-custom-y
+	padding-right: 20px
+	overflow: hidden
+	overflow-y: auto
+	scrollbar-color: #D8D8D8 #F8F8F8
+	scrollbar-width: thin
+	@media screen and (max-width: $xs-max)
+		padding-right: 10px
+	&::-webkit-scrollbar
+		width: 4px
+		border-radius: 2px
+		&-track
+			background-color: #F8F8F8
+			border-radius: 2px
+
+		&-thumb
+			background-color: #D8D8D8
+			border-radius: 2px
+
+@media screen and (max-width: $sm-max)
+	.scroll-custom-x-hidden--sm
+		overflow: hidden
+		overflow-x: auto
+		scrollbar-color: transparent transparent
+		scrollbar-width: none
+		&::-webkit-scrollbar
+			display: none
+
+@media screen and (max-width: $xs-max)
+	.scroll-custom-x-hidden--xs
+		overflow: hidden
+		overflow-x: auto
+		scrollbar-color: transparent transparent
+		scrollbar-width: none
+		&::-webkit-scrollbar
+			display: none
