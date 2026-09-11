@@ -122,20 +122,20 @@ class Root(CatalogBase, CatalogMixin):
         return result
 
     def get_products_new(self):
-        result = cache.get(self.cache_key() + '_products_new')
-        if result is None:
-            result = self.get_products().order_by('-created')[:150]
-            # Подгрузить изображения
-            result = attach_images_queryset(result)
-            cache.set(self.cache_key() + '_products_new', result, 600000)
+        # result = cache.get(self.cache_key() + '_products_new')
+        # if result is None:
+        result = self.get_products().order_by('-created')[:150]
+        # Подгрузить изображения
+        result = attach_images_queryset(result)
+            # cache.set(self.cache_key() + '_products_new', result, 600000)
         return result
 
     def get_products_new_categories(self):
-        result = cache.get(self.cache_key() + '_products_new_categories')
-        if result is None:
-            products = self.get_products_new()
-            result = Category.objects.filter(products__in=products).distinct()
-            cache.set(self.cache_key() + '_products_new_categories', result, 600000)
+        # result = cache.get(self.cache_key() + '_products_new_categories')
+        # if result is None:
+        products = self.get_products_new()
+        result = Category.objects.filter(products__in=products).distinct()
+            # cache.set(self.cache_key() + '_products_new_categories', result, 600000)
         return result
 
 
