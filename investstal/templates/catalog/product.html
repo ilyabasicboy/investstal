@@ -1,39 +1,53 @@
 {% extends 'catalog/base.html' %}
-{% load base_tags attachment_tags %}
+{% load base_tags custom_attachment_tags attachment_tags %}
+
+
+{% block content_title %}
+    {{ object.long_title|default:object.title }} <div class="title-page__info">({{ object.get_vendor_code }})</div>
+{% endblock %}
 
 {% block content %}
 
     <section class="item__block">
-        {% get_images for object as images %}
-        <div class="item__slider">
-        {% if images %}
-            <div class="item__slider-for mfp-gallery">
-                {% for image in images %}
-                    <a href="{{ image.display.url }}" class="item__slide">
-                        <picture>
-                            <source srcset="{{ image.img300x300.url }}" media="(min-width: 1024px)"/>
-                            <source srcset="{{ image.imgautox200.url }}" media="(min-width: 768px)"/>
-                            <source srcset="{{ image.img100x100.url }}" media="(min-width: 320px)"/>
-                            <img src="{{ image.img300x300.url }}" title="{{ image.title|default:'' }}"  alt="{{ image.title|default:'' }}">
-                        </picture>
-                    </a>
-                {% endfor %}
-            </div>
-            <div class="item__slider-nav">
-                {% for image in images %}
-                    <div class="item__slide">
-                        <img src="{{ image.img100x100.url }}" title="{{ image.title|default:'' }}"  alt="{{ image.title|default:'' }}">
+        <div>
+            {% get_images for object as images %}
+            {% if images %}
+                {% with images=images %}
+                    <div class="product__left">
+                        <div class="product__gallery {% if full_page %}product__gallery--check{% endif %}">
+                            <div class="product__thumb product--thumb swiper">
+                                <div class="swiper-wrapper">
+                                    {% for image in images %}
+                                        <div class="product__thumb-item swiper-slide">
+                                            <a class="product__slider-img">
+                                                <img src="{{ image.productthumb.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="product__slider product--slider swiper mfp-gallery">
+                                <div class="swiper-wrapper">
+                                    {% for image in images %}
+                                        <div class="product__slider-item swiper-slide">
+                                            <a class="product__slider-img" href="{{ image.watermarkpicture.url }}">
+                                                <img src="{{ image.productslider.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}" {% if forloop.first %}itemprop="image"{% endif %}>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
-
-        {% endif %}
-        </div>
-
-        <div class="item__description">
-            {% if object.price %}
-                <div class="item__price">{{ object.price }}</div>
+                {% endwith %}
             {% endif %}
+        </div>
+        <div>
+            от {{ product.price|price_format }} руб.{% if product.square_price %}/м<sup>2</sup>{% endif %}
+        </div>
+        <div>
+            Цена указана за базовую комплектацию и габариты
         </div>
     </section>
 

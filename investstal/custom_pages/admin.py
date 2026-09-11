@@ -5,9 +5,9 @@ from django.contrib.admin.sites import NotRegistered
 from pages import settings
 from pages.admin import PageAdmin
 from pages.models import Page, PageAlias, Media
-from .models import Advantage
+from .models import Advantage, WorkStep
 
-from adminsortable2.admin import SortableAdminMixin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 
 @admin.register(Advantage)
@@ -16,10 +16,24 @@ class AdvantageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['text', 'type']
 
 
-
+class WorkStepInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = WorkStep
+    extra = 0
+    fields = ['order_key', 'text']
 
 
 class CustomPageAdmin(PageAdmin):
+    inlines = list(PageAdmin.inlines) + [WorkStepInline]
+
+
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = super(CustomPageAdmin, self).get_inline_instances(request, obj)
+        if obj and obj.template == 'pages/frontpage.html':
+            return inline_instances
+        return [
+            inline for inline in inline_instances
+            if not isinstance(inline, WorkStepInline)
+        ]
 
     class Media:
 

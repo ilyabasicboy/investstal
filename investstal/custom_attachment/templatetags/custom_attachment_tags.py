@@ -22,6 +22,15 @@ def role(images, role):
 
 
 @register.filter
+def exclude_role(images, role):
+    """Get images without role"""
+    try:
+        return [image for image in images if image.role!=role]
+    except KeyError:
+        return None
+
+
+@register.filter
 def roles_several(images, roles):
     """Get images with role"""
     try:
