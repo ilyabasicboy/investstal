@@ -3,6 +3,22 @@ from imagekit.specs import ImageSpec
 from .resizes import *
 
 
+class CustomImageSpec(ImageSpec):
+
+    """ Added fix for png images """
+
+    @classmethod
+    def process(cls, image, obj):
+        fmt = image.format
+        img = image.copy()
+        if img.mode != 'RGBA' and img.mode != 'RGB' and fmt != 'JPEG':
+            img = img.convert('RGBA')
+        for proc in cls.processors:
+            img, fmt = proc.process(img, fmt, obj)
+        img.format = fmt
+        return img, fmt
+
+
 class Thumb(ImageSpec):
     processors = [ResizeThumb]
 
@@ -38,3 +54,13 @@ class SectionsCard(ImageSpec):
 class ProductCard(ImageSpec):
     quality = 100
     processors = [ResizeProductCard]
+
+
+class ProductSlider(CustomImageSpec):
+    quality = 100
+    processors = [ResizeProductSlider]
+
+
+class ProductThumb(CustomImageSpec):
+    quality = 100
+    processors = [ResizeProductThumb]

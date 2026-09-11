@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Category, Product, Root, Section
+from .models import Category, ParameterInline, ParameterValue, Product, Root, Section
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
@@ -49,3 +49,21 @@ class CategoryAdminForm(forms.ModelForm):
             'products': FilteredSelectMultiple(verbose_name='Товары', is_stacked=False),
 
         }
+
+
+class ParameterInlineAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = ParameterInline
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ParameterInlineAdminForm, self).__init__(*args, **kwargs)
+
+        parameter_group = self.initial.get('group')
+        if parameter_group:
+            values = [(None, '---------')] + [
+                (parameter.id, parameter.value)
+                for parameter in ParameterValue.objects.filter(parameter_group=parameter_group)
+            ]
+            self.fields['value'].choices = values

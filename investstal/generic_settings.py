@@ -114,8 +114,8 @@ ADMIN_REORDER = (
         'app': 'pages', 'label': u'Контент сайта',
         'models': (
             'pages.Page', 'easy_news.News', 'catalog.TreeItem', 'custom_catalog.Section', 'custom_catalog.Category',
-            'custom_catalog.Product', 'chunks.Chunk', 'treemenus.Menu', 'filebrowser.FileBrowser', 'custom_pages.Advantage',
-            'custom_catalog.CatalogItem'
+            'custom_catalog.Product', 'custom_catalog.ParameterGroup', 'custom_catalog.ParameterValue', 'chunks.Chunk',
+            'treemenus.Menu', 'filebrowser.FileBrowser', 'custom_pages.Advantage', 'custom_catalog.CatalogItem'
         )
     },
     {
@@ -277,7 +277,8 @@ ATTACHMENT_FOR_MODELS = [
     'custom_catalog.Root',
     'custom_catalog.Section',
     'custom_catalog.Category',
-    'custom_catalog.Product'
+    'custom_catalog.Product',
+    'custom_catalog.ParameterValue'
 ]
 ATTACHMENT_LINK_MODELS = [
     'pages.Page',

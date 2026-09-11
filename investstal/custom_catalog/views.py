@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.template import loader
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
-from .models import Root
+from .models import ParameterValue, Root
 
 
 class FilterProductViewFp(TemplateView):
@@ -32,3 +32,14 @@ class FilterProductViewFp(TemplateView):
             }
             return JsonResponse(response_data)
         return self.render_to_response(context)
+
+
+def change_parameters(request):
+    parameter_group = request.GET.get('parameter_group')
+    if parameter_group:
+        parameters = ParameterValue.objects.filter(parameter_group=parameter_group).order_by('value')
+        context = {
+            'parameters': parameters
+        }
+        return render(request, 'admin/custom_catalog/parameterinline/parameters.html', context)
+    raise PermissionDenied

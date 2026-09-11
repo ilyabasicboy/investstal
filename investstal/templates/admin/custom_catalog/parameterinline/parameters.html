@@ -1,0 +1,4 @@
+<option value="" selected="">---------</option>
+{% for param in parameters %}
+  <option value="{{ param.id }}">{{ param.value }}</option>
+{% endfor %}
