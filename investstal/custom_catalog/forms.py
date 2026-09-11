@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Category, ParameterInline, ParameterValue, Product, Root, Section
+from .models import Category, ParameterInline, ParameterValue, Product, Root, Section, Thermal
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
@@ -67,3 +67,13 @@ class ParameterInlineAdminForm(forms.ModelForm):
                 for parameter in ParameterValue.objects.filter(parameter_group=parameter_group)
             ]
             self.fields['value'].choices = values
+
+
+class ThermalForm(forms.ModelForm):
+
+    class Meta:
+        model = Thermal
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'large-input'}),
+        }

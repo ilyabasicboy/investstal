@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.template import loader
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
-from .models import ParameterValue, Root
+from .models import ParameterValue, Root, ParameterGroup
 from investstal.custom_attachment.utils import attach_images_queryset
 
 
@@ -46,3 +46,51 @@ def change_parameters(request):
         }
         return render(request, 'admin/custom_catalog/parameterinline/parameters.html', context)
     raise PermissionDenied
+
+
+def facing_popup(request, obj_id):
+    try:
+        facing = ParameterGroup.objects.filter(id=obj_id).first()
+    except:
+        facing = None
+
+    if facing:
+        try:
+            image_id = int(request.GET.get('image_id'))
+        except:
+            image_id = None
+
+        html = loader.render_to_string(
+            'pages/parts/facing_popup.html',
+            {
+                'facing': facing,
+                'image_id': image_id,
+            },
+            request
+        )
+        response_data = {
+            'html': html
+        }
+
+        return JsonResponse(response_data)
+    return HttpResponseNotFound
+
+
+def parameter_popup(request, obj_id):
+    try:
+        parameter = ParameterValue.objects.filter(id=obj_id).first()
+    except:
+        parameter = None
+
+    if parameter:
+        html = loader.render_to_string(
+            'catalog/parts/parameter_popup.html',
+            {'parameter': parameter},
+            request
+        )
+        response_data = {
+            'html': html
+        }
+
+        return JsonResponse(response_data)
+    return HttpResponseNotFound

@@ -5,7 +5,7 @@ from django.db import transaction
 from django.dispatch import receiver
 from django.core.cache import cache
 from catalog.models import TreeItem
-from investstal.custom_catalog.models import Category, Section, Product
+from investstal.custom_catalog.models import Category, Section, Product, Thermal
 
 
 def catalog_changed_handler(sender, instance, **kwargs):
@@ -18,16 +18,19 @@ def catalog_changed_handler(sender, instance, **kwargs):
 post_save.connect(catalog_changed_handler, sender=Section)
 post_save.connect(catalog_changed_handler, sender=Product)
 post_save.connect(catalog_changed_handler, sender=Category)
+post_save.connect(catalog_changed_handler, sender=Thermal)
 pre_delete.connect(catalog_changed_handler, sender=Section)
 pre_delete.connect(catalog_changed_handler, sender=Product)
 pre_delete.connect(catalog_changed_handler, sender=Category)
+pre_delete.connect(catalog_changed_handler, sender=Thermal)
 node_moved.connect(catalog_changed_handler, sender=TreeItem)
 
 
 @receiver(post_save, sender=Product)
 @receiver(post_save, sender=Section)
+@receiver(post_save, sender=Thermal)
 def update_parameters(sender, instance, created, **kwargs):
-    """Обновляет наследуемые параметры товаров после сохранения товара или раздела."""
+    """Обновляет наследуемые параметры товаров после сохранения товара, раздела или термодвери."""
     if isinstance(instance, Product):
         transaction.on_commit(lambda: instance.update_parameters())
     elif isinstance(instance, Section):
@@ -41,6 +44,12 @@ def update_parameters(sender, instance, created, **kwargs):
                 products = instance.get_products()
 
             for product in products:
+                product.update_parameters()
+
+        transaction.on_commit(update_all_products)
+    elif isinstance(instance, Thermal):
+        def update_all_products():
+            for product in instance.product_set.all():
                 product.update_parameters()
 
         transaction.on_commit(update_all_products)

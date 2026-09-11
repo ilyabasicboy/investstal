@@ -2,8 +2,8 @@
 from django.contrib import admin
 from django.forms import widgets
 from catalog.admin import CatalogItemBaseAdmin
-from .models import Category, CatalogItem, ParameterGroup, ParameterInline, ParameterValue, Product, Root, Section
-from .forms import CategoryAdminForm, ParameterInlineAdminForm, ProductAdminForm, RootAdminForm, SectionAdminForm
+from .models import Category, CatalogItem, ParameterGroup, ParameterInline, ParameterValue, Product, Root, Section, Thermal
+from .forms import CategoryAdminForm, ParameterInlineAdminForm, ProductAdminForm, RootAdminForm, SectionAdminForm, ThermalForm
 
 from adminsortable2.admin import SortableAdminMixin
 
@@ -13,13 +13,6 @@ class ParameterInlineAdmin(admin.TabularInline):
     form = ParameterInlineAdminForm
     fields = ['group', 'value']
     extra = 0
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "group":
-            kwargs["queryset"] = ParameterGroup.objects.order_by('title')
-        if db_field.name == "value":
-            kwargs["queryset"] = ParameterValue.objects.order_by('value')
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     @property
     def media(self):
@@ -53,7 +46,7 @@ class ProductAdmin(CatalogItemBaseAdmin):
     form = ProductAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'price', 'square_price', 'description', 'main_content']
+    fields = ['title', 'slug', 'show', 'price', 'square_price', 'thermal', 'description', 'main_content', 'description_content']
     inlines = [ParameterInlineAdmin, ]
 
 
@@ -113,7 +106,22 @@ class ParameterValueAdmin(admin.ModelAdmin):
 class ParameterGroupAdmin(SortableAdminMixin, admin.ModelAdmin):
     model = ParameterGroup
     ordering = ['order_key']
-    list_display = ['title', 'slug', 'type']
-    list_editable = ['type']
-    list_filter = ['type']
+    list_display = ['title', 'slug', 'group_type', ]
+    list_editable = ['group_type', ]
+    list_filter = ['group_type']
     prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(Thermal)
+class ThermalAdmin(admin.ModelAdmin):
+    model = Thermal
+    form = ThermalForm
+    inlines = [ParameterInlineAdmin, ]
+
+    @property
+    def media(self):
+        shared = (
+                super().media + widgets.Media(
+            js=('admin/js/vendor/jquery/jquery.min.js',)))
+
+        return shared

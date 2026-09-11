@@ -48,3 +48,7 @@ class ResizeProductSlider(Resize):
 
 class ResizeProductThumb(Resize):
     height = 120
+
+
+class ResizeFinishCard(Resize):
+    width = 200

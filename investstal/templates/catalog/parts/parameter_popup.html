@@ -1,0 +1,26 @@
+{% load attachment_tags custom_attachment_tags %}
+
+<div class="modal__header">
+    <div class="modal__title">
+        {{ parameter.parameter_group.title }}: {{ parameter.value }}
+    </div>
+</div>
+
+<div class="modal__body">
+    <div class="modal__grid">
+        {% get_images for parameter as images %}
+        {% if images %}
+            <div class="modal__grid-item">
+                <img src="{{ images.0.display.url }}" alt="{{ images.0.title|default:parameter.value }}" title="{{ images.0.title|default:parameter.value }}">
+            </div>
+        {% endif %}
+
+        {% if parameter.description %}
+            <div class="modal__grid-item {% if not images %}modal__grid-item--full{% endif %}">
+                <div class="placeholder">
+                    {{ parameter.description|safe }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
