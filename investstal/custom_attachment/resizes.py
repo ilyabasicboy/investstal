@@ -40,3 +40,11 @@ class ResizeSectionsCard(Resize):
 
 class ResizeProductCard(Resize):
     height = 400
+
+
+class ResizeProductSlider(Resize):
+    height = 600
+
+
+class ResizeProductThumb(Resize):
+    height = 120

@@ -21,6 +21,19 @@ GROUP_CHOICES = (
     (4, 'По отделке')
 )
 
+PARAMETER_TYPES = (
+    (1, 'Стандартная конструкция'),
+    (2, 'Фурнитура'),
+    (3, 'Базовые габариты двери'),
+    (4, 'Доставка дверей'),
+    (5, 'Установка дверей'),
+)
+
+SIZE_TYPE_PARAMETERS = (
+    (1, 'Однопольная'),
+    (2, 'Двупольная'),
+)
+
 
 class CatalogMixin:
 
@@ -158,6 +171,38 @@ class Product(CatalogBase):
         auto_now_add=True,
         editable=False
     )
+    parameters = models.ManyToManyField(
+        'ParameterValue',
+        verbose_name=u'Параметры',
+        related_name='products',
+        help_text='Суммарные параметры, наследуемые от разделов и подразделов. Логика в сигналах.',
+        blank=True
+    )
+
+    def get_parameters(self):
+        return self.parameters.order_by('parameter_group__order_key')
+
+    def update_parameters(self):
+        """Рекурсией собирает параметры от наследуемых разделов и сохраняет их в поле parameters."""
+        self_param_ids = list(self.product_parameters.all().values_list('value', flat=True))
+        self_exclude_params = list(self.product_parameters.all().values_list('group', flat=True))
+
+        try:
+            self_param_ids += self.tree.get().parent.content_object.get_param_ids(self_exclude_params)
+        except:
+            pass
+
+        parameters = ParameterValue.objects.filter(id__in=self_param_ids)
+        self.parameters.set(parameters)
+
+    def get_parameters_images(self):
+        result = cache.get(self.cache_key() + '_parameters_images')
+        if result is None:
+            ct = ContentType.objects.get_for_model(ParameterValue)
+            parameter_ids = self.parameters.filter(show_images=True).values_list('id', flat=True)
+            result = AttachmentImage.objects.filter(content_type=ct.id, object_id__in=parameter_ids)
+            cache.set(self.cache_key() + '_parameters_images', result, 600000)
+        return result
 
     def get_product_images(self):
         result = cache.get(self.cache_key() + '_product_images')
@@ -194,6 +239,18 @@ class Section(CatalogBase, CatalogMixin):
             cache.set(self.cache_key() + '_products', result, 600000)
         return result
 
+    def get_param_ids(self, exclude_params):
+        """Собирает id своих параметров и параметров родительских разделов."""
+        result = list(self.section_parameters.exclude(group__in=exclude_params).values_list('value', flat=True))
+        self_exclude_params = list(self.section_parameters.all().values_list('group', flat=True)) + exclude_params
+
+        try:
+            result += self.tree.get().parent.content_object.get_param_ids(self_exclude_params)
+        except:
+            pass
+
+        return result
+
     def __str__(self):
         return self.title
 
@@ -225,6 +282,130 @@ class Category(CatalogBase, CatalogMixin):
 
     def __str__(self):
         return self.title
+
+
+
+class ParameterGroup(models.Model):
+
+    class Meta:
+        verbose_name = u'группа параметра'
+        verbose_name_plural = u'группы параметров'
+        ordering = ['order_key']
+
+    order_key = models.PositiveIntegerField(
+        verbose_name=u'',
+        default=0,
+        blank=False,
+        null=False
+    )
+    title = models.CharField(
+        verbose_name=u'Название',
+        max_length=255
+    )
+    slug = models.SlugField(
+        verbose_name=u'slug',
+        help_text='Используется в генераторе метатегов',
+        unique=True,
+        blank=True,
+        null=True
+    )
+    type = models.IntegerField(
+        verbose_name=u'Тип параметра',
+        blank=True,
+        null=True,
+        choices=PARAMETER_TYPES,
+        help_text=u'Используется на странице товара для деления в характеристиках'
+    )
+
+    def __str__(self):
+        return self.title
+
+
+class ParameterValue(models.Model):
+
+    class Meta:
+        verbose_name = u'значение параметра'
+        verbose_name_plural = u'значения параметров'
+
+    value = models.TextField(
+        verbose_name=u'Значение',
+        max_length=255
+    )
+    parameter_group = models.ForeignKey(
+        ParameterGroup,
+        verbose_name=u'Название параметра',
+        on_delete=models.CASCADE
+    )
+    link_title = models.CharField(
+        verbose_name=u'текст ссылки',
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    page = models.ForeignKey(
+        'pages.Page',
+        verbose_name=u'ссылка на страницу',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    size_type = models.PositiveIntegerField(
+        verbose_name=u'Тип конструкции "Размер по коробке"',
+        blank=True,
+        null=True,
+        choices=SIZE_TYPE_PARAMETERS,
+        help_text='Заполнять только для параметра "Размер по коробке"'
+    )
+    show_images = models.BooleanField(
+        verbose_name=u'Выгружать фото на страницу товара',
+        default=False
+    )
+    show_in_additional_choices = models.BooleanField(
+        verbose_name=u'добавляется в админке в выборе доп.параметров',
+        default=False
+    )
+    extra_price = models.PositiveIntegerField(
+        verbose_name=u'дополнительная наценка товара',
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return '%s - %s' % (self.parameter_group, self.value)
+
+
+class ParameterInline(models.Model):
+
+    class Meta:
+        verbose_name = u'добавить параметр'
+        verbose_name_plural = u'добавить параметры'
+
+    group = models.ForeignKey(
+        ParameterGroup,
+        verbose_name=u'Название',
+        on_delete=models.CASCADE
+    )
+    value = models.ForeignKey(
+        ParameterValue,
+        verbose_name=u'Значение',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    product = models.ForeignKey(
+        Product,
+        related_name='product_parameters',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    section = models.ForeignKey(
+        Section,
+        related_name='section_parameters',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
 
 CATALOG_ITEM_TYPES = (

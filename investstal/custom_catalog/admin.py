@@ -1,10 +1,29 @@
 # -*- coding:utf-8 -*-
 from django.contrib import admin
+from django.forms import widgets
 from catalog.admin import CatalogItemBaseAdmin
-from .models import Category, CatalogItem, Product, Root, Section
-from .forms import CategoryAdminForm, ProductAdminForm, RootAdminForm, SectionAdminForm
+from .models import Category, CatalogItem, ParameterGroup, ParameterInline, ParameterValue, Product, Root, Section
+from .forms import CategoryAdminForm, ParameterInlineAdminForm, ProductAdminForm, RootAdminForm, SectionAdminForm
 
 from adminsortable2.admin import SortableAdminMixin
+
+
+class ParameterInlineAdmin(admin.TabularInline):
+    model = ParameterInline
+    form = ParameterInlineAdminForm
+    fields = ['group', 'value']
+    extra = 0
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "group":
+            kwargs["queryset"] = ParameterGroup.objects.order_by('title')
+        if db_field.name == "value":
+            kwargs["queryset"] = ParameterValue.objects.order_by('value')
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    @property
+    def media(self):
+        return super().media + widgets.Media(js=('js/admin/parameterinline.js',))
 
 
 class CustomCatalogItemBaseAdmin(CatalogItemBaseAdmin):
@@ -34,7 +53,8 @@ class ProductAdmin(CatalogItemBaseAdmin):
     form = ProductAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'price', 'description', 'main_content']
+    fields = ['title', 'slug', 'show', 'price', 'square_price', 'description', 'main_content']
+    inlines = [ParameterInlineAdmin, ]
 
 
 @admin.register(Section)
@@ -45,6 +65,7 @@ class SectionAdmin(CatalogItemBaseAdmin):
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
     fields = ['title', 'slug', 'show', 'long_title']
+    inlines = [ParameterInlineAdmin, ]
 
 
 @admin.register(Category)
@@ -78,3 +99,21 @@ class CategoryAdmin(CustomCatalogItemBaseAdmin):
 class CatalogItemAdmin(SortableAdminMixin, admin.ModelAdmin):
     extra = 0
     list_display = ['type', 'section', 'category']
+
+
+@admin.register(ParameterValue)
+class ParameterValueAdmin(admin.ModelAdmin):
+    model = ParameterValue
+    list_filter = ['parameter_group']
+    list_display = ['__str__', 'show_in_additional_choices', 'extra_price']
+    list_editable = ['show_in_additional_choices', 'extra_price']
+
+
+@admin.register(ParameterGroup)
+class ParameterGroupAdmin(SortableAdminMixin, admin.ModelAdmin):
+    model = ParameterGroup
+    ordering = ['order_key']
+    list_display = ['title', 'slug', 'type']
+    list_editable = ['type']
+    list_filter = ['type']
+    prepopulated_fields = {'slug': ('title',)}
