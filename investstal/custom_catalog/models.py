@@ -147,6 +147,10 @@ class Product(CatalogBase):
     leaf = True
     title = models.CharField(verbose_name=u'название', max_length=400)
     price = models.CharField(verbose_name=u'цена', max_length=255, blank=True, default='')
+    square_price = models.BooleanField(
+        verbose_name=u'Цена за 1 кв.м',
+        default=False,
+    )
     description = models.TextField(verbose_name=u'короткое описание', default='', blank=True)
     main_content = HTMLField(verbose_name=u'основной контент', blank=True, null=True)
     created = models.DateTimeField(
@@ -162,6 +166,9 @@ class Product(CatalogBase):
             result = AttachmentImage.objects.filter(content_type=ct.id, object_id=self.id)
             cache.set(self.cache_key() + '_product_images', result, 600000)
         return result
+
+    def get_vendor_code(self):
+        return f'Арт.{self.id:05d}'
 
     def __str__(self):
         return self.title
