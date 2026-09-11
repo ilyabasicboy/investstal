@@ -7,6 +7,12 @@ from .forms import CategoryAdminForm, ProductAdminForm, RootAdminForm, SectionAd
 from adminsortable2.admin import SortableAdminMixin
 
 
+class CustomCatalogItemBaseAdmin(CatalogItemBaseAdmin):
+
+    def view_on_site(self, obj):
+        return obj.get_absolute_url()
+
+
 @admin.register(Root)
 class RootAdmin(CatalogItemBaseAdmin):
 
@@ -42,13 +48,30 @@ class SectionAdmin(CatalogItemBaseAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(CatalogItemBaseAdmin):
+class CategoryAdmin(CustomCatalogItemBaseAdmin):
 
     model = Category
     form = CategoryAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'long_title']
+    list_display = ['title', ]
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        try:
+            priority_fields = ['show', 'slug', 'title', 'long_title', 'group', ]
+            remaining_fields = [f for f in fields if f not in priority_fields]
+            ordered_fields = []
+
+            for field in priority_fields:
+                if field in fields:
+                    ordered_fields.append(field)
+
+            ordered_fields.extend(remaining_fields)
+
+            return ordered_fields
+        except:
+            return fields
 
 
 @admin.register(CatalogItem)

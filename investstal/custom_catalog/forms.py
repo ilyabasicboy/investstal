@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from .models import Category, Product, Root, Section
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
 class RootAdminForm(forms.ModelForm):
@@ -45,4 +46,6 @@ class CategoryAdminForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'large-input'}),
             'slug': forms.TextInput(attrs={'class': 'large-input'}),
+            'products': FilteredSelectMultiple(verbose_name='Товары', is_stacked=False),
+
         }
