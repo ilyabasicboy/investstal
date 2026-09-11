@@ -6,6 +6,9 @@ from pages import settings
 from pages.admin import PageAdmin
 from pages.models import Page, PageAlias, Media
 from .models import Advantage, WorkStep
+from ..custom_attachment.models import CustomAttachmentImage
+from ..custom_attachment.forms import CustomAttachmentImageForm
+
 
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
@@ -20,6 +23,12 @@ class WorkStepInline(SortableInlineAdminMixin, admin.TabularInline):
     model = WorkStep
     extra = 0
     fields = ['order_key', 'text']
+
+
+class CustomAttachmentImageInline(admin.TabularInline):
+    model = CustomAttachmentImage
+    form = CustomAttachmentImageForm
+    extra = 0
 
 
 class CustomPageAdmin(PageAdmin):
@@ -57,6 +66,23 @@ class CustomPageAdmin(PageAdmin):
             join(settings.PAGES_STATIC_URL, 'javascript/jquery.query-2.1.7.js'),
             join(settings.PAGES_STATIC_URL, 'javascript/iframeResizer.min.js'),
         ]
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        page = Page.objects.get(pk=object_id)
+
+        # Insert custom images with groups
+        custom_image_inline_exist = False
+        page_templates = ['pages/gallery.html', 'pages/finishing.html']
+        for inline in self.inlines:
+            if inline is CustomAttachmentImageInline:
+                custom_image_inline_exist = True
+                if not page.template in page_templates:
+                    self.inlines.remove(inline)
+
+        if not custom_image_inline_exist and page.template in page_templates:
+            self.inlines.insert(0, CustomAttachmentImageInline)
+
+        return super(PageAdmin, self).change_view(request, object_id, form_url, extra_context=extra_context)
 
 
 try:

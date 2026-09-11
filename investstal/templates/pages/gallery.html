@@ -1,0 +1,74 @@
+{% extends 'pages/base.html' %}
+{% load custom_pages_tags pages_tags base_tags custom_attachment_tags %}
+
+{% block content %}
+    {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
+    {% if main_content %}
+        <section class="section-default section-default--top">
+            <div class="container">
+                <div class="placeholder">
+                    {{ main_content|safe }}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% get_items_by_model_name 'customattachmentimage' page=current_page as images %}
+    {% placeholder hide_buttons label 'Скрыть кнопки "Узнать цену"' with Checkbox as hide_buttons %}
+    {% if images %}
+        {% get_custom_images_groups images as groups %}
+        <section class="section-default section-default--top">
+            <div class="load">
+                <div class="load__header container">
+                    <form class="load__form categories gallery-form scroll-custom-x-hidden--xs" action="{% url 'filter_images' page_id=current_page.id|stringformat:'d' %}" novalidate>
+                        <div class="categories__list">
+                            <label class="categories__item" cursor-class="link-hover">
+                                <input type="radio" name="group" value="" checked>
+                                <span class="categories__item-btn">
+                                    Все
+                                </span>
+                            </label>
+
+                            {% for group in groups %}
+                                <label class="categories__item" cursor-class="link-hover">
+                                    <input type="radio" name="group" value="{{ group.id }}">
+                                    <span class="categories__item-btn">
+                                        {{ group.title }}
+                                    </span>
+                                </label>
+                            {% endfor %}
+                        </div>
+
+                        <div class="categories__more">
+                            <span>
+                                <svg width="36" height="8" viewBox="0 0 36 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_3011_4)">
+                                        <path d="M32 8C34.2091 8 36 6.20914 36 4C36 1.79086 34.2091 0 32 0C29.7909 0 28 1.79086 28 4C28 6.20914 29.7909 8 32 8ZM18 8C20.2091 8 22 6.20914 22 4C22 1.79086 20.2091 0 18 0C15.7909 0 14 1.79086 14 4C14 6.20914 15.7909 8 18 8ZM4 8C6.20914 8 8 6.20914 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 6.20914 1.79086 8 4 8Z" fill="url(#paint0_linear_3011_4)"/>
+                                    </g>
+                                    <defs>
+                                        <linearGradient id="paint0_linear_3011_4" x1="36" y1="4" x2="15.4473" y2="4" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#272727"/>
+                                            <stop offset="1" stop-color="#015AAA"/>
+                                        </linearGradient>
+                                        <clipPath id="clip0_3011_4">
+                                            <rect width="36" height="8" fill="white"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="load__body">
+                    <div class="gallery gallery--padding">
+                        <div class="gallery__column gallery__column--hidden gallery__column--more images-list ajax-update-popup" data-url="{% url 'filter_images' page_id=current_page.id %}">
+                            <div class="gallery__column-sizer"></div>
+                            {% include 'pages/parts/grouped_images_list.html' with gallery=current_page %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

@@ -64,7 +64,7 @@ class SectionAdmin(CatalogItemBaseAdmin):
     form = SectionAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'long_title']
+    fields = ['title', 'slug', 'show', 'long_title', 'group']
     inlines = [ParameterInlineAdmin, ]
 
 

@@ -125,7 +125,6 @@ ADMIN_REORDER = (
         'app': 'attachment', 'label': u'Вложения',
         'models': (
             'custom_attachment.CustomImageGroup',
-            'custom_attachment.CustomAttachmentImage',
         )
     },
     {
@@ -181,7 +180,9 @@ PAGE_TEMPLATES = (
     ('pages/default.html',   u'Шаблон по умолчанию'),
     ('pages/list.html',      u'Список'),
     ('pages/contacts.html',  u'Контакты'),
-    ('pages/slide.html',  u'Слайд')
+    ('pages/slide.html',  u'Слайд'),
+    ('pages/gallery.html',      u'Галерея'),
+    ('pages/finishing.html',    u'Отделка'),
 )
 
 # ~======== DJANGO TINYMCE ========~

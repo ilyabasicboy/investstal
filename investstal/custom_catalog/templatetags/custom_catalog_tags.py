@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import template
 from investstal.custom_attachment.utils import attach_images_list
-
+from ast import literal_eval
+from django import template
+from attachment.models import AttachmentImage
+from ..models import ParameterGroup
 from investstal.custom_catalog.models import CatalogItem
 
 
@@ -41,3 +44,25 @@ def get_catalog_items(type=None, role=u'обложка', group=None):
       return items
 
 
+@register.simple_tag()
+def get_images_finishing(ids_str):
+    if not ids_str:
+        return None
+    try:
+        ids = literal_eval(ids_str)
+        groups = ParameterGroup.objects.filter(id__in=ids)
+        images = AttachmentImage.objects.none()
+        for group in groups:
+            images = images | group.get_images_for_whole_group()
+
+        result = images
+        return result
+    except:
+        return None
+
+
+@register.simple_tag()
+def get_finishing_groups(ids_str):
+    ids = literal_eval(ids_str)
+    groups = ParameterGroup.objects.filter(id__in=ids)
+    return groups

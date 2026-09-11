@@ -1,0 +1,48 @@
+{% extends 'pages/base.html' %}
+{% load custom_pages_tags pages_tags base_tags custom_attachment_tags custom_catalog_tags %}
+
+{% block content %}
+    {% placeholder round_images label 'Показывать отделки в виде круга' with Checkbox as round_images %}
+
+    {% placeholder finishing_ids label 'Группы отделок' with ParameterGroupMultiSelect as finishing_ids %}
+
+    {% get_images_finishing finishing_ids as images %}
+    {% if images %}
+        {% get_finishing_groups finishing_ids as groups %}
+        <section class="section-default section-default--top">
+            <div class="container">
+                <div class="load">
+                    {% if groups %}
+                        <div class="load__header">
+                            <div class="load__left load__left--full">
+                                <form class="load__form filter-form-short scroll-custom-x-hidden--xs" action="{% url 'filter_finish' round_images=round_images %}" novalidate>
+                                    <div class="select">
+                                        <select name="group">
+                                            <option value="all_{{ finishing_ids }}">
+                                                Все фото
+                                            </option>
+                                            {% for group in groups %}
+                                                <option value="{{ group.id }}">
+                                                    {{ group.title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="load__body">
+                        <div class="finish">
+                            <div class="finish__grid finish__grid--big filter-update-ajax">
+                                {% include 'pages/parts/grouped_finishing_list.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+{% endblock %}

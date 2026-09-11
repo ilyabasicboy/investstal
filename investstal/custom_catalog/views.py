@@ -5,6 +5,7 @@ from django.template import loader
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 from .models import ParameterValue, Root
+from investstal.custom_attachment.utils import attach_images_queryset
 
 
 class FilterProductViewFp(TemplateView):
@@ -20,6 +21,8 @@ class FilterProductViewFp(TemplateView):
 
         if category:
             products = products.filter(category=category)
+
+        products = attach_images_queryset(products)
 
         context = {
             'product_list': products,

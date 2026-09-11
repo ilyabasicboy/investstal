@@ -139,7 +139,7 @@
         {% include 'parts/gallery_categories.html' with show_link=True %}
     {% endif %}
 
-    {% get_catalog_items type=0 role='обложка' as catalog_items %}
+    {% get_catalog_items type=1 role='обложка' as catalog_items %}
     {% if catalog_items %}
         <section class="section-default">
             <div class="container">

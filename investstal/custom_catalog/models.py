@@ -15,24 +15,32 @@ from investstal.custom_attachment.utils import attach_images_queryset
 
 
 GROUP_CHOICES = (
-    (1, 'По ценовому сегменту'),
-    (2, 'По назначению'),
-    (3, 'По особенностям'),
-    (4, 'По отделке')
+    (1, 'Двери по наружной отделке'),
+    (2, 'Двери по месту установки'),
+    (3, 'Двери по особенностям'),
+    (4, 'Металлоконструкции')
 )
 
 PARAMETER_TYPES = (
     (1, 'Стандартная конструкция'),
     (2, 'Фурнитура'),
-    (3, 'Базовые габариты двери'),
+    (3, 'Габариты'),
     (4, 'Доставка дверей'),
     (5, 'Установка дверей'),
+    (6,  'Отделки'),
 )
 
 SIZE_TYPE_PARAMETERS = (
     (1, 'Однопольная'),
     (2, 'Двупольная'),
 )
+
+SORT_CHOICES = (
+    ('new', 'Новинки сверху'),
+    ('asc', 'Дешевле сверху'),
+    ('desc', 'Дороже сверху'),
+)
+
 
 
 class CatalogMixin:
@@ -152,7 +160,70 @@ class Root(CatalogBase, CatalogMixin):
         return result
 
 
-class Product(CatalogBase):
+class SectionCategoryBase(models.Model):
+    """
+        Поля, общие для разделов и категорий
+    """
+
+    class Meta:
+        abstract = True
+
+    group = models.IntegerField(
+        verbose_name=u'Группа',
+        choices=GROUP_CHOICES,
+        blank=True,
+        null=True
+    )
+    sort = models.CharField(
+        verbose_name=u'Сортировать по',
+        choices=SORT_CHOICES,
+        default='new',
+        max_length=10
+    )
+    main_content = HTMLField(
+        verbose_name=u'основной контент',
+        blank=True, null=True
+    )
+
+    def get_questions_section(self):
+        result = self.faqquestion_set.filter(show=True).exclude(answer='')
+        return result
+
+
+class CustomCatalogBase(CatalogBase):
+
+    class Meta:
+        abstract = True
+
+    title = models.CharField(
+        verbose_name=u'название',
+        max_length=400
+    )
+    long_title = models.CharField(
+        verbose_name=u'длинное название',
+        max_length=400,
+        null=True,
+        blank=True
+    )
+    additional_parameters = models.ManyToManyField(
+        'ParameterValue',
+        limit_choices_to={
+            'show_in_additional_choices': True
+        },
+        verbose_name=u'дополнительные параметры',
+        blank=True,
+    )
+    advantages = models.ManyToManyField(
+        'custom_pages.Advantage',
+        limit_choices_to={
+            'type': 1
+        },
+        verbose_name=u'преимущества заказа',
+        blank=True,
+    )
+
+
+class Product(CustomCatalogBase):
     class Meta:
         verbose_name = u'товар'
         verbose_name_plural = u'товары'
@@ -219,18 +290,11 @@ class Product(CatalogBase):
         return self.title
 
 
-class Section(CatalogBase, CatalogMixin):
+class Section(CustomCatalogBase, SectionCategoryBase, CatalogMixin):
     class Meta:
         verbose_name = u'раздел'
         verbose_name_plural = u'разделы'
 
-    title = models.CharField(verbose_name=u'название', max_length=400)
-    long_title = models.CharField(
-        verbose_name=u'длинное название',
-        max_length=400,
-        null=True,
-        blank=True
-    )
 
     def get_products(self):
         result = cache.get(self.cache_key() + '_products')
@@ -255,22 +319,15 @@ class Section(CatalogBase, CatalogMixin):
         return self.title
 
 
-class Category(CatalogBase, CatalogMixin):
+class Category(CustomCatalogBase, SectionCategoryBase, CatalogMixin):
     class Meta:
         verbose_name = u'категория'
         verbose_name_plural = u'категории'
 
-    title = models.CharField(verbose_name=u'название', max_length=400)
     products = models.ManyToManyField(
         Product,
         blank=True,
         verbose_name='товары'
-    )
-    long_title = models.CharField(
-        verbose_name=u'длинное название',
-        max_length=400,
-        null=True,
-        blank=True
     )
 
     def get_products(self):
@@ -316,6 +373,19 @@ class ParameterGroup(models.Model):
         choices=PARAMETER_TYPES,
         help_text=u'Используется на странице товара для деления в характеристиках'
     )
+
+    def get_images_for_whole_group(self):
+        result = cache.get(self.cache_key() + '_images')
+
+        if result:
+            return result
+
+        ct = ContentType.objects.get_for_model(ParameterValue)
+        parameters_list_ids = self.parametervalue_set.all().values_list('id', flat=True)
+        result = AttachmentImage.objects.filter(object_id__in=parameters_list_ids, content_type=ct)
+
+        cache.set(self.cache_key() + '_images', result, 600000)
+        return result
 
     def __str__(self):
         return self.title
