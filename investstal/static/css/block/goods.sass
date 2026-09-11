@@ -1,0 +1,20 @@
+.goods
+	display: flex
+	flex-direction: column
+	position: relative
+	width: 100%
+	&--slider
+		margin-right: -20px
+		overflow: visible
+		@media screen and (max-width: $sm-max)
+			margin-right: -16px
+	&__item
+		margin-right: 20px
+		height: auto
+		width: calc(25% - 20px)
+		@media screen and (max-width: $sm-max)
+			width: calc(33.3% - 16px)
+			margin-right: 16px
+		@media screen and (max-width: $xs-max)
+			width: calc(50% - 16px)
+			min-width: 240px

@@ -6,7 +6,7 @@
 
 {% block content %}
     {% if current_page.get_children_for_frontend %}
-        <section class="intro">
+        <section class="intro section-default section-default--top">
             <div class="container">
                 <div class="intro__slider">
                     <div class="intro--slider swiper {% if current_page.get_children_for_frontend.count > 1 %}intro__slider--padding{% endif %}">
@@ -63,7 +63,7 @@
 
     {% get_items_by_model_name 'advantage' type=0 as advantages %}
     {% if advantages.exists %}
-        <section class="section-default section-default--bottom">
+        <section class="section-default section-default--top section-overflow">
             <div class="container">
                 {% include 'parts/advantages.html' %}
             </div>
@@ -72,22 +72,41 @@
 
     {% get_catalog_items type=0 role='обложка' as catalog_items %}
     {% if catalog_items %}
-        <section>
-            <div>
-                <div>
-                    Металлические двери на заказ
-                    <a href="{% url 'catalog-root' %}">
-                        Смотреть все
+        <section class="section-default section-default--top">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-header__title">
+                        Металлические двери <span>на заказ</span>
+                    </div>
+
+                    <a class="section-header__link" href="{% url 'catalog-root' %}">
+                        Смотреть все →
                     </a>
                 </div>
-                <div>
-                    {% for item in catalog_items %}
-                        {% if item.catalog_item.images %}
-                            <img src="{{ item.catalog_item.images.0.image.url }}" alt="">
-                        {% endif %}
-                        {{ item.catalog_item.title }}
-                        {{ item.catalog_item.get_products_count }}
-                    {% endfor %}
+
+                <div class="sections">
+                    <div class="sections__grid">
+                        {% for item in catalog_items %}
+                            <div class="sections__grid-item">
+                                <a class="sections-card" href="{{ item.catalog_item.get_absolute_url }}">
+                                    {% if item.catalog_item.images %}
+                                        <div class="sections-card__preview">
+                                            <img src="{{ item.catalog_item.images.0.sectionscard.url }}" alt="{{ item.catalog_item.title }}">
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="sections-card__content">
+                                        <div class="sections-card__title">
+                                            {{ item.catalog_item.title }}
+                                            <sup class="sections-card__count">
+                                                {{ item.catalog_item.get_products_count }}
+                                            </sup>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </section>

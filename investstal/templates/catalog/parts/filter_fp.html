@@ -3,7 +3,7 @@
 <form class="categories filter-form-short scroll-custom-x-hidden--xs" action="{% url 'filter_products_fp' %}" novalidate>
     {% if categories_new %}
         <div class="categories__list">
-            <label class="categories__item" cursor-class="link-hover">
+            <label class="categories__item">
                 <input type="radio" name="category" value="" checked>
                 <span class="categories__item-btn">
                     Все
@@ -11,32 +11,13 @@
             </label>
 
             {% for category in categories_new %}
-                <label class="categories__item" cursor-class="link-hover">
+                <label class="categories__item">
                     <input type="radio" name="category" value="{{ category.id }}">
                     <span class="categories__item-btn">
                         {{ category.title }}
                     </span>
                 </label>
             {% endfor %}
-        </div>
-
-        <div class="categories__more">
-            <span>
-                <svg width="36" height="8" viewBox="0 0 36 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_3011_4)">
-                        <path d="M32 8C34.2091 8 36 6.20914 36 4C36 1.79086 34.2091 0 32 0C29.7909 0 28 1.79086 28 4C28 6.20914 29.7909 8 32 8ZM18 8C20.2091 8 22 6.20914 22 4C22 1.79086 20.2091 0 18 0C15.7909 0 14 1.79086 14 4C14 6.20914 15.7909 8 18 8ZM4 8C6.20914 8 8 6.20914 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 6.20914 1.79086 8 4 8Z" fill="url(#paint0_linear_3011_4)"/>
-                    </g>
-                    <defs>
-                        <linearGradient id="paint0_linear_3011_4" x1="36" y1="4" x2="15.4473" y2="4" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#272727"/>
-                            <stop offset="1" stop-color="#015AAA"/>
-                        </linearGradient>
-                        <clipPath id="clip0_3011_4">
-                            <rect width="36" height="8" fill="white"/>
-                        </clipPath>
-                    </defs>
-                </svg>
-            </span>
         </div>
     {% endif %}
 </form>

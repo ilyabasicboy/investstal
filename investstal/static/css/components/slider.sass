@@ -55,3 +55,33 @@
 			&.swiper-button-lock
 				opacity: 0
 				pointer-events: none
+
+	.swiper
+		margin-bottom: 60px
+
+	&__pagination
+		bottom: calc(-60px + 20px)!important
+		transform: translateX(calc(-50% - 10px))!important
+		@media screen and (max-width: $sm-max)
+			transform: translateX(calc(-50% - 8px))!important
+		.swiper-pagination-bullet
+			background-color: #fff!important
+			border: 2px solid #8F8F8F!important
+			opacity: 1
+			width: 12px
+			height: 12px
+			&:before
+				content: ''
+				width: 60%
+				height: 60%
+				background-color: #343D42
+				opacity: 0
+				position: absolute
+				top: 50%
+				left: 50%
+				border-radius: 50%
+				transform: translate(-50%, -50%)
+				transition: opacity 0.5s ease-in-out
+			&-active
+				&:before
+					opacity: 1

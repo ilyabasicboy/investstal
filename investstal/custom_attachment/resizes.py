@@ -32,3 +32,11 @@ class ResizeGalleryColumn(Resize):
     
 class ResizeIntro(Resize):
     width = 2600
+
+
+class ResizeSectionsCard(Resize):
+    width = 1000
+
+
+class ResizeProductCard(Resize):
+    height = 400

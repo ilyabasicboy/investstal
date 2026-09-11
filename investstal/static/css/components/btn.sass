@@ -20,6 +20,15 @@
 	overflow: hidden
 	transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out, border 0.5s ease-in-out, opacity 0.5s ease-in-out
 
+	&--uppercase
+		text-transform: uppercase
+
+	&--min
+		height: 26px
+		font-size: 12px
+		padding: 2px 20px
+
+
 	&--white
 		background-color: #fff
 		color: #333
@@ -34,5 +43,16 @@
 		&:hover
 			background-color: #e5e5e5
 
-	&--uppercase
-		text-transform: uppercase
+	&--dark
+		background-color: #333
+		color: #fff
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08)
+		&:hover
+			background-color: #1a1a1a
+
+	&--grey
+		background-color: #717171
+		color: #fff
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08)
+		&:hover
+			background-color: #515151

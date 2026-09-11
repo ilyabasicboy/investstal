@@ -1,38 +1,27 @@
 {% load attachment_tags base_tags custom_catalog_tags %}
 <div class="product-card">
-    <div class="product-card__favorite favorite_product_btn data-product_id="{{ product.id }}" cursor-class="link-hover">
-        <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.8093 19L9.38692 17.7052C4.33515 13.1243 1 10.0932 1 6.3951C1 3.36403 3.37384 1 6.3951 1C8.10191 1 9.74005 1.79455 10.8093 3.04033C11.8785 1.79455 13.5166 1 15.2234 1C18.2447 1 20.6185 3.36403 20.6185 6.3951C20.6185 10.0932 17.2834 13.1243 12.2316 17.7052L10.8093 19Z" fill="white"/>
-            <path d="M10.8093 19L9.38692 17.7052C4.33515 13.1243 1 10.0932 1 6.3951C1 3.36403 3.37384 1 6.3951 1C8.10191 1 9.74005 1.79455 10.8093 3.04033C11.8785 1.79455 13.5166 1 15.2234 1C18.2447 1 20.6185 3.36403 20.6185 6.3951C20.6185 10.0932 17.2834 13.1243 12.2316 17.7052L10.8093 19Z" stroke="black" stroke-width="2" stroke-miterlimit="5"/>
-        </svg>
-    </div>
-
-    <div class="product-card__body">
+    <a class="product-card__body" href="{{ product.get_absolute_url }}">
         {% with images=product.images %}
             {% if images %}
-                <div class="product-card__slider product-card--slider swiper">
-                    <div class="swiper-wrapper">
-                        <div class="product-card__slide swiper-slide">
-                            <a class="product-card__img" href="{{ images.0.watermarkpicture.url }}" data-fancybox data-caption="{{ images.0.title|default:product.title }}" cursor-class="link-hover">
-                                <img src="{{ images.0.productcard.url }}" alt="{{ images.0.title|default:product.title }}" title="{{ images.0.title|default:product.title }}">
-                            </a>
-                        </div>
-                    </div>
+                <div class="product-card__preview">
+                    <img src="{{ images.0.productcard.url }}" alt="{{ images.0.title|default:product.title }}" title="{{ images.0.title|default:product.title }}">
                 </div>
             {% endif %}
         {% endwith %}
 
-        <a class="product-card__content" href="{{ product.get_absolute_url }}" cursor-class="link-hover">
-
+        <div class="product-card__content">
             <div class="product-card__title">
-                <span class="product-card__name">{{ product.long_title|default:product.title }}</span>
-                <span class="product-card__article"> {{ product.get_vendor_code }}</span>
+                {{ product.long_title|default:product.title }}
+            </div>
+
+            <div class="product-card__article">
+                Арт: <span>{{ product.get_vendor_code }}</span>
             </div>
 
             <div class="product-card__price">
                 {% if product.price %}
                     <div class="product-card__price-default">
-                        от {{ product.price|price_format }} руб.
+                        от <span>{{ product.price|price_format }}</span> руб.
                     </div>
                 {% else %}
                     <div class="product-card__price-default">
@@ -40,14 +29,15 @@
                     </div>
                 {% endif %}
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 
     <div class="product-card__footer">
-        <a href="{{ product.get_absolute_url }}">
+        <a class="product-card__btn btn btn--grey btn--min" href="{{ product.get_absolute_url }}">
             Подробнее
         </a>
-        <button class="product-card__btn btn btn--min btn--dark modal-open" data-href="#order-modal" cursor-class="link-hover">
+
+        <button class="product-card__btn btn btn--dark btn--min modal-open" data-href="#order-modal">
             Заказать
         </button>
     </div>

@@ -1,24 +1,21 @@
 {% if root %}
     {% with products_new=root.0.get_products_new categories_new=root.0.get_products_new_categories %}
         {% if products_new %}
-            <section class="section-default section-grey">
+            <section class="section-default section-default--top">
                 <div class="container">
-                    <div class="section-default__header">
-                        <div class="title">
-                            Выберите модель двери
-                        </div>
-                    </div>
+                    <div class="section-header">
+                        <div class="section-header__group">
+                            <div class="section-header__title">
+                                Выберите модель двери
+                            </div>
 
-                    {% include 'catalog/parts/filter_fp.html' %}
-                    
-                    <a class="link-line" href="{% url 'catalog-root' %}" cursor-class="link-hover">
-                        <span>
-                            Смотреть все
-                        </span>
-                        <svg width="29" height="9" viewBox="0 0 29 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.5369 0C20.6202 0 20.7024 0.0194049 20.777 0.0566778L28.7031 4.01976C28.9683 4.15236 29.0758 4.47483 28.9432 4.74003C28.8913 4.84393 28.807 4.92817 28.7031 4.98012L20.777 8.9432C20.5118 9.0758 20.1893 8.96831 20.0567 8.70311C20.0194 8.62857 20 8.54637 20 8.46302V5H0.5C0.223858 5 0 4.77614 0 4.5C0 4.22386 0.223858 4 0.5 4H20V0.53686C20 0.27001 20.1947 0.0486336 20.4498 0.00702667L20.5369 0Z" fill="#373737"/>
-                        </svg>
-                    </a>
+                            {% include 'catalog/parts/filter_fp.html' %}
+                        </div>
+
+                        <a class="section-header__link" href="{% url 'catalog-root' %}">
+                            Смотреть все →
+                        </a>
+                    </div>
 
                     {% include 'catalog/parts/product_slider.html' with product_list=products_new ajax_update=True %}
                 </div>

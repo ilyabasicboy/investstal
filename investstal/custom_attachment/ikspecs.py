@@ -29,3 +29,12 @@ class WatermarkPicture(ImageSpec):
 
 class Intro(ImageSpec):
     processors = [ResizeIntro]
+
+
+class SectionsCard(ImageSpec):
+    processors = [ResizeSectionsCard]
+
+
+class ProductCard(ImageSpec):
+    quality = 100
+    processors = [ResizeProductCard]
