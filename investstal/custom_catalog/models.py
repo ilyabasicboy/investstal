@@ -28,10 +28,10 @@ PARAMETER_TYPE_OPENING = 4
 PARAMETER_TYPE_FINISHING = 5
 
 PARAMETER_TYPES = (
-    (PARAMETER_TYPE_STANDARD,   u'Стандартные параметры'),
-    (PARAMETER_TYPE_DIMENSIONS, u'Размеры двери'),
-    (PARAMETER_TYPE_DELIVERY,   u'Доставка дверей'),
-    (PARAMETER_TYPE_OPENING,    u'Открывание'),
+    (PARAMETER_TYPE_STANDARD,   u'Двери по наружной отделке'),
+    (PARAMETER_TYPE_DIMENSIONS, u'Двери по месту установки'),
+    (PARAMETER_TYPE_DELIVERY,   u'Двери по особенностям'),
+    (PARAMETER_TYPE_OPENING,    u'Металлоконструкции'),
     (PARAMETER_TYPE_FINISHING,  u'Отделки'),
 )
 
@@ -298,8 +298,8 @@ class Product(CustomCatalogBase):
     def get_product_info(self):
         result = cache.get(self.cache_key() + '_product_info')
 
-        if result is not None:
-            return result
+        # if result is not None:
+        #     return result
 
         result = {}
 
@@ -319,11 +319,10 @@ class Product(CustomCatalogBase):
 
         finishing_group_ids = self.parameters.filter(parameter_group__group_type=PARAMETER_TYPE_FINISHING).values_list('parameter_group__id', flat=True).distinct()
         finishing_data = {}
-
         if finishing_group_ids:
             try:
                 groups = ParameterGroup.objects.filter(id__in=finishing_group_ids).prefetch_related('parametervalue_set')
-
+                print(groups)
                 ct = ContentType.objects.get_for_model(ParameterValue)
 
                 for group in groups:
@@ -389,6 +388,9 @@ class Product(CustomCatalogBase):
 
     def get_vendor_code(self):
         return f'Арт.{self.id:05d}'
+
+    def cache_key(self):
+            return '%s_%d' % (self.__class__.__name__, self.id)
 
     def __str__(self):
         return self.title
