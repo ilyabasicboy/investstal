@@ -35,6 +35,7 @@ class SectionAdminForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'large-input'}),
             'slug': forms.TextInput(attrs={'class': 'large-input'}),
+            'additional_parameters': FilteredSelectMultiple(verbose_name='Товары', is_stacked=False),
         }
 
 

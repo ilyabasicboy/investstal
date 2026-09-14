@@ -57,7 +57,6 @@ class SectionAdmin(CatalogItemBaseAdmin):
     form = SectionAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'long_title', 'group']
     inlines = [ParameterInlineAdmin, ]
 
 
@@ -98,8 +97,8 @@ class CatalogItemAdmin(SortableAdminMixin, admin.ModelAdmin):
 class ParameterValueAdmin(admin.ModelAdmin):
     model = ParameterValue
     list_filter = ['parameter_group']
-    list_display = ['__str__', 'show_in_additional_choices', 'extra_price']
-    list_editable = ['show_in_additional_choices', 'extra_price']
+    list_display = ['__str__', 'show_in_additional_choices', 'extra_price', 'show_images']
+    list_editable = ['show_in_additional_choices', 'extra_price', 'show_images']
 
 
 @admin.register(ParameterGroup)

@@ -12,6 +12,7 @@ from catalog.utils import get_content_objects, get_sorted_content_objects
 from django.core.exceptions import ValidationError
 from itertools import chain
 from investstal.custom_attachment.utils import attach_images, attach_images_queryset
+from .utils import get_model_field
 
 
 GROUP_CHOICES = (
@@ -304,14 +305,48 @@ class Product(CustomCatalogBase):
 
         result = {}
 
-        result['finishing'] = self._get_finishing_data()
+        result['finishing'] = self.get_finishing_data()
 
         result['parameters'] = attach_images_queryset(self.get_parameters())
+
+        result['additional_parameters'] = self.get_additional_parameters()
+
+        result['similar_products']
         
         cache.set(self.cache_key() + '_product_info', result, 600000)
         return result
 
-    def _get_finishing_data(self):
+    def get_additional_parameters(self):
+        result = cache.get(self.cache_key() + '_additional_parameters')
+
+        # if result is not None:
+        #     return result
+        
+        result_parameters = ParameterValue.objects.none()
+        result_groups = ParameterGroup.objects.none()
+        try:
+            additional_parameters = get_model_field(self, 'additional_parameters', many_to_many=True)
+            if additional_parameters:
+                additional_parameters = additional_parameters.filter(
+                    show_in_additional_choices=True
+                ).order_by('parameter_group__order_key').distinct()
+
+                if additional_parameters.exists():
+                    result_parameters = attach_images_queryset(additional_parameters)
+                    group_ids = result_parameters.values_list('parameter_group', flat=True).distinct()
+                    result_groups = ParameterGroup.objects.filter(id__in=group_ids).order_by('order_key')
+        except:
+            pass
+
+        result = {
+            'parameters': result_parameters,
+            'groups': result_groups
+        }
+        cache.set(self.cache_key() + '_additional_parameters', result, 600000)
+
+        return result
+
+    def get_finishing_data(self):
         finishing_data = {}
         try:
             chosen_params = list(attach_images(

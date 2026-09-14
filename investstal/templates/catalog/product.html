@@ -8,7 +8,7 @@
 
 {% block content %}
     {% with product_info=product.get_product_info product_images=product.get_product_images %}
-        <section class="item__block">
+        <section class="item__block product">
             <div>
                 {% get_images for object as images %}
                 {% if images %}
@@ -43,7 +43,7 @@
                     {% endwith %}
                 {% endif %}
             </div>
-            <div>
+            <div class="product__price-default">
                 от {{ product.price|price_format }} руб.{% if product.square_price %}/м<sup>2</sup>{% endif %}
             </div>
             <div>
@@ -53,7 +53,7 @@
             <div>
                 {% if product_info.finishing %}
                     {% for finish_group, group_data in product_info.finishing.items %}
-                        {{ finish_group.title }}: <a href="#finish_modal_{{ group_data.chosen_param.id}}">{{ group_data.chosen_param.value }}</a>
+                        {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}href="#finish_modal_{{ group_data.chosen_param.id}}"{% endif %}>{{ group_data.chosen_param.value }}</a>
                     {% endfor %}
                 {% endif %}
 
@@ -65,7 +65,7 @@
                     <a class="modal-open" data-href="#rackman-modal">
                         Вызвать замерщика для точного расчета
                     </a>
-                    <a class="modal-open" data-href="#order-modal">
+                    <a class="modal-open product__btn" data-href="#order-modal">
                         Заказать
                     </a>
                 </div>
@@ -96,30 +96,106 @@
             </section>
         {% endif %}
 
-        {% for finish_group, group_data in product_info.finishing.items %}
-            <div id="finish_modal_{{ group_data.chosen_param.id }}">
-                {{ group_data.chosen_param.value }}
+        {% if product_info.additional_parameters.parameters.exists %}
+            <div class="option__additionally">
+                <div class="option__additionally-header">
+                    <div class="option__additionally-title">
+                        Комплектация:
+                    </div>
 
-                Выбирайте вариант из списка наиболее популярных в нашем каталоге
+                    {% if product_info.additional_parameters.groups.exists %}
+                        <ul class="option__additionally-list option__list">
+                            <li class="option__list-item active" data-link="option_all">
+                                <span>
+                                    Все
+                                </span>
+                            </li>
+                            {% for group in product_info.additional_parameters.groups %}
+                                <li class="option__list-item" data-link="option_{{ group.id }}">
+                                    <span>
+                                        {{ group.title }}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="option__slider mfp-gallery">
+                    <div class="option--slider swiper">
+                        <div class="swiper-wrapper">
+                            {% for parameter in product_info.additional_parameters.parameters.all %}
+                                <div class="option__slide swiper-slide" data-target="option_{{ parameter.parameter_group.id }}">
+                                    <div class="option-card">
+                                        <label class="option-card__label">
+                                            <input class="option-card__input" type="checkbox" value="{{ parameter.extra_price|default:0 }}">
 
-                {% for image in group_data.chosen_images %}
-                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
-                    {{ image.title }}
-                {% endfor %}
+                                            <div class="option-card__content">
+                                                <div class="option-card__top {% if parameter.images %}option-card__top--border{% endif %}">
+                                                    {% if parameter.images %}
+                                                        <a class="option-card__preview" href="{{ parameter.images.0.image.url }}">
+                                                            <img src="{{ parameter.images.0.image.url }}" title="{{ parameter.images.0.title|default:parameter.value }}" alt="{{ parameter.images.0.title|default:parameter.value }}">
+                                                        </a>
+                                                    {% endif %}
+
+                                                    <div class="option-card__icon">
+                                                        <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M0.898262 4.07091C1.39424 3.57573 2.19767 3.57616 2.69312 4.07186L6.02997 7.4104L12.5375 0.89847C13.033 0.402571 13.8368 0.402298 14.3327 0.897862C14.8286 1.39407 14.8291 2.19885 14.3331 2.69499L6.02997 11L0.89731 5.86477C0.402211 5.36942 0.402912 4.56601 0.898262 4.07091Z" fill="black"></path>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class="option-card__price">
+                                                        + {{ parameter.extra_price|default:0|price_format }} руб.
+                                                    </div>
+                                                </div>
+
+                                                <div class="option-card__text">
+                                                    {{ parameter.parameter_group.title }} {{ parameter.value }}
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
+        {% endif %}
+
+        {% if object.main_content %}
+            <section>
+                {{ object.main_content|safe }}
+            </section>
+        {% endif %}
+
+        {% for finish_group, group_data in product_info.finishing.items %}
+            {% if group_data.chosen_images and group_data.chosen_param.show_images %}
+                <div id="finish_modal_{{ group_data.chosen_param.id }}">
+                    {{ group_data.chosen_param.value }}
+
+                    Выбирайте вариант из списка наиболее популярных в нашем каталоге
+
+                    {% for image in group_data.chosen_images %}
+                        <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                        {{ image.title }}
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endfor %}
 
         {% for parameter in product_info.parameters %}
-            <div id="parameter_modal_{{ parameter.id }}">
-                {{ parameter.value }}
+            {% if parameter.images and parameter.show_images %}
+                <div id="parameter_modal_{{ parameter.id }}">
+                    {{ parameter.value }}
 
-                Выбирайте вариант из списка наиболее популярных в нашем каталоге
+                    Выбирайте вариант из списка наиболее популярных в нашем каталоге
 
-                {% for image in parameter.images %}
-                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
-                    {{ image.title }}
-                {% endfor %}
-            </div>
+                    {% for image in parameter.images %}
+                        <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                        {{ image.title }}
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endfor %}
     {% endwith %}
 
