@@ -157,3 +157,11 @@ def price_format(val):
 def string_to_list(val):
     list = literal_eval(val)
     return list
+
+
+@register.filter
+def divide(value, arg):
+    try:
+        return int(int(value) / int(arg))
+    except (ValueError, ZeroDivisionError):
+        return None
