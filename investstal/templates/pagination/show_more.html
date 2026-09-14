@@ -1,0 +1,9 @@
+{% load base_tags %}
+{% if pages|length > 1 %}
+    {% get_custom_pagination page_obj.number pages as nav %}
+    {% if nav.next %}
+        <a class="btn btn--grey show-more__btn" href="?page={{ nav.next }}">
+            Смотреть еще
+        </a>
+    {% endif %}
+{% endif %}

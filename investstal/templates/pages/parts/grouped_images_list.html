@@ -9,8 +9,14 @@
             </a>
 
             <div class="gallery__column-overlay">
+                {% if image.title %}
+                    <div class="gallery__column-title">
+                        {{ image.title }}
+                    </div>
+                {% endif %}
+
                 {% if hide_buttons != 'True' %}
-                    <a class="btn btn--dark btn--min gallery__column-btn modal-open" data-href="#pricedetails-modal">
+                    <a class="btn btn--dark btn--middle gallery__column-btn modal-open" data-href="#pricedetails-modal">
                         Узнать цену
                     </a>
                 {% endif %}

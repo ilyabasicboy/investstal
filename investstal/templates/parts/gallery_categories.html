@@ -3,37 +3,41 @@
     {% get_custom_images_groups images as groups %}
     <section class="section-default section-shadow">
         <div class="container">
-            <div class="section-default__header">
-                <div class="section-default__title">
+            <div class="section-header section-header--column">
+                <div class="section-header__title">
                     Наши работы <span>последние фото с объектов</span>
                 </div>
 
-                {% if show_link %}
-                    <a class="section-default__btn" href="{{ groups.0.images.all.0.page }}">
-                        В галерею →
-                    </a>
-                {% endif %}
-            </div>
+                <div class="section-header__bottom">
+                    <div class="section-header__filter">
+                        <form class="categories gallery-form scroll-custom-x-hidden--xs" action="{% url 'filter_images_gallery' page_ids=gallery_ids %}" novalidate>
+                            <div class="categories__list">
+                                <label class="categories__item">
+                                    <input type="radio" name="group" value="" checked>
+                                    <span class="categories__item-btn">
+                                        Все
+                                    </span>
+                                </label>
 
-            <form class="categories gallery-form scroll-custom-x-hidden--xs" action="{% url 'filter_images_gallery' page_ids=gallery_ids %}" novalidate>
-                <div class="categories__list">
-                    <label class="categories__item">
-                        <input type="radio" name="group" value="" checked>
-                        <span class="categories__item-btn">
-                            Все
-                        </span>
-                    </label>
+                                {% for group in groups %}
+                                    <label class="categories__item">
+                                        <input type="radio" name="group" value="{{ group.id }}">
+                                        <span class="categories__item-btn">
+                                            {{ group.title }}
+                                        </span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
 
-                    {% for group in groups %}
-                        <label class="categories__item">
-                            <input type="radio" name="group" value="{{ group.id }}">
-                            <span class="categories__item-btn">
-                                {{ group.title }}
-                            </span>
-                        </label>
-                    {% endfor %}
+                    {% if show_link %}
+                        <a class="section-header__btn" href="{{ groups.0.images.all.0.page }}">
+                            В галерею →
+                        </a>
+                    {% endif %}
                 </div>
-            </form>
+            </div>
         </div>
 
         <div class="gallery gallery--padding">

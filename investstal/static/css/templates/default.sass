@@ -87,6 +87,8 @@ sup
 		align-items: flex-start
 		justify-content: space-between
 		position: relative
+		&--column
+			flex-direction: column
 		&__title
 			font-size: 36px
 			line-height: 44px
@@ -130,6 +132,29 @@ sup
 				margin-right: 24px
 				margin-bottom: 24px
 				margin-top: 4px
+		&__bottom
+			margin-top: 32px
+			display: flex
+			align-items: flex-start
+			justify-content: space-between
+			width: 100%
+		&__btn
+			height: 32px
+			display: flex
+			align-items: center
+			justify-content: center
+			padding: 2px 24px
+			background-color: #333
+			color: #fff
+			font-size: 14px
+			line-height: 22px
+			font-weight: 600
+			transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out
+			cursor: pointer
+			margin-left: 20px
+			&:hover
+				color: #333
+				background-color: #fff
 
 .section-background
 	background-size: cover

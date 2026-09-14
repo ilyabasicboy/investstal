@@ -14,7 +14,8 @@
 	&__column
 		position: relative
 		width: 100%
-		max-width: 1840px
+		max-width: 1450px
+		padding: 0px 15px
 		margin: 0 auto
 		transition: opacity 0.2s ease-in-out
 		&--hidden
@@ -68,7 +69,8 @@
 			padding-bottom: calc(20px + 32px + 12px)
 			display: flex
 			align-items: center
-			justify-content: center
+			flex-direction: column
+			justify-content: flex-end
 			text-align: center
 			pointer-events: none
 			opacity: 0
@@ -83,7 +85,14 @@
 				position: absolute
 				bottom: 0px
 				left: 0px
-				background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(16, 57, 96, 1) 100%)
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)
+		&-title
+			color: #333
+			font-size: 13px
+			line-height: 19px
+			font-weight: 600
+			position: relative
+			z-index: 1
 		&-btn
 			position: absolute
 			bottom: 20px
