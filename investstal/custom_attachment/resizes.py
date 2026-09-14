@@ -27,7 +27,7 @@ class ResizeDisplay(Resize):
 
 
 class ResizeGalleryColumn(Resize):
-    height = 600
+    height = 800
 
     
 class ResizeIntro(Resize):

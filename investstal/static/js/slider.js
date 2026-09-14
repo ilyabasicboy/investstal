@@ -96,4 +96,16 @@ $(function () {
 	};
 	swiperGoodsInit();
 
+	//Init Steps Slider
+	function swiperStepsInit() {
+		const swiperStepsBlock = document.querySelectorAll('.steps--slider');
+		swiperStepsBlock.forEach((el) => {
+			let swiperSteps = new Swiper(el, {
+				slidesPerView: 'auto',
+				speed: 800,
+			});
+		});
+	};
+	swiperStepsInit();
+
 });
