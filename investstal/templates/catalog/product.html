@@ -168,6 +168,26 @@
             </section>
         {% endif %}
 
+        {% if product_info.similar_products %}
+            <section class="section-default">
+                <div class="container">
+                    <div class="section-header">
+                        <div class="section-header__title">
+                            Похожие товары
+                        </div>
+                    </div>
+
+                    <div class="goods">
+                        {% for product in product_info.similar_products %}
+                            <div class="goods__item">
+                                {% include 'catalog/parts/product_card.html' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
         {% for finish_group, group_data in product_info.finishing.items %}
             {% if group_data.chosen_images and group_data.chosen_param.show_images %}
                 <div id="finish_modal_{{ group_data.chosen_param.id }}">

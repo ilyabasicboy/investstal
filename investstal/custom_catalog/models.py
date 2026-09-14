@@ -311,10 +311,28 @@ class Product(CustomCatalogBase):
 
         result['additional_parameters'] = self.get_additional_parameters()
 
-        result['similar_products']
+        result['similar_products'] = self.get_similar_products()
         
         cache.set(self.cache_key() + '_product_info', result, 600000)
         return result
+
+    def get_similar_products(self):
+        similar_products = Product.objects.none()
+        try:
+            category = Category.objects.filter(
+                products=self,
+                show=True
+            ).order_by('?').first()
+
+            if category:
+                similar_products = category.products.filter(show=True).exclude(
+                    id=self.id
+                ).order_by('?')[:3]
+                similar_products = attach_images_queryset(similar_products)
+        except:
+            pass
+
+        return similar_products
 
     def get_additional_parameters(self):
         result = cache.get(self.cache_key() + '_additional_parameters')
