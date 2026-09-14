@@ -225,12 +225,14 @@ FEEDBACK_FORMS = {
     'call': 'investstal.custom_feedback.forms.CallForm',
     'consult': 'investstal.custom_feedback.forms.Consult',
     'rackman': 'investstal.custom_feedback.forms.Rackman',
+    'order': 'investstal.custom_feedback.forms.Order',
 }
 
 FEEDBACK_FORMS_NAMES = {
     'call': u'Написать нам',
     'consult': u'Получить консультацию',
-    'rackman': u'Вызвать замерщика'
+    'rackman': u'Вызвать замерщика',
+    'order': u'Заказать'
 }
 
 # ~======== CHUNKS =================~

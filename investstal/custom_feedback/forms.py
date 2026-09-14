@@ -193,3 +193,50 @@ class Rackman(BaseFileForm, BaseForm):
             }
         ),
     )
+
+
+class Order(BaseForm):
+
+    """
+        Заказать
+    """
+    link = forms.CharField(
+        label='Ссылка на товар',
+        widget=forms.HiddenInput,
+        required=False
+    )
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+
+            }
+        ),
+    )
+    phone = forms.CharField(
+        label=u'Ваш телефон:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'+7 (___) ___-__-__',
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label=u'Ваш е-майл:',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+
+            }
+        ),
+    )
+
+    comment = forms.CharField(
+        label=u'Комментарий менеджеру:',
+        max_length=1000,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+            }
+        ),
+    )

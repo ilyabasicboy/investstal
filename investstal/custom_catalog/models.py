@@ -11,7 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from catalog.utils import get_content_objects, get_sorted_content_objects
 from django.core.exceptions import ValidationError
 from itertools import chain
-from investstal.custom_attachment.utils import attach_images_queryset
+from investstal.custom_attachment.utils import attach_images, attach_images_queryset
 
 
 GROUP_CHOICES = (
@@ -312,46 +312,40 @@ class Product(CustomCatalogBase):
         return result
 
     def _get_finishing_data(self):
-        finishing_group_ids = self.parameters.filter(parameter_group__group_type=PARAMETER_TYPE_FINISHING).values_list('parameter_group__id', flat=True).distinct()
         finishing_data = {}
-        if finishing_group_ids:
-            try:
-                groups = ParameterGroup.objects.filter(id__in=finishing_group_ids).prefetch_related('parametervalue_set')
-                ct = ContentType.objects.get_for_model(ParameterValue)
-                chosen_params = self.parameters.filter(
-                    parameter_group__id__in=finishing_group_ids
+        try:
+            chosen_params = list(attach_images(
+                self.parameters.filter(
+                    parameter_group__group_type=PARAMETER_TYPE_FINISHING
                 ).select_related('parameter_group').order_by('id')
-                chosen_params_by_group_id = {}
-                chosen_param_ids = []
+            ))
+            if not chosen_params:
+                return finishing_data
 
-                for param in chosen_params:
-                    if param.parameter_group_id not in chosen_params_by_group_id:
-                        chosen_params_by_group_id[param.parameter_group_id] = param
-                        chosen_param_ids.append(param.id)
+            finishing_group_ids = []
+            chosen_params_by_group_id = {}
 
-                chosen_images_by_param_id = {}
-                chosen_images = AttachmentImage.objects.filter(
-                    object_id__in=chosen_param_ids,
-                    content_type=ct
-                ).order_by('object_id', 'position', 'id')
+            for param in chosen_params:
+                if param.parameter_group_id not in chosen_params_by_group_id:
+                    chosen_params_by_group_id[param.parameter_group_id] = param
+                    finishing_group_ids.append(param.parameter_group_id)
 
-                for image in chosen_images:
-                    chosen_images_by_param_id.setdefault(image.object_id, []).append(image)
+            groups = ParameterGroup.objects.filter(id__in=finishing_group_ids).prefetch_related('parametervalue_set')
 
-                for group in groups:
-                    param_values = group.parametervalue_set.all()
-                    chosen_param = chosen_params_by_group_id.get(group.id)
-                    chosen_images = []
-                    if chosen_param:
-                        chosen_images = chosen_images_by_param_id.get(chosen_param.id, [])
+            for group in groups:
+                param_values = group.parametervalue_set.all()
+                chosen_param = chosen_params_by_group_id.get(group.id)
+                chosen_images = []
+                if chosen_param:
+                    chosen_images = chosen_param.images
 
-                    finishing_data[group] = {
-                        'param_values': param_values,
-                        'chosen_param': chosen_param,
-                        'chosen_images': chosen_images,
-                    }
-            except:
-                pass
+                finishing_data[group] = {
+                    'param_values': param_values,
+                    'chosen_param': chosen_param,
+                    'chosen_images': chosen_images,
+                }
+        except:
+            pass
 
         return finishing_data
 

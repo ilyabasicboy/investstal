@@ -328,6 +328,21 @@
                 </div>
             </div>
 
+            <div class="modal mfp-hide mfp-anim" id="order-modal">
+                <div class="modal__body">
+                    <div class="modal__header">
+                        <div class="modal__title">
+                            Заказать
+                        </div>
+                        <div class="modal__subtitle"></div>
+                    </div>
+
+                    <!--noindex-->
+                        {% show_feedback 'order' %}
+                    <!--/noindex-->
+                </div>
+            </div>
+
             {% block js %}
                 <script src="{% static 'bundle/bundle.f92e393c8fec405ded86.js' %}"></script>
             {% endblock %}
