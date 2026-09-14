@@ -314,6 +314,20 @@
                 </div>
             </footer>
 
+            <div class="modal mfp-anim mfp-hide" id="rackman-modal">
+                <div class="modal__header">
+                    <div class="modal__title">
+                        Вызвать замерщика
+                    </div>
+                </div>
+
+                <div class="modal__body">
+                    <!--noindex-->
+                        {% show_feedback 'rackman' %}
+                    <!--/noindex-->
+                </div>
+            </div>
+
             {% block js %}
                 <script src="{% static 'bundle/bundle.f92e393c8fec405ded86.js' %}"></script>
             {% endblock %}

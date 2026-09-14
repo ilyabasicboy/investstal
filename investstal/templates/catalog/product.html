@@ -1,5 +1,5 @@
 {% extends 'catalog/base.html' %}
-{% load base_tags custom_attachment_tags attachment_tags %}
+{% load base_tags feedback_tags custom_attachment_tags attachment_tags %}
 
 
 {% block content_title %}
@@ -53,18 +53,71 @@
             <div>
                 {% if product_info.finishing %}
                     {% for finish_group, group_data in product_info.finishing.items %}
-                        <div>
-                            {{ finish_group.title }}: {{ group_data.chosen_param.value }}
-                        </div>
+                        {{ finish_group.title }}: <a href="#finish_modal_{{ group_data.chosen_param.id}}">{{ group_data.chosen_param.value }}</a>
                     {% endfor %}
                 {% endif %}
 
                 <div>
                     Характеристики: <a href="">Смотреть все</a>
                 </div>
-            </div>
 
+                <div>
+                    <a class="header__btn modal-open" data-href="#rackman-modal" cursor-class="link-hover">
+                        ВЫЗВАТЬ ЗАМЕРЩИКА
+                    </a>
+                </div>
+            </div>
         </section>
+
+        {% if product_info.parameters %}
+            <section class="section-default" id="section-specifications">
+                <div class="container">
+                    <div class="h2 title--nomargintop">
+                        Характеристики:
+                    </div>
+
+                    <div class="specifications">
+                        {% for parameter in product_info.parameters %}
+                            <div class="specifications__item">
+                                <div class="specifications__item-title">
+                                    {{ parameter.parameter_group.title }}:
+                                </div>
+
+                                <a class="specifications__item-info {% if parameter.images %}parameter-btn-js modal-open{% endif %}" {% if parameter.images %}data-href="#parameter-modal_{{parameter.id}}"{% endif %} cursor-class="link-hover">
+                                    {{ parameter.value }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% for finish_group, group_data in product_info.finishing.items %}
+            <div id="finish_modal_{{ group_data.chosen_param.id }}">
+                {{ group_data.chosen_param.value }}
+
+                Выбирайте вариант из списка наиболее популярных в нашем каталоге
+
+                {% for image in group_data.chosen_images %}
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                    {{ image.title }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        {% for parameter in product_info.parameters %}
+            <div id="parameter_modal_{{ parameter.id }}">
+                {{ parameter.value }}
+
+                Выбирайте вариант из списка наиболее популярных в нашем каталоге
+
+                {% for image in parameter.images %}
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                    {{ image.title }}
+                {% endfor %}
+            </div>
+        {% endfor %}
     {% endwith %}
 
 {% endblock %}

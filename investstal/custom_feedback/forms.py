@@ -56,6 +56,37 @@ class BaseForm(BaseFeedbackForm):
             self.fields[name].error_messages = self.ERROR_MESSAGES
 
 
+class BaseFileForm(forms.Form):
+
+    file = forms.FileField(
+        label=u'Прикрепить файл',
+        validators=[validate_file_size],
+        required=False,
+        help_text=u'Допустимо: JPG, PNG, PDF до 5 Мб',
+        widget=forms.FileInput(
+            attrs={
+                'data-accept-imgfile': '',
+            }
+        )
+    )
+
+    def mail(self, request):
+
+        message = self.render_message(request)
+        headers = {}
+        if 'email' in self.cleaned_data:
+            headers = {'Reply-to': self.cleaned_data.get('email')}
+
+        msg = EmailMessage(self.subject, message, self.sender, self.recipients, headers=headers)
+        if request.FILES:
+            files_copy = dict(request.FILES)
+            uploaded_files = files_copy
+            for uploaded_file in uploaded_files['file']:  # file is the name value which you have provided in form for file field
+                msg.attach(uploaded_file.name, uploaded_file.read(), uploaded_file.content_type)
+        msg.send()
+        self.after_mail(message=message, headers=headers)
+
+
 class CallForm(BaseForm):
 
     """ Тестовая форма
@@ -100,6 +131,65 @@ class Consult(BaseForm):
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Ваш телефон'
+            }
+        ),
+    )
+
+
+class Rackman(BaseFileForm, BaseForm):
+
+    """
+        Вызвать замерщика
+    """
+
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваше имя'
+            }
+        ),
+    )
+    phone = forms.CharField(
+        label=u'Ваш телефон:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'+7 (___) ___-__-__',
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label=u'E-mail:',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Ваш e-mail'
+            }
+        ),
+    )
+    date_call = forms.CharField(
+        label=u'Дата замера:',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Дата'
+            }
+        ),
+    )
+    time_call = forms.CharField(
+        label=u'Желаемое время:',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Время'
+            }
+        ),
+    )
+    comment = forms.CharField(
+        label=u'Комментарий менеджеру:',
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'Комментарий менеджеру'
             }
         ),
     )

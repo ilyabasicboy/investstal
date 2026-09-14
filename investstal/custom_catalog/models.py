@@ -21,18 +21,20 @@ GROUP_CHOICES = (
     (4, 'Металлоконструкции')
 )
 
-PARAMETER_TYPE_STANDARD = 1
-PARAMETER_TYPE_DIMENSIONS = 2
-PARAMETER_TYPE_DELIVERY = 3
-PARAMETER_TYPE_OPENING = 4
-PARAMETER_TYPE_FINISHING = 5
+PARAMETER_TYPE_STANDART_CONSTRUCTION = 1
+PARAMETER_TYPE_HARDWARE = 2
+PARAMETER_TYPE_HABARYTES = 3
+PARAMETER_TYPE_DELIVERY = 4
+PARAMETER_TYPE_INSTALLATION = 5
+PARAMETER_TYPE_FINISHING = 6
 
 PARAMETER_TYPES = (
-    (PARAMETER_TYPE_STANDARD,   u'Двери по наружной отделке'),
-    (PARAMETER_TYPE_DIMENSIONS, u'Двери по месту установки'),
-    (PARAMETER_TYPE_DELIVERY,   u'Двери по особенностям'),
-    (PARAMETER_TYPE_OPENING,    u'Металлоконструкции'),
-    (PARAMETER_TYPE_FINISHING,  u'Отделки'),
+    (PARAMETER_TYPE_STANDART_CONSTRUCTION,  u'Стандартная конструкция'),
+    (PARAMETER_TYPE_HARDWARE,               u'Фурнитура'),
+    (PARAMETER_TYPE_HABARYTES,              u'Габариты'),
+    (PARAMETER_TYPE_DELIVERY,               u'Доставка дверей'),
+    (PARAMETER_TYPE_INSTALLATION,           u'Установка дверей'),
+    (PARAMETER_TYPE_FINISHING,              u'Отделки'),
 )
 
 SORT_CHOICES = (
@@ -264,12 +266,11 @@ class Product(CustomCatalogBase):
 
     def get_parameters(self):
         exclude_types = [
-            PARAMETER_TYPE_DELIVERY,
-            PARAMETER_TYPE_DIMENSIONS,
-            PARAMETER_TYPE_OPENING,
             PARAMETER_TYPE_FINISHING
         ]
-        return self.parameters.exclude(parameter_group__group_type__in=exclude_types).order_by('parameter_group__order_key')
+        return self.parameters.prefetch_related('parameter_group').exclude(
+            parameter_group__group_type__in=exclude_types
+        ).order_by('parameter_group__order_key')
 
     def get_parameter_group_data(self, param_type):
 
@@ -303,54 +304,57 @@ class Product(CustomCatalogBase):
 
         result = {}
 
-        result['description_content'] = self.description_content
-        result['advantages'] = self.advantages.filter(type=1)
+        result['finishing'] = self._get_finishing_data()
 
-        params_delivery = self.parameters.filter(parameter_group__group_type=PARAMETER_TYPE_DELIVERY)
-        result['params_delivery'] = params_delivery
+        result['parameters'] = attach_images_queryset(self.get_parameters())
+        
+        cache.set(self.cache_key() + '_product_info', result, 600000)
+        return result
 
-        dimensions_data = self.get_parameter_group_data(PARAMETER_TYPE_DIMENSIONS)
-        result['params_dimensions'] = dimensions_data['all_values']
-        result['params_dimensions_default'] = dimensions_data['default']
-
-        opening_data = self.get_parameter_group_data(PARAMETER_TYPE_OPENING)
-        result['params_opening'] = opening_data['all_values']
-        result['params_opening_default'] = opening_data['default']
-
+    def _get_finishing_data(self):
         finishing_group_ids = self.parameters.filter(parameter_group__group_type=PARAMETER_TYPE_FINISHING).values_list('parameter_group__id', flat=True).distinct()
         finishing_data = {}
         if finishing_group_ids:
             try:
                 groups = ParameterGroup.objects.filter(id__in=finishing_group_ids).prefetch_related('parametervalue_set')
-                print(groups)
                 ct = ContentType.objects.get_for_model(ParameterValue)
+                chosen_params = self.parameters.filter(
+                    parameter_group__id__in=finishing_group_ids
+                ).select_related('parameter_group').order_by('id')
+                chosen_params_by_group_id = {}
+                chosen_param_ids = []
+
+                for param in chosen_params:
+                    if param.parameter_group_id not in chosen_params_by_group_id:
+                        chosen_params_by_group_id[param.parameter_group_id] = param
+                        chosen_param_ids.append(param.id)
+
+                chosen_images_by_param_id = {}
+                chosen_images = AttachmentImage.objects.filter(
+                    object_id__in=chosen_param_ids,
+                    content_type=ct
+                ).order_by('object_id', 'position', 'id')
+
+                for image in chosen_images:
+                    chosen_images_by_param_id.setdefault(image.object_id, []).append(image)
 
                 for group in groups:
                     param_values = group.parametervalue_set.all()
-                    chosen_param = None
-                    chosen_params = self.parameters.filter(parameter_group=group)
-                    chosen_image = None
-                    if chosen_params.exists():
-                        chosen_param = chosen_params.first()
-                        chosen_images = AttachmentImage.objects.filter(
-                            object_id=chosen_param.id,
-                            content_type=ct
-                        )
-                        if chosen_images.exists():
-                            chosen_image = chosen_images.first()
+                    chosen_param = chosen_params_by_group_id.get(group.id)
+                    chosen_images = []
+                    if chosen_param:
+                        chosen_images = chosen_images_by_param_id.get(chosen_param.id, [])
 
                     finishing_data[group] = {
                         'param_values': param_values,
                         'chosen_param': chosen_param,
-                        'chosen_image': chosen_image,
+                        'chosen_images': chosen_images,
                     }
-
-                result['finishing'] = finishing_data
             except:
                 pass
 
-        cache.set(self.cache_key() + '_product_info', result, 600000)
-        return result
+        return finishing_data
+
 
     def update_parameters(self):
         """Рекурсией собирает параметры от наследуемых разделов и сохраняет их в поле parameters."""
