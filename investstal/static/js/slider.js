@@ -108,4 +108,27 @@ $(function () {
 	};
 	swiperStepsInit();
 
+	//Init Product Gallery Slider
+	function swiperProductGalleryInit() {
+		const swiperProductGallery = document.querySelectorAll('.product__gallery');
+		swiperProductGallery.forEach((el) => {
+			let swiperProductGalleryThumbs = new Swiper(el.querySelector('.product--thumb'), {
+				slidesPerView: 'auto',
+				speed: 800,
+				freeMode: true,
+				direction: 'vertical',
+			});
+			let swiperProductGalleryParent = new Swiper(el.querySelector('.product--slider'), {
+				modules: [Thumbs],
+				slidesPerView: 'auto',
+				speed: 800,
+				thumbs: {
+					swiper: swiperProductGalleryThumbs,
+					autoScrollOffset: 3
+				}
+			});
+		});
+	};
+	swiperProductGalleryInit();
+
 });

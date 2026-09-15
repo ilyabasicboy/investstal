@@ -21,7 +21,7 @@
         {{ chunks.end_of_head.content }}
 
         {% block css %}
-            <link rel="stylesheet" href="{% static 'bundle/bundle.102b795436906a673dbc.css' %}">
+            <link rel="stylesheet" href="{% static 'bundle/bundle.f7c1e9a39dc2944eb55e.css' %}">
         {% endblock %}
     </head>
 
@@ -332,7 +332,23 @@
                     </section>
                 {% endblock %}
 
-                {% block content %}{% endblock %}
+                {% block content_narrow %}
+                    <section class="section-default section-default--top">
+                        <div class="container">
+                            <div class="default-page">
+                                <div class="default-page__sidebar">
+
+                                </div>
+
+                                <div class="default-page__content">
+                                    {% block content %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                {% endblock %}
+
+                {% block content_wide %}{% endblock %}
             </main>
 
             <footer class="footer">
@@ -488,7 +504,7 @@
             </div>
 
             {% block js %}
-                <script src="{% static 'bundle/bundle.102b795436906a673dbc.js' %}"></script>
+                <script src="{% static 'bundle/bundle.f7c1e9a39dc2944eb55e.js' %}"></script>
             {% endblock %}
 
             {{ chunks.end_of_body.content }}

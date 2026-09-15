@@ -1,0 +1,27 @@
+.default-page
+	display: flex
+	@media screen and (max-width: $sm-max)
+		flex-direction: column
+	&__sidebar
+		width: 280px
+		min-width: 280px
+		margin-right: 32px
+		@media screen and (max-width: $md-max)
+			width: 240px
+			min-width: 240px
+			margin-right: 24px
+		@media screen and (max-width: $sm-max)
+			min-width: 100%
+			width: 100%
+			margin-right: 0px
+			margin-bottom: 32px
+		@media screen and (max-width: $xs-max)
+			margin-bottom: 24px
+	&__content
+		width: calc(100% - 280px - 32px)
+		@media screen and (max-width: $md-max)
+			width: calc(100% - 240px - 24px)
+		@media screen and (max-width: $sm-max)
+			width: 100%
+		> .section-default:last-child
+			padding-bottom: 0px

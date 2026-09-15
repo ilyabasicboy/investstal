@@ -1,0 +1,94 @@
+.product
+	display: flex
+	@media screen and (max-width: $xs-max)
+		flex-direction: column
+	&__left
+		width: calc(55% - 40px)
+		margin-right: 40px
+		@media screen and (max-width: $sm-max)
+			width: calc(55% - 10px)
+			margin-right: 10px
+		@media screen and (max-width: $xs-max)
+			width: 100%
+			margin: 0px
+
+	&__gallery
+		width: 100%
+		display: flex
+		position: sticky
+		top: calc(60px + 90px + 24px)
+		@media screen and (max-width: $md-max)
+			top: calc(60px + 90px + 16px)
+		@media screen and (max-width: $xs-max)
+			margin: auto
+			width: max-content
+			max-width: 100%
+			top: auto
+			position: relative
+
+	&__slider
+		min-height: 330px
+		width: 100%
+		position: relative
+		@media screen and (max-width: $xs-max)
+			min-height: 260px
+		&-item
+			height: 330px
+			width: 100%
+			background-color: #fff
+			margin-right: 20px
+			@media screen and (max-width: $xs-max)
+				height: 260px
+				margin-right: 16px
+
+		&-img
+			width: 100%
+			height: 100%
+			display: flex
+			justify-content: center
+			cursor: pointer
+			img
+				height: 100%
+				width: auto
+				max-width: 100%
+				max-height: 100%
+				object-fit: contain
+
+	&__thumb
+		margin-right: 24px
+		height: 100%
+		width: 60px
+		min-height: 330px
+		max-height: 330px
+		min-width: 60px
+		@media screen and (max-width: $xs-max)
+			min-height: 260px
+			max-height: 260px
+			margin-right: 20px
+		&-item
+			height: 60px
+			width: 60px
+			min-width: 60px
+			background-color: #fff
+			margin-bottom: 20px
+			border: 3px solid transparent
+			transition: border 0.7s ease-in-out
+			@media screen and (max-width: $xs-max)
+				margin-bottom: 16px
+			&:last-child
+				margin-bottom: 0px
+			&.swiper-slide-thumb-active
+				border-color: rgba(4, 89, 166, 1)
+		.swiper-wrapper
+			flex-direction: column
+			align-items: flex-start
+
+	&__right
+		width: 45%
+		@media screen and (max-width: $sm-max)
+			width: calc(45% - 10px)
+			margin-left: 10px
+		@media screen and (max-width: $xs-max)
+			width: 100%
+			margin-left: 0px
+			margin-top: 32px

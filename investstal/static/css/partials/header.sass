@@ -151,6 +151,7 @@
 			justify-content: space-between
 			padding-right: 230px
 			width: 50%
+			height: 100%
 			@media screen and (max-width: $lg-max)
 				padding-right: 190px
 			@media screen and (max-width: $sm-max)
@@ -161,12 +162,14 @@
 				justify-content: flex-start
 				align-items: flex-start
 				width: 100%
+				height: initial
 		&-right
 			display: flex
 			align-items: center
 			justify-content: space-between
 			padding-left: 230px
 			width: 50%
+			height: 100%
 			@media screen and (max-width: $lg-max)
 				padding-left: 190px
 			@media screen and (max-width: $sm-max)
@@ -177,6 +180,7 @@
 				justify-content: flex-start
 				align-items: flex-start
 				width: 100%
+				height: initial
 		&-item
 			display: flex
 			flex-direction: column
@@ -415,7 +419,6 @@
 
 		@media screen and (min-width: $sm-min)
 			&:hover
-				background-color: #07579F
 				.header__more-menu
 					transform: translateY(0px)
 					pointer-events: auto
@@ -449,7 +452,7 @@
 
 		&-menu
 			position: absolute
-			top: -20px
+			top: 0px
 			right: 0px
 			z-index: 1
 			width: 320px

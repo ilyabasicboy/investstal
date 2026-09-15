@@ -1,0 +1,29 @@
+.section-breadcrumbs
+	margin-bottom: 32px
+	position: relative
+	z-index: 2
+	@media screen and (max-width: $xs-max)
+		margin-bottom: 24px
+
+.breadcrumbs
+	@media screen and (max-width: $xs-max)
+		display: flex
+		white-space: nowrap
+		margin-right: -15px
+	&__item
+		display: inline-block
+		@media screen and (max-width: $xs-max)
+			display: flex
+			&:last-child
+				padding-right: 30px
+		a
+			text-decoration: none
+			&:hover
+				text-decoration: underline
+	&__content
+		font-size: 13px
+		line-height: 16px
+		color: #AAAAAA
+		line-height: 20px
+		font-weight: 400
+		margin-right: 4px
