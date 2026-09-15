@@ -216,13 +216,11 @@ class CustomCatalogBase(CatalogBase):
         verbose_name=u'дополнительные параметры',
         blank=True,
     )
-    advantages = models.ManyToManyField(
-        'custom_pages.Advantage',
-        limit_choices_to={
-            'type': 1
-        },
-        verbose_name=u'преимущества заказа',
+    price_description = models.TextField(
+        verbose_name=u'описание цены',
+        help_text=u'текст возле цены на странице товара',
         blank=True,
+        null=True
     )
 
 
@@ -269,7 +267,7 @@ class Product(CustomCatalogBase):
         exclude_types = [
             PARAMETER_TYPE_FINISHING
         ]
-        return self.parameters.prefetch_related('parameter_group').exclude(
+        return self.parameters.select_related('parameter_group').exclude(
             parameter_group__group_type__in=exclude_types
         ).order_by('parameter_group__order_key')
 
@@ -310,6 +308,8 @@ class Product(CustomCatalogBase):
         result['parameters'] = attach_images_queryset(self.get_parameters())
 
         result['additional_parameters'] = self.get_additional_parameters()
+
+        result['price_description'] = get_model_field(self, 'price_description')
 
         result['similar_products'] = self.get_similar_products()
         
@@ -452,6 +452,11 @@ class Section(CustomCatalogBase, SectionCategoryBase, CatalogMixin):
         verbose_name = u'раздел'
         verbose_name_plural = u'разделы'
 
+    sort = models.TextField(
+        verbose_name=u'Сортировать по',
+        choices=SORT_CHOICES,
+        default=SORT_CHOICES[0][0],
+    )
 
     def get_products(self):
         result = cache.get(self.cache_key() + '_products')
@@ -485,6 +490,12 @@ class Category(CustomCatalogBase, SectionCategoryBase, CatalogMixin):
         Product,
         blank=True,
         verbose_name='товары'
+    )
+
+    sort = models.TextField(
+        verbose_name=u'Сортировать по',
+        choices=SORT_CHOICES,
+        default=SORT_CHOICES[0][0],
     )
 
     def get_products(self):

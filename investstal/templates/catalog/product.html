@@ -50,11 +50,13 @@
                             </div>
                         </div>
 
-                        <div class="product__content-item">
-                            <div class="product__info">
-                                ❗ Цена указана за базовую комплектацию и габариты
+                        {% if product_info.price_description %}
+                            <div class="product__content-item">
+                                <div class="product__info">
+                                    ❗ {{ product_info.price_description }}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
 
                     <div class="product__list">
@@ -188,13 +190,7 @@
                     Похожие товары
                 </div>
 
-                <div class="goods">
-                    {% for product in product_info.similar_products %}
-                        <div class="goods__item">
-                            {% include 'catalog/parts/product_card.html' %}
-                        </div>
-                    {% endfor %}
-                </div>
+                {% include 'catalog/parts/product_slider.html' with product_list=product_info.similar_products %}
             </section>
         {% endif %}
 

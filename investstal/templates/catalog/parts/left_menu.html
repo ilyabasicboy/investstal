@@ -1,0 +1,33 @@
+<aside class="sidebar scroll-custom-y">
+    <div class="sidebar__content">
+        {% with catalog_data=root.0.get_catalog_data %}
+            {% if catalog_data %}
+                <ul class="sidebar__menu scroll-custom-x-hidden--sm">
+                    {% for group_name, sections in catalog_data.items %}
+                        <li class="sidebar__menu-item">
+                            <div class="sidebar__menu-title">
+                                {{ group_name }}
+                            </div>
+
+                            <ul class="sidebar__submenu">
+                                {% for section in sections %}
+                                    <li class="sidebar__submenu-item">
+                                        <a class="sidebar__submenu-link {% if section.get_absolute_url in request.get_full_path %}active{% endif %}" href="{{ section.get_absolute_url }}">
+                                            {{ section.title }}
+                                        </a>
+
+                                        {% if section.get_products_count %}
+                                            <span class="sidebar__submenu-count">
+                                                {{ section.get_products_count }} шт.
+                                            </span>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</aside>
