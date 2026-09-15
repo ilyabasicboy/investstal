@@ -62,7 +62,7 @@
                             {% if product_info.finishing %}
                                 {% for finish_group, group_data in product_info.finishing.items %}
                                     <div class="product__list-item">
-                                        {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}href="#finish_modal_{{ group_data.chosen_param.id }}"{% endif %}>{{ group_data.chosen_param.value }}</a>
+                                        {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}class="facing-btn-js modal-open" data-href="#facing-modal" data-id="{{ finish_group.id }}" data-url="{% url 'facing_popup' obj_id=finish_group.id %}"{% endif %}>{{ group_data.chosen_param.value }}</a>
                                     </div>
                                 {% endfor %}
                             {% endif %}
@@ -101,7 +101,7 @@
                                     {{ parameter.parameter_group.title }}:
                                 </div>
 
-                                <a class="specifications__item-info {% if parameter.images %}parameter-btn-js modal-open{% endif %}" {% if parameter.images %}data-href="#parameter-modal_{{parameter.id}}"{% endif %} cursor-class="link-hover">
+                                <a class="specifications__item-info {% if parameter.images and parameter.show_images %}parameter-btn-js modal-open{% endif %}" {% if parameter.images and parameter.show_images %}data-href="#parameter-modal" data-id="{{ parameter.id }}" data-url="{% url 'parameter_popup' obj_id=parameter.id %}"{% endif %} cursor-class="link-hover">
                                     {{ parameter.value }}
                                 </a>
                             </div>
@@ -203,35 +203,13 @@
             </section>
         {% endif %}
 
-        {% for finish_group, group_data in product_info.finishing.items %}
-            {% if group_data.chosen_images and group_data.chosen_param.show_images %}
-                <div id="finish_modal_{{ group_data.chosen_param.id }}">
-                    {{ group_data.chosen_param.value }}
+        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="facing-modal" data-id>
+            <div class="modal__load"></div>
+        </div>
 
-                    Выбирайте вариант из списка наиболее популярных в нашем каталоге
-
-                    {% for image in group_data.chosen_images %}
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}">
-                        {{ image.title }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-
-        {% for parameter in product_info.parameters %}
-            {% if parameter.images and parameter.show_images %}
-                <div id="parameter_modal_{{ parameter.id }}">
-                    {{ parameter.value }}
-
-                    Выбирайте вариант из списка наиболее популярных в нашем каталоге
-
-                    {% for image in parameter.images %}
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}">
-                        {{ image.title }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
+        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="parameter-modal" data-id>
+            <div class="modal__load"></div>
+        </div>
     {% endwith %}
 
 {% endblock %}

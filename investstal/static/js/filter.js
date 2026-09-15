@@ -19,3 +19,37 @@ $('.filter-form-short input').on('change', function(e) {
     e.preventDefault();
     ajax_send($(this).closest('.filter-form-short'));
 });
+
+//Product finish popup
+$('.facing-btn-js').on('click', function() {
+    let id = $(this).data('id');
+    let url = $(this).data('url');
+    let popup = $('#facing-modal .modal__load');
+
+    if (id != popup.data('id')) {
+        popup.addClass('load');
+        $.get(url, function(data) {
+            popup.html(data['html']);
+            popup.data('id', id);
+
+            popup.removeClass('load');
+        });
+    }
+});
+
+//Product parameter popup
+$('.parameter-btn-js').on('click', function() {
+    let id = $(this).data('id');
+    let url = $(this).data('url');
+    let popup = $('#parameter-modal .modal__load');
+
+    if (id != popup.data('id')) {
+        popup.addClass('load');
+        $.get(url, function(data) {
+            popup.html(data['html']);
+            popup.data('id', id);
+
+            popup.removeClass('load');
+        });
+    }
+});
