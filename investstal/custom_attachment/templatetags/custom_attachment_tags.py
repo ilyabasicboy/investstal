@@ -7,9 +7,15 @@ from django import template
 from django.contrib.contenttypes.models import ContentType
 from pages.models import Page
 
+from ..utils import attach_images as attach_images_to_objects
 from ..models import CustomAttachmentImage, CustomImageGroup
 
 register = template.Library()
+
+
+@register.simple_tag
+def attach_images(objects, role=None, group=None):
+    return attach_images_to_objects(objects, role=role, group=group)
 
 
 @register.filter
