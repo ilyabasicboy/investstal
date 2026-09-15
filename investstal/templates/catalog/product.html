@@ -7,6 +7,14 @@
 
 {% block content %}
     {% with product_info=product.get_product_info product_images=product.get_product_images %}
+        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="facing-modal" data-id>
+            <div class="modal__load"></div>
+        </div>
+
+        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="parameter-modal" data-id>
+            <div class="modal__load"></div>
+        </div>
+
         <section class="section-default section-default--top">
             <div class="product">
                 {% get_images for object as images %}
@@ -26,11 +34,11 @@
                                     </div>
                                 </div>
 
-                                <div class="product__slider product--slider swiper mfp-gallery">
+                                <div class="product__slider product--slider swiper">
                                     <div class="swiper-wrapper">
                                         {% for image in images %}
                                             <div class="product__slider-item swiper-slide">
-                                                <a class="product__slider-img" href="{{ image.display.url }}">
+                                                <a class="product__slider-img" href="{{ image.display.url }}" data-fancybox="gallery-product" data-caption="{{ image.title|default:object.title }}">
                                                     <img src="{{ image.productslider.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}" {% if forloop.first %}itemprop="image"{% endif %}>
                                                 </a>
                                             </div>
@@ -53,7 +61,7 @@
                         {% if product_info.price_description %}
                             <div class="product__content-item">
                                 <div class="product__info">
-                                    ❗ {{ product_info.price_description }}
+                                    {{ product_info.price_description }}
                                 </div>
                             </div>
                         {% endif %}
@@ -87,27 +95,27 @@
 
         {% if product_info.parameters %}
             <section class="section-default section-default--top" id="section-specifications">
-                <div class="h2 title--nomargintop">
+                <div class="h4 title--nomargintop">
                     Характеристики:
                 </div>
 
                 <div class="specifications">
-                        {% for parameter in product_info.parameters %}
-                            <div class="specifications__item">
-                                <div class="specifications__item-left">
-                                    <div class="specifications__item-title">
-                                        {{ parameter.parameter_group.title }}:
-                                    </div>
-                                </div>
-
-                                <div class="specifications__item-right">
-                                    <a class="specifications__item-info {% if parameter.images and parameter.show_images %}parameter-btn-js modal-open{% endif %}" {% if parameter.images and parameter.show_images %}data-href="#parameter-modal" data-id="{{ parameter.id }}" data-url="{% url 'parameter_popup' obj_id=parameter.id %}"{% endif %}>
-                                        {{ parameter.value }}
-                                    </a>
+                    {% for parameter in product_info.parameters %}
+                        <div class="specifications__item">
+                            <div class="specifications__item-left">
+                                <div class="specifications__item-title">
+                                    {{ parameter.parameter_group.title }}:
                                 </div>
                             </div>
-                        {% endfor %}
-                    </div>
+
+                            <div class="specifications__item-right">
+                                <a class="specifications__item-info {% if parameter.images and parameter.show_images %}parameter-btn-js modal-open{% endif %}" {% if parameter.images and parameter.show_images %}data-href="#parameter-modal" data-id="{{ parameter.id }}" data-url="{% url 'parameter_popup' obj_id=parameter.id %}"{% endif %}>
+                                    {{ parameter.value }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </section>
         {% endif %}
 
@@ -115,7 +123,7 @@
             <section class="section-default section-default--top">
                 <div class="option">
                     <div class="option__header">
-                        <div class="option__title">
+                        <div class="h4 option__title">
                             Комплектация:
                         </div>
 
@@ -144,7 +152,7 @@
                                     <div class="option__slide swiper-slide" data-target="option_{{ parameter.parameter_group.id }}">
                                         <div class="option-card">
                                             <label class="option-card__label">
-                                                <input class="option-card__input" type="checkbox" value="{{ parameter.extra_price|default:0 }}">
+                                                <input class="option-card__input" type="checkbox">
 
                                                 <div class="option-card__content">
                                                     <div class="option-card__top">
@@ -190,16 +198,10 @@
                     Похожие товары
                 </div>
 
-                {% include 'catalog/parts/product_slider.html' with product_list=product_info.similar_products %}
+                <div class="goods--3">
+                    {% include 'catalog/parts/product_slider.html' with product_list=product_info.similar_products %}
+                </div>
             </section>
         {% endif %}
-
-        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="facing-modal" data-id>
-            <div class="modal__load"></div>
-        </div>
-
-        <div class="modal modal--big modal--padding mfp-hide mfp-anim" id="parameter-modal" data-id>
-            <div class="modal__load"></div>
-        </div>
     {% endwith %}
 {% endblock %}

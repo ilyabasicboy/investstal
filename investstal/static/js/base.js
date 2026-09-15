@@ -34,4 +34,17 @@ $(function () {
 		$(this).parent().next().slideToggle();
 	});
 
+	//Check Anchor Margin
+	let headerFixedHeight = 0;
+	headerFixedHeight = $('.header').height();
+
+	//Anchor Link
+	$('.anchor-link').on('click', function(e) {
+		e.preventDefault();
+		let elementClick = $(this).attr('href');
+		let destination = $(elementClick).offset().top - headerFixedHeight - 40;
+
+		$('html, body').animate( { scrollTop: destination }, 1500, 'swing');
+	});
+
 });

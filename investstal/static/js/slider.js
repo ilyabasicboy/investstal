@@ -131,4 +131,51 @@ $(function () {
 	};
 	swiperProductGalleryInit();
 
+    //Init Option Slider
+    function swiperOptionInit() {
+        const swiperOptionBlock = document.querySelectorAll('.option__slider');
+        swiperOptionBlock.forEach((el) => {
+            let swiperOption = new Swiper(el.querySelector('.option--slider'), {
+                slidesPerView: 'auto',
+                observer: true,
+                observeParents: true,
+                speed: 800,
+            });
+        });
+    };
+    swiperOptionInit();
+
+    //Update Option Slider
+	function swiperOptionUpdate(sliderElement) {
+		let domElement = sliderElement[0] || sliderElement;
+		let swiper = domElement.swiper;
+		if (swiper) {
+			swiper.update();
+			swiper.slideTo(0);
+		}
+	};
+
+	//Filter Option Slider
+	$('.option__list-item').on('click', function() {
+		let target = $(this).data('link');
+
+		$('.option__list-item').removeClass('active');
+		$(this).addClass('active');
+
+		if (target === 'option_all') {
+			$('.option__slide').fadeIn(300).promise().done(function() {
+				$('.option--slider').each(function() {
+					swiperOptionUpdate(this);
+				});
+			});
+		} else {
+			$('.option__slide').hide();
+			$('.option__slide[data-target="' + target + '"]').fadeIn(300).promise().done(function() {
+				$('.option--slider').each(function() {
+					swiperOptionUpdate(this);
+				});
+			});
+		}
+	});
+
 });
