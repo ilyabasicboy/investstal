@@ -19,6 +19,11 @@
 	position: relative
 	overflow: hidden
 	transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out, border 0.5s ease-in-out, opacity 0.5s ease-in-out
+	@media screen and (max-width: $xs-max)
+		height: 32px
+		font-size: 13px
+		line-height: 18px
+		padding: 3px 24px
 
 	&--uppercase
 		text-transform: uppercase

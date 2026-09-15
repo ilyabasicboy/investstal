@@ -1,73 +1,88 @@
 {% extends 'catalog/base.html' %}
 {% load base_tags feedback_tags custom_attachment_tags attachment_tags %}
 
-
 {% block content_title %}
     {{ object.long_title|default:object.title }} <div class="title-page__info">({{ object.get_vendor_code }})</div>
 {% endblock %}
 
 {% block content %}
     {% with product_info=product.get_product_info product_images=product.get_product_images %}
-        <section class="item__block product">
-            <div>
-                {% get_images for object as images %}
-                {% if images %}
-                    {% with images=images %}
-                        <div class="product__left">
-                            <div class="product__gallery {% if full_page %}product__gallery--check{% endif %}">
-                                <div class="product__thumb product--thumb swiper">
-                                    <div class="swiper-wrapper">
-                                        {% for image in images %}
-                                            <div class="product__thumb-item swiper-slide">
-                                                <a class="product__slider-img">
-                                                    <img src="{{ image.productthumb.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}">
-                                                </a>
-                                            </div>
-                                        {% endfor %}
+        <section class="section-default section-default--top">
+            <div class="container">
+                <div class="product">
+                    {% get_images for object as images %}
+                    {% if images %}
+                        {% with images=images %}
+                            <div class="product__left">
+                                <div class="product__gallery">
+                                    <div class="product__thumb product--thumb swiper">
+                                        <div class="swiper-wrapper">
+                                            {% for image in images %}
+                                                <div class="product__thumb-item swiper-slide">
+                                                    <a class="product__slider-img">
+                                                        <img src="{{ image.productthumb.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}">
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="product__slider product--slider swiper mfp-gallery">
-                                    <div class="swiper-wrapper">
-                                        {% for image in images %}
-                                            <div class="product__slider-item swiper-slide">
-                                                <a class="product__slider-img" href="{{ image.watermarkpicture.url }}">
-                                                    <img src="{{ image.productslider.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}" {% if forloop.first %}itemprop="image"{% endif %}>
-                                                </a>
-                                            </div>
-                                        {% endfor %}
+                                    <div class="product__slider product--slider swiper mfp-gallery">
+                                        <div class="swiper-wrapper">
+                                            {% for image in images %}
+                                                <div class="product__slider-item swiper-slide">
+                                                    <a class="product__slider-img" href="{{ image.display.url }}">
+                                                        <img src="{{ image.productslider.url }}" title="{{ image.title|default:object.title }}"  alt="{{ image.title|default:object.title }}" {% if forloop.first %}itemprop="image"{% endif %}>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        {% endwith %}
+                    {% endif %}
+
+                    <div class="product__right">
+                        <div class="product__content">
+                            <div class="product__content-item">
+                                <div class="product__price">
+                                    от <span>{{ product.price|price_format }}</span> руб.{% if product.square_price %}/м<sup>2</sup>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="product__content-item">
+                                <div class="product__info">
+                                    ❗ Цена указана за базовую комплектацию и габариты
+                                </div>
+                            </div>
                         </div>
-                    {% endwith %}
-                {% endif %}
-            </div>
-            <div class="product__price-default">
-                от {{ product.price|price_format }} руб.{% if product.square_price %}/м<sup>2</sup>{% endif %}
-            </div>
-            <div>
-                Цена указана за базовую комплектацию и габариты
-            </div>
 
-            <div>
-                {% if product_info.finishing %}
-                    {% for finish_group, group_data in product_info.finishing.items %}
-                        {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}href="#finish_modal_{{ group_data.chosen_param.id}}"{% endif %}>{{ group_data.chosen_param.value }}</a>
-                    {% endfor %}
-                {% endif %}
+                        <div class="product__list">
+                            {% if product_info.finishing %}
+                                {% for finish_group, group_data in product_info.finishing.items %}
+                                    <div class="product__list-item">
+                                        {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}href="#finish_modal_{{ group_data.chosen_param.id }}"{% endif %}>{{ group_data.chosen_param.value }}</a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
 
-                <div>
-                    Характеристики: <a href="">Смотреть все</a>
-                </div>
+                            <div class="product__list-item">
+                                Характеристики: <a href="">Смотреть все</a>
+                            </div>
+                        </div>
 
-                <div>
-                    <a class="modal-open" data-href="#rackman-modal">
-                        Вызвать замерщика для точного расчета
-                    </a>
-                    <a class="modal-open product__btn" data-href="#order-modal">
-                        Заказать
-                    </a>
+
+                            <div>
+                                <a class="modal-open" data-href="#rackman-modal">
+                                    Вызвать замерщика для точного расчета
+                                </a>
+                                <a class="modal-open product__btn" data-href="#order-modal">
+                                    Заказать
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
