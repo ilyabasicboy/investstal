@@ -15,6 +15,9 @@
 		background-size: cover
 		background-position: center
 		background-repeat: no-repeat
+		@media screen and (max-width: $sm-max)
+			padding: 40px
+			padding-top: 60px
 	&__content
 		display: flex
 		flex-direction: column
@@ -25,6 +28,15 @@
 		font-weight: 600
 		max-width: 560px
 		position: relative
+		@media screen and (max-width: $md-max)
+			font-size: 36px
+			line-height: 42px
+		@media screen and (max-width: $sm-max)
+			font-size: 28px
+			line-height: 36px
+		@media screen and (max-width: $xs-max)
+			font-size: 24px
+			line-height: 30px
 		&:after
 			content: ''
 			display: block
@@ -32,17 +44,30 @@
 			background-color: #FBCC09
 			height: 3px
 			width: 40%
+			@media screen and (max-width: $sm-max)
+				margin-top: 16px
 	&__text
 		font-size: 18px
 		line-height: 24px
 		color: #fff
 		margin-top: 20px
+		@media screen and (max-width: $md-max)
+			font-size: 17px
+			line-height: 23px
+		@media screen and (max-width: $sm-max)
+			font-size: 16px
+			line-height: 22px
+		@media screen and (max-width: $xs-max)
+			font-size: 15px
+			line-height: 21px
 	&__buttons
 		display: flex
 		flex-wrap: wrap
 		margin-right: -16px
 		margin-bottom: -10px
 		margin-top: 40px
+		@media screen and (max-width: $sm-max)
+			margin-top: 24px
 		.btn
 			margin-right: 16px
 			margin-bottom: 10px

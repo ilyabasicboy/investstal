@@ -9,12 +9,16 @@
 	z-index: 102
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)
 	background-color: #fff
+	@media screen and (max-width: $xs-max)
+		height: 70px
 	&__top
 		background: linear-gradient(270deg, rgba(245, 245, 245, 1) 0%, rgba(250, 250, 250, 1) 100%)
 		width: 100%
 		height: 60px
 		display: flex
 		align-items: center
+		@media screen and (max-width: $xs-max)
+			display: none
 		.container
 			display: flex
 			align-items: center
@@ -25,19 +29,47 @@
 		align-items: center
 		justify-content: space-between
 		width: 100%
+		@media screen and (max-width: $sm-max)
+			flex-wrap: wrap
+			justify-content: flex-start
 		&-item + &-item
 			margin-left: 40px
+			@media screen and (max-width: $xl-max)
+				margin-left: 32px
+			@media screen and (max-width: $md-max)
+				margin-left: 32px
+			@media screen and (max-width: $sm-max)
+				margin-left: 0px
 		&-item
 			display: flex
 			align-items: center
 			font-size: 18px
 			line-height: 22px
 			color: #333
+			white-space: nowrap
+			@media screen and (max-width: $xl-max)
+				font-size: 16px
+				line-height: 20px
+			@media screen and (max-width: $md-max)
+				font-size: 15px
+				line-height: 19px
+			@media screen and (max-width: $sm-max)
+				font-size: 13px
+				line-height: 17px
+				width: 50%
+				padding-right: 32px
 			span
 				border-bottom: 1px dashed #333
 			svg
 				flex-shrink: 0
 				margin-right: 6px
+			&--address
+				white-space: initial
+				@media screen and (max-width: $sm-max)
+					margin-bottom: 6px
+			&--email
+				@media screen and (max-width: $sm-max)
+					margin-bottom: 6px
 		a.header__contacts-item
 			span
 				border-bottom: 1px solid #333
@@ -47,9 +79,479 @@
 					border-color: transparent
 
 	&__social
-		margin-left: 40px
+		margin-left: 80px
+		@media screen and (max-width: $xl-max)
+			margin-left: 60px
+		@media screen and (max-width: $md-max)
+			margin-left: 32px
+		@media screen and (max-width: $sm-max)
+			margin-left: 0px
 
 	&__bottom
 		height: 90px
 		width: 100%
 		display: flex
+		@media screen and (max-width: $xs-max)
+			position: fixed
+			top: 70px
+			left: 0
+			width: 100%
+			height: calc(100% - 70px)
+			transform: translate3d(-100%, 0, 0)
+			opacity: 0
+			overflow: hidden
+			overflow-y: auto
+			padding: 40px 16px
+			display: flex
+			flex-direction: column
+			align-items: flex-start
+			background-color: #333
+			&.anim--active
+				transition: transform 0.5s ease-in-out, opacity 0.5s linear
+			&.active
+				transform: matrix(1,0,0,1,0,0)
+				opacity: 1
+			.container
+				padding: 0px
+
+	&__list
+		height: 100%
+		width: 100%
+		display: flex
+		flex-direction: column
+
+	&__logo
+		width: 380px
+		position: absolute
+		display: flex
+		align-items: center
+		left: 50%
+		transform: translateX(-50%)
+		top: 8px
+		@media screen and (max-width: $lg-max)
+			width: 320px
+		@media screen and (max-width: $sm-max)
+			width: 234px
+		@media screen and (max-width: $xs-max)
+			display: none
+
+	&__menu
+		width: 100%
+		height: 100%
+		display: flex
+		align-items: center
+		justify-content: center
+		position: relative
+		@media screen and (max-width: $xs-max)
+			flex-direction: column
+			align-items: flex-start
+		&-left
+			display: flex
+			align-items: center
+			justify-content: space-between
+			padding-right: 230px
+			width: 50%
+			@media screen and (max-width: $lg-max)
+				padding-right: 190px
+			@media screen and (max-width: $sm-max)
+				padding-right: 137px
+			@media screen and (max-width: $xs-max)
+				padding: 0px
+				flex-direction: column
+				justify-content: flex-start
+				align-items: flex-start
+				width: 100%
+		&-right
+			display: flex
+			align-items: center
+			justify-content: space-between
+			padding-left: 230px
+			width: 50%
+			@media screen and (max-width: $lg-max)
+				padding-left: 190px
+			@media screen and (max-width: $sm-max)
+				padding-left: 137px
+			@media screen and (max-width: $xs-max)
+				padding: 0px
+				flex-direction: column
+				justify-content: flex-start
+				align-items: flex-start
+				width: 100%
+		&-item
+			display: flex
+			flex-direction: column
+			@media screen and (max-width: $xs-max)
+				width: 100%
+				margin-bottom: 16px
+			&--catalog
+				.header__menu-link
+					box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08)
+					background-color: #333333
+					border: none
+					padding: 8px 20px
+					color: #fff
+					display: flex
+					align-items: center
+					position: relative
+					z-index: 3
+					@media screen and (max-width: $xs-max)
+						padding: 0px
+						box-shadow: none
+					.header__menu-burger
+						margin-right: 6px
+						flex-shrink: 0px
+						@media screen and (max-width: $xs-max)
+							display: none
+			@media screen and (min-width: $sm-min)
+				&:hover .header__submenu
+					opacity: 1
+					transform: translateY(0px)
+					pointer-events: auto
+		&-item + &-item
+			margin-left: 16px
+			@media screen and (max-width: $xs-max)
+				margin-left: 0px
+		&-content
+			width: 100%
+			display: flex
+		&-link
+			font-size: 14px
+			line-height: 20px
+			text-transform: uppercase
+			color: #333
+			transition: border 0.5s ease-in-out
+			border-bottom: 1px solid transparent
+			@media screen and (max-width: $xs-max)
+				border: none
+				color: #fff
+				flex-grow: 1
+			&:hover
+				border-color: #333
+		&-icon
+			display: none
+			@media screen and (max-width: $xs-max)
+				display: flex
+				align-items: center
+				justify-content: center
+				width: 50px
+				height: 22px
+				position: relative
+				top: -2px
+				right: auto
+				transition: transform 0.5s ease-in-out
+				svg
+					position: absolute
+					top: 50%
+					right: 0
+					transform: translateY(-50%)
+					transition: transform 0.5s ease-in-out
+					height: 8px
+					width: auto
+				&.active, &.active-mobile
+					svg
+						transform: translateY(-50%) rotate(180deg)
+			svg
+				path
+					transition: stroke 0.5s ease-in-out
+	&__submenu
+		width: calc(100% + 30px)
+		position: absolute
+		z-index: 2
+		top: 0px
+		left: -15px
+		background-color: #333
+		opacity: 0
+		transform: translateY(4px)
+		will-change: transform
+		pointer-events: none
+		transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out
+		overflow: hidden
+		&:before
+			content: ''
+			width: 800px
+			height: 158px
+			opacity: 0.15
+			background-color: rgba(217, 4, 16, 1)
+			filter: blur(100px)
+			position: absolute
+			top: 50%
+			transform: translateY(-50%)
+			left: 0px
+			pointer-events: none
+			@media screen and (max-width: $xs-max)
+				display: none
+		&:after
+			content: ''
+			width: 800px
+			height: 158px
+			opacity: 0.15
+			background-color: #FDE011
+			filter: blur(100px)
+			position: absolute
+			top: 50%
+			transform: translateY(-50%)
+			right: 0px
+			@media screen and (max-width: $xs-max)
+				left: 0px
+		@media screen and (min-width: $sm-min)
+			display: block!important
+		@media screen and (max-width: $xs-max)
+			position: relative
+			top: auto
+			max-height: initial
+			padding: 0px
+			left: 0px
+			background: none
+			transform: none
+			opacity: 1
+			pointer-events: auto
+			overflow: hidden
+			display: none
+			width: 100%
+			margin-top: 10px
+			&.active-mobile
+				display: block
+		&-overflow
+			margin-top: 90px
+			padding-right: 0px!important
+			max-height: calc(100vh - 60px - 90px)
+			@supports (height: 100dvh)
+				max-height: calc(100vh - 60px - 90px)
+			@media screen and (max-width: $xs-max)
+				max-height: initial
+				margin-top: 0px
+				overflow: hidden
+		&-wrapper
+			padding: 36px
+			padding-top: 20px
+			padding-bottom: 60px
+			display: flex
+			flex-wrap: wrap
+			margin-right: -80px
+			position: relative
+			z-index: 1
+			@media screen and (max-width: $md-max)
+				margin-right: -40px
+			@media screen and (max-width: $sm-max)
+				margin-right: -32px
+			@media screen and (max-width: $xs-max)
+				margin-right: 0px
+				padding: 24px 16px
+		&-item + &-item
+			@media screen and (max-width: $xs-max)
+				margin-top: 32px
+		&-item
+			width: calc((100% / 4) - 80px)
+			margin-right: 80px
+			margin-bottom: 40px
+			@media screen and (max-width: $md-max)
+				width: calc((100% / 4) - 40px)
+				margin-right: 40px
+			@media screen and (max-width: $sm-max)
+				width: calc((100% / 3) - 32px)
+				margin-right: 32px
+			@media screen and (max-width: $xs-max)
+				width: 100%
+				margin-right: 0px
+				margin-bottom: 0px
+		&-content
+			width: 100%
+			display: flex
+		&-link
+			width: 100%
+			color: #BBBBBB
+			font-size: 14px
+			line-height: 20px
+			font-weight: 600
+			padding-bottom: 8px
+			border-bottom: 1px solid #BBBBBB
+			text-transform: uppercase
+			@media screen and (max-width: $sm-max)
+				font-size: 13px
+				line-height: 19px
+	&__childmenu
+		margin-top: 20px
+		display: flex
+		flex-direction: column
+		@media screen and (max-width: $sm-max)
+			margin-top: 12px
+		&-item
+			width: 100%
+		&-item + &-item
+			margin-top: 12px
+		&-content
+			width: 100%
+		&-link
+			font-size: 16px
+			line-height: 22px
+			font-weight: 500
+			color: #fff
+			@media screen and (max-width: $sm-max)
+				font-size: 14px
+				line-height: 20px
+			&:hover
+				.header__childmenu-name
+					text-decoration: underline
+		&-count
+			font-size: 14px
+			line-height: 20px
+			color: #AAAAAA
+
+	&__more
+		width: 60px
+		min-width: 60px
+		height: 100%
+		display: flex
+		align-items: center
+		justify-content: center
+		position: relative
+		pointer-events: auto
+		cursor: pointer
+		transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out
+		&.hidden
+			display: none
+		@media screen and (max-width: $xs-max)
+			display: none
+
+		@media screen and (min-width: $sm-min)
+			&:hover
+				background-color: #07579F
+				.header__more-menu
+					transform: translateY(0px)
+					pointer-events: auto
+					opacity: 1
+
+					.header__submenu
+						pointer-events: auto
+
+				.header__more-close
+					pointer-events: auto
+					opacity: 1
+					transition: opacity 0.5s ease-in-out
+
+				.header__more-open
+					pointer-events: none
+					opacity: 0
+
+		svg
+			position: absolute
+			top: 50%
+			left: 50%
+			transform: translate(-50%, -50%)
+
+		&-close
+			opacity: 0
+			pointer-events: none
+			z-index: 2
+
+		&-open
+			transition: opacity 0.5s ease-in-out
+
+		&-menu
+			position: absolute
+			top: -20px
+			right: 0px
+			z-index: 1
+			width: 320px
+			background-color: #333
+			padding: 30px
+			transform: translateY(4px)
+			opacity: 0
+			pointer-events: none
+			overflow: hidden
+			transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out
+			@media screen and (max-width: $sm-max)
+				padding: 24px 20px
+				width: 280px
+
+			&:before
+				content: ''
+				width: 80px
+				height: 80px
+				opacity: 0.8
+				background-color: rgba(217, 4, 16, 1)
+				filter: blur(100px)
+				position: absolute
+				top: 50%
+				left: 50%
+				transform: translate(-50%, -50%)
+				pointer-events: none
+
+			.header__menu-item + .header__menu-item
+				margin-top: 16px
+				margin-left: 0px
+				@media screen and (max-width: $sm-max)
+					margin-top: 12px
+
+			.header__menu-link
+				height: auto
+				padding: 0px
+				justify-content: flex-end
+				text-align: right
+				white-space: initial
+				color: #fff
+				&:hover
+					border-color: #fff
+
+	&__hidden
+		display: none
+		@media screen and (max-width: $xs-max)
+			display: flex
+			flex-direction: column
+			width: 100%
+			margin-top: 20px
+		.header__contacts
+			flex-direction: column
+			align-items: flex-start
+			&-item
+				width: 100%
+				padding: 0px
+				color: #fff
+				font-size: 15px
+				line-height: 21px
+			&-item + .header__contacts-item
+				margin-top: 12px
+		.header__social
+			margin-top: 20px
+
+	&__mobile
+		display: none
+		@media screen and (max-width: $xs-max)
+			display: flex
+			width: 100%
+			height: 100%
+		.container
+			display: flex
+			align-items: center
+			justify-content: center
+		&-logo
+			width: 160px
+			display: flex
+			align-items: center
+		&-contacts
+			position: absolute
+			top: 50%
+			left: 15px
+			transform: translateY(-50%)
+			display: flex
+			a
+				color: #333
+				display: flex
+				align-items: center
+				justify-content: center
+				font-size: 12px
+				line-height: 14px
+				width: 30px
+				height: 30px
+				background-color: #333
+				svg
+					height: 40%
+					width: auto
+			a + a
+				margin-left: 16px
+
+	&__burger
+		position: absolute
+		top: 50%
+		right: 15px
+		transform: translateY(-50%)

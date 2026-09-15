@@ -18,4 +18,20 @@ $(function () {
         $(item).wrap('<div class="iframe-wrap" style="max-width: ' + videoMaxWidth + 'px;"></div>');
     });
 
+	//Header menu toggle
+	$('.header__burger').on('click', function(event) {
+		event.preventDefault();
+		$(this).toggleClass('active');
+		$('.header__bottom').toggleClass('active');
+		$('.header__bottom').addClass('anim--active');
+		$('body').toggleClass('noscroll');
+	});
+
+	//Header submenu toggle
+	$('.header__menu-icon').on('click', function(event) {
+		event.preventDefault();
+		$(this).toggleClass('active');
+		$(this).parent().next().slideToggle();
+	});
+
 });
