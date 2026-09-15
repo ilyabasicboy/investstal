@@ -1,6 +1,10 @@
 {% extends 'catalog/base.html' %}
 {% load base_tags custom_catalog_tags %}
 
+{% block content_title %}
+    {{ object.long_title|default:object.title }} (<span class="products_count">{{ object.get_products_count }}</span>)
+{% endblock %}
+
 {% block content %}
     {% with products=object.get_sorted_products %}
         <section class="section-default section-default--top">
@@ -11,7 +15,7 @@
                             <div class="catalog__panel">
                                 <div class="catalog__panel-sticky">
                                     <div class="catalog__panel-content">
-                                        {# include 'catalog/parts/filter_sort.html' #}
+                                        {% include 'catalog/parts/filter_sort.html' %}
                                     </div>
                                 </div>
                             </div>
@@ -36,4 +40,3 @@
         </section>
     {% endwith %}
 {% endblock %}
-

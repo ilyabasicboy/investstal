@@ -44,8 +44,6 @@ SORT_CHOICES = (
     ('desc', 'Дороже сверху'),
 )
 
-
-
 class CatalogMixin:
 
     def get_products(self):
@@ -90,6 +88,47 @@ class CatalogMixin:
             else:
                 result = result.order_by('-id')
 
+        return result
+
+    def get_categories_filter(self):
+        result = cache.get(self.cache_key() + '_categories_filter', 0)
+        if not result:
+            products = self.get_products()
+            section_ids = products.values_list('tree__parent__object_id', flat=True).distinct()
+            category_ids = products.values_list('category__id', flat=True).distinct()
+
+            sections = Section.objects.filter(id__in=section_ids, show=True, show_on_filter=True)
+            categories = Category.objects.filter(id__in=category_ids, show=True, show_on_filter=True)
+
+            if hasattr(self, 'filter_exclude_section') and self.filter_exclude_section.exists():
+                sections = sections.exclude(id__in=self.filter_exclude_section.all())
+            if hasattr(self, 'filter_exclude_category') and self.filter_exclude_category.exists():
+                categories = categories.exclude(id__in=self.filter_exclude_category.all())
+
+            if isinstance(self, Root):
+                sections = get_content_objects(
+                    self.tree.get().get_children().filter(
+                        content_type__model="section",
+                        object_id__in=sections
+                    )
+                )
+                categories = get_content_objects(
+                    self.tree.get().get_children().filter(
+                        content_type__model="category",
+                        object_id__in=categories
+                    )
+                )
+            elif isinstance(self, Category):
+                categories = categories.exclude(id=self.id)
+            elif isinstance(self, Section):
+                sections = sections.exclude(id=self.id)
+
+            result = sorted(
+                chain(sections, categories),
+                key=lambda x: x.title.lower()
+            )
+
+            cache.set(self.cache_key() + '_categories_filter', result, 600000)
         return result
 
 
@@ -177,6 +216,32 @@ class SectionCategoryBase(models.Model):
         blank=True,
         null=True
     )
+    show_on_filter = models.BooleanField(
+        verbose_name=u'отображать в фильтре',
+        default=True
+    )
+    filter_exclude_section = models.ManyToManyField(
+        to='custom_catalog.Section',
+        verbose_name=u'разделы, исключенные из вывода в фильтр',
+        related_name='+',
+        limit_choices_to={
+            'show_on_filter': True,
+        },
+        blank=True
+    )
+    filter_exclude_category = models.ManyToManyField(
+        to='custom_catalog.Category',
+        verbose_name=u'категории, исключенные из вывода в фильтр',
+        related_name='+',
+        limit_choices_to={
+            'show_on_filter': True,
+        },
+        blank=True
+    )
+    hide_filter_category = models.BooleanField(
+        verbose_name=u'скрыть фильтр по категориям',
+        default=False
+    )
     sort = models.CharField(
         verbose_name=u'Сортировать по',
         choices=SORT_CHOICES,
@@ -231,7 +296,7 @@ class Product(CustomCatalogBase):
 
     leaf = True
     title = models.CharField(verbose_name=u'название', max_length=400)
-    price = models.CharField(verbose_name=u'цена', max_length=255, blank=True, default='')
+    price = models.PositiveIntegerField(verbose_name=u'цена', default=0)
     square_price = models.BooleanField(
         verbose_name=u'Цена за 1 кв.м',
         default=False,
@@ -461,7 +526,10 @@ class Section(CustomCatalogBase, SectionCategoryBase, CatalogMixin):
     def get_products(self):
         result = cache.get(self.cache_key() + '_products')
         if result is None:
-            result = Product.objects.filter(tree__parent__object_id=self.id, show=True)
+            product_ids = self.tree.get().get_descendants().filter(
+                content_type__model='product'
+            ).values_list('object_id', flat=True)
+            result = Product.objects.filter(id__in=product_ids, show=True)
             cache.set(self.cache_key() + '_products', result, 600000)
         return result
 

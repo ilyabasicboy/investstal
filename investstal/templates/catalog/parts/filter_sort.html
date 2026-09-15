@@ -1,0 +1,43 @@
+<form class="filter filter--bg filter-form" action="{% url 'filter_products' %}" novalidate>
+    <input type="hidden" name="ct" value="{{ object.tree.get.content_type.id }}">
+    <input type="hidden" name="obj" value="{{ object.id }}">
+
+    <div class="filter__content">
+        <div class="filter__left">
+            <div class="filter__select select">
+                <select name="dir">
+                    <option value="new" {% if object.sort == 'new' or not object.sort %}selected{% endif %}>Новинки сверху</option>
+                    <option value="asc" {% if object.sort == 'asc' %}selected{% endif %}>Дешевле сверху</option>
+                    <option value="desc" {% if object.sort == 'desc' %}selected{% endif %}>Дороже сверху</option>
+                    <option value="popular" {% if object.sort == 'popular' %}selected{% endif %}>Популярные</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filter__right">
+            <div class="filter__price">
+                <label class="filter__price-field">
+                    <span>Цена от</span>
+                    <input class="filter__price-input filter__price-input--min" name="min_price" type="number" placeholder="{{ object.get_min_price|default:0 }}" min="{{ object.get_min_price|default:0 }}" max="{{ object.get_max_price|default:0 }}">
+                </label>
+                <label class="filter__price-field">
+                    <span>до</span>
+                    <input class="filter__price-input filter__price-input--max" name="max_price" type="number" placeholder="{{ object.get_max_price|default:0 }}" min="{{ object.get_min_price|default:0 }}" max="{{ object.get_max_price|default:0 }}">
+                </label>
+            </div>
+
+            {% if not object.hide_filter_category and object.get_categories_filter %}
+                <div class="filter__select select">
+                    <select name="category">
+                        <option value="" selected>Все товары</option>
+                        {% for choice in object.get_categories_filter %}
+                            <option value="{{ choice.tree.get.content_type.model }}_{{ choice.id }}">
+                                {{ choice.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</form>
