@@ -1,0 +1,65 @@
+.option
+	width: 100%
+	display: flex
+	flex-direction: column
+
+	&__header
+		display: flex
+		align-items: flex-start
+		margin-bottom: 20px
+		@media screen and (max-width: $xs-max)
+			margin-bottom: 16px
+		@media screen and (max-width: $xs-max)
+			flex-direction: column
+	&__title
+		margin: 0px
+		margin-right: 24px
+		white-space: nowrap
+		@media screen and (max-width: $xs-max)
+			white-space: initial
+			margin-right: 0px
+			margin-bottom: 8px
+
+	&__list
+		display: flex
+		flex-wrap: wrap
+		margin-right: -20px
+		margin-bottom: -10px
+		margin-top: 4px
+		@media screen and (max-width: $sm-max)
+			margin-top: 2px
+			margin-right: -16px
+			margin-bottom: -4px
+		&-item
+			margin-right: 20px
+			margin-bottom: 10px
+			cursor: pointer
+			font-size: 16px
+			line-height: 22px
+			color: #333
+			@media screen and (max-width: $xs-max)
+				font-size: 14px
+				line-height: 20px
+				margin-right: 16px
+				margin-bottom: 4px
+			span
+				padding-bottom: 2px
+				border-bottom: 1px dashed #333
+				transition: border 0.5s ease-in-out
+			&.active, &:hover
+				span
+					border-color: transparent
+
+	&__slider
+		display: flex
+
+	&--slider
+		width: 100%
+		.swiper-wrapper
+			margin-bottom: 24px
+
+	&__slide
+		width: 190px
+		margin-right: 24px
+		@media screen and (max-width: $xs-max)
+			margin-right: 16px

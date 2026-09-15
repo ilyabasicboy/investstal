@@ -36,6 +36,8 @@ class SectionAdminForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'large-input'}),
             'slug': forms.TextInput(attrs={'class': 'large-input'}),
             'additional_parameters': FilteredSelectMultiple(verbose_name='Товары', is_stacked=False),
+            'filter_exclude_section': FilteredSelectMultiple(verbose_name='Разделы, исключенные из вывода в фильтр', is_stacked=False),
+            'filter_exclude_category': FilteredSelectMultiple(verbose_name='Категории, исключенные из вывода в фильтр', is_stacked=False),
         }
 
 

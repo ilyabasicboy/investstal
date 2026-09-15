@@ -142,6 +142,16 @@ class Rackman(BaseFileForm, BaseForm):
         Вызвать замерщика
     """
 
+    link = forms.CharField(
+        label='Ссылка на товар',
+        widget=forms.HiddenInput,
+        required=False
+    )
+    info = forms.CharField(
+        label='Информация о товаре',
+        widget=forms.HiddenInput,
+        required=False
+    )
     name = forms.CharField(
         label=u'Ваше имя:*',
         widget=forms.TextInput(
@@ -154,7 +164,7 @@ class Rackman(BaseFileForm, BaseForm):
         label=u'Ваш телефон:*',
         widget=forms.TextInput(
             attrs={
-                'placeholder':'+7 (___) ___-__-__',
+                'placeholder':'Телефон',
             }
         ),
     )
@@ -171,7 +181,7 @@ class Rackman(BaseFileForm, BaseForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Дата'
+                'placeholder': 'Дата замера'
             }
         ),
     )
@@ -180,7 +190,7 @@ class Rackman(BaseFileForm, BaseForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Время'
+                'placeholder': 'Желаемое время'
             }
         ),
     )
@@ -214,7 +224,7 @@ class Order(BaseForm):
         label=u'Ваше имя:*',
         widget=forms.TextInput(
             attrs={
-
+                'placeholder':'Ваше имя',
             }
         ),
     )
@@ -222,7 +232,7 @@ class Order(BaseForm):
         label=u'Ваш телефон:*',
         widget=forms.TextInput(
             attrs={
-                'placeholder':'+7 (___) ___-__-__',
+                'placeholder':'Телефон',
             }
         ),
     )
@@ -231,7 +241,7 @@ class Order(BaseForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-
+                'placeholder': 'Ваш e-mail'
             }
         ),
     )
@@ -240,8 +250,9 @@ class Order(BaseForm):
         label=u'Комментарий менеджеру:',
         max_length=1000,
         required=False,
-        widget=forms.TextInput(
+        widget=forms.Textarea(
             attrs={
+                'placeholder': 'Адрес, комментарий'
             }
         ),
     )

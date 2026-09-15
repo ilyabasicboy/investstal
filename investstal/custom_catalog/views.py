@@ -146,44 +146,22 @@ def change_parameters(request):
     raise PermissionDenied
 
 
-def facing_popup(request, obj_id):
-    try:
-        facing = ParameterGroup.objects.filter(id=obj_id).first()
-    except:
-        facing = None
+def parameter_popup(request, obj_id):
 
-    if facing:
+    parameter = ParameterValue.objects.filter(id=obj_id).first()
+
+    if parameter:
         try:
             image_id = int(request.GET.get('image_id'))
         except:
             image_id = None
 
         html = loader.render_to_string(
-            'pages/parts/facing_popup.html',
+            'catalog/parts/parameter_popup.html',
             {
-                'facing': facing,
+                'parameter': parameter,
                 'image_id': image_id,
             },
-            request
-        )
-        response_data = {
-            'html': html
-        }
-
-        return JsonResponse(response_data)
-    return HttpResponseNotFound
-
-
-def parameter_popup(request, obj_id):
-    try:
-        parameter = ParameterValue.objects.filter(id=obj_id).first()
-    except:
-        parameter = None
-
-    if parameter:
-        html = loader.render_to_string(
-            'catalog/parts/parameter_popup.html',
-            {'parameter': parameter},
             request
         )
         response_data = {

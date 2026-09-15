@@ -1,0 +1,70 @@
+.option-card
+	width: 100%
+	display: flex
+	flex-direction: column
+
+	&--checked
+		.option-card__label
+			cursor: default
+		.option-card__icon
+			svg
+				path
+					fill: #9a9a9a
+
+	&__label
+		width: 100%
+		display: flex
+		flex-direction: column
+		cursor: pointer
+	&__input
+		display: none
+		&:checked + .option-card__content .option-card__icon svg
+			opacity: 1
+	&__content
+		width: 100%
+		display: flex
+		flex-direction: column
+	&__top
+		position: relative
+		width: 100%
+		margin-bottom: 10px
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.07)
+		background-color: #fff
+		min-height: 24px
+	&__preview
+		width: 100%
+		position: relative
+		display: flex
+		max-height: 188px
+		&:before
+			content: ''
+			display: block
+			width: 100%
+			padding-bottom: 100%
+		> img
+			position: absolute
+			top: 0
+			left: 0
+			right: 0
+			bottom: 0
+			width: 100%
+			height: 100%
+			object-fit: contain
+	&__icon
+		width: 24px
+		height: 24px
+		background-color: #fff
+		border: 2px solid #888
+		position: absolute
+		top: 0px
+		right: 0px
+		display: flex
+		align-items: center
+		justify-content: center
+		svg
+			opacity: 0
+			transition: opacity 0.5s ease-in-out
+	&__text
+		font-size: 12px
+		line-height: 16px
+		color: #888
