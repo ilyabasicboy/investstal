@@ -77,12 +77,12 @@
                         {% endif %}
 
                         <div class="product__list-item">
-                            Характеристики: <a href="">Смотреть все</a>
+                            Характеристики: <a class="anchor-link" href="#section-specifications">Смотреть все</a>
                         </div>
                     </div>
 
                     <div class="product__buttons">
-                        <a class="btn btn--grey modal-open" data-href="#rackman-modal">
+                        <a class="product__rackman btn btn--grey modal-open" data-href="#rackman-modal">
                             Вызвать замерщика для точного расчета
                         </a>
                         <a class="product__order btn btn--dark modal-open product__btn" data-href="#order-modal">
@@ -157,7 +157,7 @@
                                                 <div class="option-card__content">
                                                     <div class="option-card__top">
                                                         {% if parameter.images %}
-                                                            <a class="option-card__preview" href="{{ parameter.images.0.image.url }}">
+                                                            <a class="option-card__preview" href="{{ parameter.images.0.image.url }}" data-fancybox data-caption="{{ image.title|default:object.title }}">
                                                                 <img src="{{ parameter.images.0.image.url }}" title="{{ parameter.images.0.title|default:parameter.value }}" alt="{{ parameter.images.0.title|default:parameter.value }}">
                                                             </a>
                                                         {% endif %}

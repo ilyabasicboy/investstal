@@ -4,7 +4,7 @@
     <div class="modal__title">
         Отделка: {{ facing.title }}
     </div>
-    <div>
+    <div class="modal__subtitle">
         Выбирайте вариант из списка наиболее популярных в нашем каталоге
     </div>
 </div>
@@ -17,7 +17,7 @@
                 {% for image in images %}
                     {% if image.content_object.value %}
                         <div class="finish__grid-item">
-                            <a class="finish-card finish-card--click {% if round_images %}finish-card--circle{% endif %}" data-id="{{ image.id }}" cursor-class="link-hover">
+                            <a class="finish-card finish-card--click" data-id="{{ image.id }}">
                                 <div class="finish-card__preview">
                                     <img src="{{ image.finishcard.url }}" alt="{{ image.content_object.value|default:facing.title }}" title="{{ image.content_object.value|default:facing.title }}">
                                 </div>
