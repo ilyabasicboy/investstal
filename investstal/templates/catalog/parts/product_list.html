@@ -1,0 +1,31 @@
+{% load pagination_tags attachment_tags custom_attachment_tags %}
+
+{% if products %}
+    {% if paginate_by %}
+        {% autopaginate products paginate_by %}
+    {% endif %}
+
+    {% for product in products %}
+        <div class="{% if col4 %}catalog__grid-3 catalog__grid-4--sm catalog__grid-6--xs{% else %}catalog__grid-4 catalog__grid-6--md{% endif %} catalog__grid-12--custom product-card--check">
+            {% include 'catalog/parts/product_card.html' %}
+        </div>
+    {% endfor %}
+
+    {% if not hide_pagination %}
+        <div class="catalog__grid-12 loader__show-more show-more-filter">
+            <div class="loader__content loader-js">
+                <div class="loader"></div>
+            </div>
+            {% paginate using 'pagination/show_more.html' %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="catalog__grid-12 catalog__notfound">
+        <div class="catalog__notfound-title">
+            Товары с такими параметрами не найдены.
+        </div>
+        <a class="catalog__notfound-link filter-reset-js">
+            Сбросить настройки фильтрации
+        </a>
+    </div>
+{% endif %}
