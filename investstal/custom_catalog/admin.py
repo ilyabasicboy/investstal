@@ -46,7 +46,6 @@ class ProductAdmin(CatalogItemBaseAdmin):
     form = ProductAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ("title", )
-    fields = ['title', 'slug', 'show', 'price', 'square_price', 'thermal', 'description', 'main_content', 'description_content']
     inlines = [ParameterInlineAdmin, ]
 
 

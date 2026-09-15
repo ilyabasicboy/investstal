@@ -15,18 +15,18 @@
         <div class="finish" data-id="{{ parameter.id }}">
             <div class="finish__grid finish__grid--middle">
                 {% for image in images %}
-                    {% if image.title %}
-                        <div class="finish__grid-item">
-                            <a class="finish-card finish-card--click" data-id="{{ image.id }}">
-                                <div class="finish-card__preview">
-                                    <img src="{{ image.finishcard.url }}" alt="{{ image.title|default:parameter.value }}" title="{{ image.title|default:parameter.value }}">
-                                </div>
+                    <div class="finish__grid-item">
+                        <a class="finish-card finish-card--click" data-id="{{ image.id }}">
+                            <div class="finish-card__preview">
+                                <img src="{{ image.finishcard.url }}" alt="{{ image.title|default:parameter.value }}" title="{{ image.title|default:parameter.value }}">
+                            </div>
+                            {% if image.title %}
                                 <div class="finish-card__title">
                                     {{ image.title }}
                                 </div>
-                            </a>
-                        </div>
-                    {% endif %}
+                            {% endif %}
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         </div>
