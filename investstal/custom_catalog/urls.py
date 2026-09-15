@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
 from django.urls import path
-from .views import FilterProductView, FilterProductViewFp, change_parameters, facing_popup, parameter_popup
+from .views import FilterProductView, FilterProductViewFp, change_parameters, parameter_popup
 
 urlpatterns = [
     url('parameters_list/', change_parameters, name='change_parameters_list'),
