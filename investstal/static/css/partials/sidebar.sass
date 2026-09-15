@@ -1,0 +1,84 @@
+.sidebar
+	width: 100%
+	display: flex
+	flex-direction: column
+	position: sticky
+	top: calc(60px + 90px + 16px)
+	max-height: calc(100vh - 60px - 90px  - 16px)
+	@media screen and (max-width: $sm-max)
+		position: relative
+		top: auto
+		overflow: hidden
+		overflow-x: auto
+		width: auto
+		margin-right: -15px
+		flex-direction: row
+		max-height: initial
+
+	&__menu
+		width: 100%
+		display: flex
+		flex-direction: column
+		@media screen and (max-width: $sm-max)
+			flex-direction: row
+			white-space: nowrap
+			width: auto
+		&-item + &-item
+			margin-top: 40px
+			@media screen and (max-width: $sm-max)
+				margin-top: 0px
+		&-item
+			width: 100%
+			display: flex
+			flex-direction: column
+			@media screen and (max-width: $sm-max)
+				flex-direction: row
+				align-items: center
+				width: auto
+			&:last-child
+				padding-bottom: 0px
+				@media screen and (max-width: $sm-max)
+					padding-bottom: 0px
+		&-title
+			width: 100%
+			display: flex
+			font-size: 14px
+			line-height: 20px
+			text-transform: uppercase
+			color: #BBBBBB
+			font-weight: 600
+			position: relative
+			margin-bottom: 16px
+			@media screen and (max-width: $sm-max)
+				display: none
+
+	&__submenu
+		width: 100%
+		display: flex
+		flex-direction: column
+		@media screen and (max-width: $sm-max)
+			flex-direction: row
+
+		&-item + &-item
+			margin-top: 8px
+			@media screen and (max-width: $sm-max)
+				margin-top: 0px
+		&-item
+			width: 100%
+		&-link
+			color: #333
+			font-size: 16px
+			line-height: 22px
+			transition: color 0.5s ease-in-out
+			@media screen and (max-width: $sm-max)
+				padding: 10px 16px
+				background-color: #f9f7f7
+				margin-right: 16px
+				align-items: center
+				flex-direction: row
+				border-radius: 10px
+			&:hover
+				text-decoration: underline
+		&-count
+			color: #AAAAAA
+			font-size: 14px

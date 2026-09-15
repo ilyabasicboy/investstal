@@ -71,6 +71,7 @@ $(function () {
 			const modal = $(`#${modalId}`);
 			modal.find('.modal__subtitle').text(fullInfo);
 
+			modal.find('#id_rackman-info').val(fullInfo);
 			modal.find('#id_order-info').val(fullInfo);
 		});
 	};
@@ -86,7 +87,6 @@ $(function () {
 		const title = product.find('.product-card__title').text().trim();
 		const article = product.find('.product-card__article').text().trim();
 		const link = product.attr('href');
-		const titleContainer = modal.find('.modal__card-title');
 
 		//Update price
 		const priceDefault = product.find('.product-card__price-default').text().trim();
