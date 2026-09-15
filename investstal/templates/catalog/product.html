@@ -71,7 +71,7 @@
                         {% if product_info.finishing %}
                             {% for finish_group, group_data in product_info.finishing.items %}
                                 <div class="product__list-item">
-                                    {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}class="facing-btn-js modal-open" data-href="#facing-modal" data-id="{{ finish_group.id }}" data-url="{% url 'facing_popup' obj_id=finish_group.id %}"{% endif %}>{{ group_data.chosen_param.value }}</a>
+                                    {{ finish_group.title }}: <a {% if group_data.chosen_images and group_data.chosen_param.show_images %}class="facing-btn-js modal-open" data-href="#facing-modal" data-id="{{ finish_group.id }}" data-url="{% url 'parameter_popup' obj_id=finish_group.id %}"{% endif %}>{{ group_data.chosen_param.value }}</a>
                                 </div>
                             {% endfor %}
                         {% endif %}
