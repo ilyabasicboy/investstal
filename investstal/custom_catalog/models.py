@@ -357,7 +357,7 @@ class Product(CustomCatalogBase):
             pass
 
         result = {
-            'parameters': result_parameters,
+            'parameters': attach_images_queryset(result_parameters),
             'groups': result_groups
         }
         cache.set(self.cache_key() + '_additional_parameters', result, 600000)

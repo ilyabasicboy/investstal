@@ -148,7 +148,7 @@
                     <div class="option__slider mfp-gallery">
                         <div class="option--slider swiper">
                             <div class="swiper-wrapper">
-                                {% for parameter in product_info.additional_parameters.parameters.all %}
+                                {% for parameter in product_info.additional_parameters.parameters %}
                                     <div class="option__slide swiper-slide" data-target="option_{{ parameter.parameter_group.id }}">
                                         <div class="option-card">
                                             <label class="option-card__label">
