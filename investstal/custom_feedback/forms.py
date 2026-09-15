@@ -147,6 +147,11 @@ class Rackman(BaseFileForm, BaseForm):
         widget=forms.HiddenInput,
         required=False
     )
+    info = forms.CharField(
+        label='Информация о товаре',
+        widget=forms.HiddenInput,
+        required=False
+    )
     name = forms.CharField(
         label=u'Ваше имя:*',
         widget=forms.TextInput(
