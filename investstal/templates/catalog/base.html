@@ -7,5 +7,5 @@
 {% endblock %}
 
 {% block content_title %}
-    {{ object.long_title|default:object.title }}
+    {{ object.long_title|default:object.title }} ({{ object.get_products_count }})
 {% endblock %}
