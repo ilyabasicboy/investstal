@@ -64,3 +64,8 @@ class ProductSlider(CustomImageSpec):
 class ProductThumb(CustomImageSpec):
     quality = 100
     processors = [ResizeProductThumb]
+
+
+class FinishCard(CustomImageSpec):
+    quality = 100
+    processors = [ResizeFinishCard]

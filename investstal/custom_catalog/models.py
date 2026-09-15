@@ -11,7 +11,8 @@ from django.contrib.contenttypes.models import ContentType
 from catalog.utils import get_content_objects, get_sorted_content_objects
 from django.core.exceptions import ValidationError
 from itertools import chain
-from investstal.custom_attachment.utils import attach_images_queryset
+from investstal.custom_attachment.utils import attach_images, attach_images_queryset
+from .utils import get_model_field
 
 
 GROUP_CHOICES = (
@@ -21,18 +22,20 @@ GROUP_CHOICES = (
     (4, 'Металлоконструкции')
 )
 
-PARAMETER_TYPES = (
-    (1, 'Стандартная конструкция'),
-    (2, 'Фурнитура'),
-    (3, 'Габариты'),
-    (4, 'Доставка дверей'),
-    (5, 'Установка дверей'),
-    (6,  'Отделки'),
-)
+PARAMETER_TYPE_STANDART_CONSTRUCTION = 1
+PARAMETER_TYPE_HARDWARE = 2
+PARAMETER_TYPE_HABARYTES = 3
+PARAMETER_TYPE_DELIVERY = 4
+PARAMETER_TYPE_INSTALLATION = 5
+PARAMETER_TYPE_FINISHING = 6
 
-SIZE_TYPE_PARAMETERS = (
-    (1, 'Однопольная'),
-    (2, 'Двупольная'),
+PARAMETER_TYPES = (
+    (PARAMETER_TYPE_STANDART_CONSTRUCTION,  u'Стандартная конструкция'),
+    (PARAMETER_TYPE_HARDWARE,               u'Фурнитура'),
+    (PARAMETER_TYPE_HABARYTES,              u'Габариты'),
+    (PARAMETER_TYPE_DELIVERY,               u'Доставка дверей'),
+    (PARAMETER_TYPE_INSTALLATION,           u'Установка дверей'),
+    (PARAMETER_TYPE_FINISHING,              u'Отделки'),
 )
 
 SORT_CHOICES = (
@@ -249,14 +252,165 @@ class Product(CustomCatalogBase):
         help_text='Суммарные параметры, наследуемые от разделов и подразделов. Логика в сигналах.',
         blank=True
     )
+    thermal = models.ForeignKey(
+        'Thermal',
+        verbose_name=u'Термодверь',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    description_content = HTMLField(
+        verbose_name=u'Описание товара',
+        blank=True,
+        null=True
+    )
 
     def get_parameters(self):
-        return self.parameters.order_by('parameter_group__order_key')
+        exclude_types = [
+            PARAMETER_TYPE_FINISHING
+        ]
+        return self.parameters.prefetch_related('parameter_group').exclude(
+            parameter_group__group_type__in=exclude_types
+        ).order_by('parameter_group__order_key')
+
+    def get_parameter_group_data(self, param_type):
+
+        params = self.parameters.filter(parameter_group__group_type=param_type)
+
+        result = {
+            'default': None,
+            'all_values': None
+        }
+
+        try:
+            if params.exists():
+                default_param = params.first()
+                group_id = default_param.parameter_group.id
+                all_values = ParameterValue.objects.filter(parameter_group__id=group_id)
+
+                result = {
+                    'default': default_param,
+                    'all_values': all_values
+                }
+        except:
+            pass
+
+        return result
+
+    def get_product_info(self):
+        result = cache.get(self.cache_key() + '_product_info')
+
+        # if result is not None:
+        #     return result
+
+        result = {}
+
+        result['finishing'] = self.get_finishing_data()
+
+        result['parameters'] = attach_images_queryset(self.get_parameters())
+
+        result['additional_parameters'] = self.get_additional_parameters()
+
+        result['similar_products'] = self.get_similar_products()
+        
+        cache.set(self.cache_key() + '_product_info', result, 600000)
+        return result
+
+    def get_similar_products(self):
+        similar_products = Product.objects.none()
+        try:
+            category = Category.objects.filter(
+                products=self,
+                show=True
+            ).order_by('?').first()
+
+            if category:
+                similar_products = category.products.filter(show=True).exclude(
+                    id=self.id
+                ).order_by('?')[:3]
+                similar_products = attach_images_queryset(similar_products)
+        except:
+            pass
+
+        return similar_products
+
+    def get_additional_parameters(self):
+        result = cache.get(self.cache_key() + '_additional_parameters')
+
+        # if result is not None:
+        #     return result
+        
+        result_parameters = ParameterValue.objects.none()
+        result_groups = ParameterGroup.objects.none()
+        try:
+            additional_parameters = get_model_field(self, 'additional_parameters', many_to_many=True)
+            if additional_parameters:
+                additional_parameters = additional_parameters.filter(
+                    show_in_additional_choices=True
+                ).order_by('parameter_group__order_key').distinct()
+
+                if additional_parameters.exists():
+                    result_parameters = attach_images_queryset(additional_parameters)
+                    group_ids = result_parameters.values_list('parameter_group', flat=True).distinct()
+                    result_groups = ParameterGroup.objects.filter(id__in=group_ids).order_by('order_key')
+        except:
+            pass
+
+        result = {
+            'parameters': result_parameters,
+            'groups': result_groups
+        }
+        cache.set(self.cache_key() + '_additional_parameters', result, 600000)
+
+        return result
+
+    def get_finishing_data(self):
+        finishing_data = {}
+        try:
+            chosen_params = list(attach_images(
+                self.parameters.filter(
+                    parameter_group__group_type=PARAMETER_TYPE_FINISHING
+                ).select_related('parameter_group').order_by('id')
+            ))
+            if not chosen_params:
+                return finishing_data
+
+            finishing_group_ids = []
+            chosen_params_by_group_id = {}
+
+            for param in chosen_params:
+                if param.parameter_group_id not in chosen_params_by_group_id:
+                    chosen_params_by_group_id[param.parameter_group_id] = param
+                    finishing_group_ids.append(param.parameter_group_id)
+
+            groups = ParameterGroup.objects.filter(id__in=finishing_group_ids).prefetch_related('parametervalue_set')
+
+            for group in groups:
+                param_values = group.parametervalue_set.all()
+                chosen_param = chosen_params_by_group_id.get(group.id)
+                chosen_images = []
+                if chosen_param:
+                    chosen_images = chosen_param.images
+
+                finishing_data[group] = {
+                    'param_values': param_values,
+                    'chosen_param': chosen_param,
+                    'chosen_images': chosen_images,
+                }
+        except:
+            pass
+
+        return finishing_data
+
 
     def update_parameters(self):
         """Рекурсией собирает параметры от наследуемых разделов и сохраняет их в поле parameters."""
         self_param_ids = list(self.product_parameters.all().values_list('value', flat=True))
         self_exclude_params = list(self.product_parameters.all().values_list('group', flat=True))
+
+        if self.thermal:
+            self_param_ids = self_param_ids + list(self.thermal.thermal_parameters.all().values_list('value', flat=True))
+            self_exclude_params = self_exclude_params + list(self.thermal.thermal_parameters.all().values_list('group', flat=True))
 
         try:
             self_param_ids += self.tree.get().parent.content_object.get_param_ids(self_exclude_params)
@@ -285,6 +439,9 @@ class Product(CustomCatalogBase):
 
     def get_vendor_code(self):
         return f'Арт.{self.id:05d}'
+
+    def cache_key(self):
+            return '%s_%d' % (self.__class__.__name__, self.id)
 
     def __str__(self):
         return self.title
@@ -366,13 +523,20 @@ class ParameterGroup(models.Model):
         blank=True,
         null=True
     )
-    type = models.IntegerField(
+    group_type = models.IntegerField(
         verbose_name=u'Тип параметра',
         blank=True,
         null=True,
         choices=PARAMETER_TYPES,
         help_text=u'Используется на странице товара для деления в характеристиках'
     )
+    round_images = models.BooleanField(
+        verbose_name=u'Показывать отделки в виде круга',
+        default=False
+    )
+
+    def cache_key(self):
+        return '%s_%d' % (self.__class__.__name__, self.id)
 
     def get_images_for_whole_group(self):
         result = cache.get(self.cache_key() + '_images')
@@ -412,19 +576,22 @@ class ParameterValue(models.Model):
         blank=True,
         null=True
     )
+    short_description = models.TextField(
+        verbose_name=u'краткое описание',
+        blank=True,
+        null=True
+    )
+    description = HTMLField(
+        verbose_name=u'полное описание',
+        blank=True,
+        null=True
+    )
     page = models.ForeignKey(
         'pages.Page',
         verbose_name=u'ссылка на страницу',
         blank=True,
         null=True,
         on_delete=models.SET_NULL
-    )
-    size_type = models.PositiveIntegerField(
-        verbose_name=u'Тип конструкции "Размер по коробке"',
-        blank=True,
-        null=True,
-        choices=SIZE_TYPE_PARAMETERS,
-        help_text='Заполнять только для параметра "Размер по коробке"'
     )
     show_images = models.BooleanField(
         verbose_name=u'Выгружать фото на страницу товара',
@@ -476,6 +643,26 @@ class ParameterInline(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
+    thermal = models.ForeignKey(
+        'Thermal',
+        related_name='thermal_parameters',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+
+
+class Thermal(models.Model):
+    class Meta:
+        verbose_name = u'Термодверь'
+        verbose_name_plural = u'Термодвери'
+
+    title = models.TextField(
+        verbose_name=u'название',
+    )
+
+    def __str__(self):
+        return self.title
 
 
 CATALOG_ITEM_TYPES = (

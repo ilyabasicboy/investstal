@@ -458,6 +458,35 @@
                 </div>
             </footer>
 
+            <div class="modal mfp-anim mfp-hide" id="rackman-modal">
+                <div class="modal__header">
+                    <div class="modal__title">
+                        Вызвать замерщика
+                    </div>
+                </div>
+
+                <div class="modal__body">
+                    <!--noindex-->
+                        {% show_feedback 'rackman' %}
+                    <!--/noindex-->
+                </div>
+            </div>
+
+            <div class="modal mfp-hide mfp-anim" id="order-modal">
+                <div class="modal__body">
+                    <div class="modal__header">
+                        <div class="modal__title">
+                            Заказать
+                        </div>
+                        <div class="modal__subtitle"></div>
+                    </div>
+
+                    <!--noindex-->
+                        {% show_feedback 'order' %}
+                    <!--/noindex-->
+                </div>
+            </div>
+
             {% block js %}
                 <script src="{% static 'bundle/bundle.c4c7e465c24f3767fa52.js' %}"></script>
             {% endblock %}

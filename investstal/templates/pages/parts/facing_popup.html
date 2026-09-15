@@ -1,0 +1,32 @@
+{% load attachment_tags custom_attachment_tags pages_tags %}
+
+<div class="modal__header">
+    <div class="modal__title">
+        Отделка: {{ facing.title }}
+    </div>
+</div>
+
+{% with images=facing.get_images_for_whole_group round_images=facing.round_images %}
+{% if images %}
+    <div class="modal__body">
+        <div class="finish" data-id="{{ facing.id }}">
+            <div class="finish__grid finish__grid--middle">
+                {% for image in images %}
+                    {% if image.content_object.value %}
+                        <div class="finish__grid-item">
+                            <a class="finish-card finish-card--click {% if round_images %}finish-card--circle{% endif %}" data-id="{{ image.id }}" cursor-class="link-hover">
+                                <div class="finish-card__preview">
+                                    <img src="{{ image.finishcard.url }}" alt="{{ image.content_object.value|default:facing.title }}" title="{{ image.content_object.value|default:facing.title }}">
+                                </div>
+                                <div class="finish-card__title">
+                                    {{ image.content_object.value }}
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endwith %}
