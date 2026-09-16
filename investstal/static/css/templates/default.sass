@@ -60,7 +60,7 @@ sup
 	@media screen and (max-width: $sm-max)
 		padding: 60px 0
 	@media screen and (max-width: $xs-max)
-		padding: 48px 0
+		padding: 40px 0
 	&--top
 		padding-top: 0px!important
 
@@ -72,7 +72,7 @@ sup
 		@media screen and (max-width: $sm-max)
 			margin: 60px 0
 		@media screen and (max-width: $xs-max)
-			margin: 48px 0
+			margin: 40px 0
 		&--top
 			margin-top: 0px!important
 
@@ -87,6 +87,9 @@ sup
 		align-items: flex-start
 		justify-content: space-between
 		position: relative
+		@media screen and (max-width: $xs-max)
+			flex-direction: column
+			justify-content: flex-start
 		&--column
 			flex-direction: column
 		&__title
@@ -96,11 +99,29 @@ sup
 			font-weight: 600
 			text-transform: uppercase
 			position: relative
+			@media screen and (max-width: $md-max)
+				font-size: 32px
+				line-height: 38px
+			@media screen and (max-width: $sm-max)
+				font-size: 26px
+				line-height: 34px
+			@media screen and (max-width: $xs-max)
+				font-size: 22px
+				line-height: 28px
 			span
 				font-size: 24px
 				line-height: 32px
 				color: #929292
 				text-transform: initial
+				@media screen and (max-width: $md-max)
+					font-size: 22px
+					line-height: 28px
+				@media screen and (max-width: $sm-max)
+					font-size: 20px
+					line-height: 26px
+				@media screen and (max-width: $xs-max)
+					font-size: 18px
+					line-height: 24px
 			&:after
 				content: ''
 				height: 3px
@@ -109,6 +130,11 @@ sup
 				background-color: #FBCC09
 				display: block
 				margin-top: 16px
+				@media screen and (max-width: $sm-max)
+					margin-top: 10px
+				@media screen and (max-width: $xs-max)
+					margin-top: 4px
+					height: 1px
 		&__link
 			font-size: 14px
 			line-height: 20px
@@ -117,6 +143,11 @@ sup
 			white-space: nowrap
 			margin-left: 20px
 			margin-top: 10px
+			@media screen and (max-width: $sm-max)
+				margin-top: 8px
+			@media screen and (max-width: $xs-max)
+				margin-top: 12px
+				margin-left: 0px
 			&:hover
 				text-decoration: underline
 		&__group
@@ -125,19 +156,32 @@ sup
 			flex-grow: 1
 			margin-right: -24px
 			margin-bottom: -24px
+			@media screen and (max-width: $xs-max)
+				margin-right: -12px
+				margin-bottom: -12px
 			.section-header__title
 				margin-right: 24px
 				margin-bottom: 24px
+				@media screen and (max-width: $xs-max)
+					margin-right: 12px
+					margin-bottom: 12px
 			.section-header__filter
 				margin-right: 24px
 				margin-bottom: 24px
 				margin-top: 4px
+				@media screen and (max-width: $xs-max)
+					margin-right: 12px
+					margin-bottom: 12px
 		&__bottom
 			margin-top: 32px
 			display: flex
 			align-items: flex-start
 			justify-content: space-between
 			width: 100%
+			@media screen and (max-width: $xs-max)
+				margin-top: 12px
+				flex-direction: column
+				justify-content: flex-start
 		&__btn
 			height: 32px
 			display: flex
@@ -152,6 +196,12 @@ sup
 			transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out
 			cursor: pointer
 			margin-left: 20px
+			@media screen and (max-width: $xs-max)
+				margin-left: 0px
+				margin-top: 12px
+				padding: 2px 16px
+				height: 30px
+				font-size: 13px
 			&:hover
 				color: #333
 				background-color: #fff

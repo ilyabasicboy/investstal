@@ -1,0 +1,103 @@
+.catalog
+	&__grid
+		display: grid
+		grid-template-columns: repeat(12, 1fr)
+		grid-gap: 40px 24px
+		@media screen and (max-width: $sm-max)
+			grid-gap: 24px 20px
+		@media screen and (max-width: $xs-max)
+			grid-gap: 20px 16px
+		&-3
+			grid-column: 3 span
+		&-4
+			grid-column: 4 span
+		&-12
+			grid-column: 12 span
+
+		@media screen and (max-width: $md-max)
+			&-4--md
+				grid-column: 4 span
+
+		@media screen and (max-width: $sm-max)
+			&-6--sm
+				grid-column: 6 span
+
+		@media screen and (max-width: $xs-max)
+			&-6--xs
+				grid-column: 6 span
+			&-12--xs
+				grid-column: 12 span
+
+	&__panel
+		margin-bottom: 32px
+		@media screen and (max-width: $xs-max)
+			margin-bottom: 24px
+
+	&__notfound
+		font-size: 16px
+		line-height: 22px
+		color: #999
+		font-weight: 600
+		width: 100%
+		max-width: 820px
+		text-align: center
+		margin: 40px auto
+		@media screen and (max-width: $xs-max)
+			font-size: 15px
+			line-height: 21px
+			margin: 32px auto
+		@media screen and (max-width: $xs-max)
+			font-size: 14px
+			margin: 24px auto
+		a
+			color: #333
+			cursor: pointer
+			&:hover
+				text-decoration: underline
+
+	&__result
+		display: flex
+		flex-direction: column
+		margin-top: 60px
+		@media screen and (max-width: $sm-max)
+			margin-top: 40px
+		@media screen and (max-width: $xs-max)
+			margin-top: 32px
+		&-title
+			color: #6F6F6F
+			font-size: 18px
+			line-height: 24px
+			@media screen and (max-width: $sm-max)
+				font-size: 16px
+				line-height: 20px
+			@media screen and (max-width: $xs-max)
+				font-size: 14px
+				line-height: 20px
+		&-notfound
+			font-size: 16px
+			line-height: 22px
+			color: #999
+			font-weight: 600
+			width: 100%
+			max-width: 820px
+			text-align: center
+			margin: 40px auto
+			@media screen and (max-width: $xs-max)
+				font-size: 15px
+				line-height: 21px
+				margin: 32px auto
+			@media screen and (max-width: $xs-max)
+				font-size: 14px
+				margin: 24px auto
+		&-title + .catalog__grid
+			margin-top: 60px
+			@media screen and (max-width: $sm-max)
+				margin-top: 40px
+			@media screen and (max-width: $xs-max)
+				margin-top: 32px
+		&-title + &-notfound
+			margin-top: 60px
+			@media screen and (max-width: $sm-max)
+				margin-top: 40px
+			@media screen and (max-width: $xs-max)
+				margin-top: 32px

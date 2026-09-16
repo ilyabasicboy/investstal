@@ -98,4 +98,26 @@ $(function () {
 		modal.find('#id_order-info').val(fullInfo);
 	});
 
+    //Toggle Text
+    $.fn.extend({
+        toggleText: function (a, b) {
+            if (this.text() == a) {
+                this.text(b);
+            }
+            else {
+                this.text(a)
+            }
+        }
+    });
+
+    //Sidebar Menu Load Items
+    let sidebarMore = $('.sidebar__more');
+    sidebarMore.each(function(index, item) {
+        let sidebarMoreBtn = $(item).find('.sidebar__more-btn');
+        sidebarMoreBtn.on('click', function() {
+            sidebarMoreBtn.prev().toggleClass('sidebar__submenu-load');
+            sidebarMoreBtn.toggleText('Скрыть', 'Смотреть еще');
+        });
+    });
+
 });

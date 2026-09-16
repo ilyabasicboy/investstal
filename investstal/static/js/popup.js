@@ -1,34 +1,39 @@
 //Import function
 import ajaxReset from './feedback';
+import getScrollbarWidth from './getscrollbarwidth';
 
 $(function () {
 
-    //Form Modal
-    function initModal() {
-        $('.modal-open').each(function() {
-            $(this).magnificPopup({
-                type: 'inline',
-                items: {
-                    src: $(this).data('href')
-                },
-                removalDelay: 500,
-                mainClass: 'mfp-move',
-                autoFocusLast: false,
-                callbacks: {
-                    open: function () {
-                        $('body').addClass("noscroll");
-                    },
-                    close: function () {
-                        $('body').removeClass("noscroll");
+	//Form Modal
+	function initModal() {
+		$('.modal-open').each(function() {
+			$(this).magnificPopup({
+				type: 'inline',
+				items: {
+					src: $(this).data('href')
+				},
+				removalDelay: 500,
+				mainClass: 'mfp-move',
+				autoFocusLast: false,
+				callbacks: {
+					open: function () {
+						$('body').addClass('noscroll');
 
-                        //Reload Form
-                        ajaxReset(this.content.find('[data-reset]'));
-                    },
-                },
-            });
-        });
-    };
-    initModal();
+						$('.header').css('padding-right', `${getScrollbarWidth()}px`);
+					},
+					close: function () {
+						$('body').removeClass('noscroll');
+
+						$('.header').css('padding-right', `0px`);
+
+						//Reload Form
+						ajaxReset(this.content.find('[data-reset]'));
+					},
+				},
+			});
+		});
+	};
+	initModal();
 
     //Reinit popup
     let target = document.querySelectorAll('.ajax-update-popup');

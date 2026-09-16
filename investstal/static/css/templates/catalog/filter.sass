@@ -1,0 +1,181 @@
+.filter
+	width: 100%
+	display: flex
+	justify-content: space-between
+	align-items: center
+	border-radius: 10px
+
+	&__form
+		width: 100%
+		display: flex
+		flex-direction: column
+		position: relative
+		z-index: 2
+
+	&__content
+		width: 100%
+		display: flex
+		align-items: center
+		justify-content: space-between
+
+	&__left
+		display: flex
+		align-items: center
+		margin-right: 16px
+		@media screen and (max-width: $md-max)
+			margin-right: 12px
+
+	&__select
+		width: 180px
+		@media screen and (max-width: $md-max)
+			width: 145px
+		@media screen and (max-width: $sm-max)
+			width: 180px
+
+	&__right
+		display: flex
+		align-items: center
+		flex-grow: 1
+
+	&__price
+		display: flex
+		align-items: center
+		position: relative
+		margin-left: auto
+		width: 100%
+
+		.filter__select
+			margin-right: auto
+			width: 235px
+			@media screen and (max-width: $md-max)
+				width: 170px
+			@media screen and (max-width: $sm-max)
+				width: 100%
+				margin-bottom: 16px
+
+		&-container
+			display: flex
+			align-items: center
+			@media screen and (max-width: $sm-max)
+				flex-direction: column
+				align-items: flex-start
+				width: 100%
+
+		&-content
+			display: flex
+			align-items: center
+			justify-content: flex-end
+			width: 100%
+			@media screen and (max-width: $sm-max)
+				position: absolute
+				top: calc(100% + 6px)
+				right: 0
+				width: 370px
+				background-color: #fff
+				padding: 20px
+				flex-direction: column
+				align-items: flex-start
+				border-radius: 8px
+				transform: translateY(10px)
+				opacity: 0
+				pointer-events: none
+				box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1)
+				transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out
+				&.active
+					opacity: 1
+					transform: translateY(0px)
+					pointer-events: auto
+			@media screen and (max-width: $xs-max)
+				width: 330px
+				padding: 20px 12px
+
+			.filter__price-btn
+				margin-top: 12px
+
+		&-list
+			display: flex
+			align-items: center
+			@media screen and (max-width: $sm-max)
+				width: 100%
+
+		&-wrapper
+			position: relative
+			display: flex
+			align-items: center
+			@media screen and (max-width: $sm-max)
+				flex: 1
+			@media screen and (max-width: $xs-max)
+				width: 140px
+				min-width: 140px
+
+		&-wrapper + &-wrapper
+			margin-left: 8px
+
+		&-info
+			height: 100%
+			display: flex
+			align-items: center
+			pointer-events: none
+			font-size: 14px
+			line-height: 22px
+			margin-right: 8px
+
+		&-input
+			color: #333
+			width: 100px
+			font-size: 14px
+			line-height: 22px
+			height: 32px
+			padding: 2px 10px
+			border: 1px solid #BBBBBB
+			background-color: #fff
+			transition: border 0.7s ease-in-out, color 0.7s ease-in-out, box-shadow 0.7s ease-in-out
+			font-family: inherit
+			box-shadow: none
+			border-radius: 0px
+
+			&::-webkit-input-placeholder
+				color: #888888
+
+			&:-moz-placeholder
+				color: #888888
+				opacity: 1
+
+			&::-moz-placeholder
+				color: #888888
+				opacity: 1
+
+			&:-ms-input-placeholder
+				color: #888888
+
+			&::-ms-input-placeholder
+				color: #888888
+
+			&::placeholder
+				color: #888888
+
+		&-btn
+			display: none
+			width: 100px
+			min-width: 100px
+			margin-left: 12px
+			height: 42px
+			background-color: rgba(240, 240, 240, 0.7)
+			border: 1px solid rgba(203, 203, 203, 1)
+			color: #333
+			font-size: 14px
+			line-height: 20px
+			padding: 5px 20px
+			text-align: center
+			align-items: center
+			justify-content: center
+			border-radius: 100px
+			@media screen and (max-width: $sm-max)
+				display: block
+			@media screen and (max-width: $sm-max)
+				width: 82px
+				min-width: 82px
+				margin-left: auto
+				padding: 5px 10px
+			@media screen and (max-width: $xs-max)
+				height: 36px

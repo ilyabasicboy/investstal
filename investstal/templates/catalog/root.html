@@ -2,7 +2,7 @@
 {% load base_tags %}
 
 {% block content_title %}
-    {{ object.long_title|default:object.title }} (<span class="products_count">{{ object.get_products_count }}</span>)
+    {{ object.long_title|default:object.title }} <span class="title__info">(<span class="products_count">{{ object.get_products_count }}</span>)</span>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -21,35 +21,27 @@
 {% block content %}
     {% with products=object.get_sorted_products %}
         <section class="section-default section-default--top">
-            <div class="container">
-                <div class="default-page">
-                    <div class="default-page__content">
-                        <div class="catalog content-anim content-anim--opacity">
-                            <div class="catalog__panel">
-                                <div class="catalog__panel-sticky">
-                                    <div class="catalog__panel-content">
-                                        {% include 'catalog/parts/filter_sort.html' %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="catalog__grid product-list-js ajax-update-popup ajax-update-reviews">
-                                {% include 'catalog/parts/product_list.html' with paginate_by=24 %}
-                            </div>
+            <div class="catalog">
+                <div class="catalog__panel">
+                    <div class="catalog__panel-sticky">
+                        <div class="catalog__panel-content">
+                            {% include 'catalog/parts/filter_sort.html' %}
                         </div>
-
-                        {% if object.main_content %}
-                            <section class="section-default section-default--bottom content-anim content-anim--bottom">
-                                <div class="section-default__bg">
-                                    <div class="placeholder">
-                                        {{ object.main_content|safe }}
-                                    </div>
-                                </div>
-                            </section>
-                        {% endif %}
                     </div>
+                </div>
+
+                <div class="catalog__grid product-list-js ajax-update-popup">
+                    {% include 'catalog/parts/product_list.html' with paginate_by=2 %}
                 </div>
             </div>
         </section>
+
+        {% if object.main_content %}
+            <section class="section-default section-default--bottom">
+                <div class="placeholder">
+                    {{ object.main_content|safe }}
+                </div>
+            </section>
+        {% endif %}
     {% endwith %}
 {% endblock %}

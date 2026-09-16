@@ -180,6 +180,43 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 	width: 100%
 	display: flex
 
+.select
+	select
+		color: #333
+		font-size: 14px
+		line-height: 20px
+		font-weight: 400
+		height: 38px
+		border: none
+		border-radius: 0px
+		cursor: pointer
+		width: 100%
+		border: 1px solid #BBBBBB
+		background-color: #fff
+		padding: 2px 16px
+		padding-right: 32px
+		font-family: inherit
+		box-shadow: none
+		-moz-appearance: none
+		appearance: none
+		white-space: nowrap
+		overflow: hidden
+		text-overflow: ellipsis
+		background-image: url('/static/img/select-icon.svg')
+		background-repeat: no-repeat
+		background-position-x: calc(100% - 16px)
+		background-position-y: 50%
+		transition: border 0.7s ease-in-out, color 0.7s ease-in-out, opacity 0.7s ease-in-out
+		&:disabled
+			opacity: 0.4
+
+	&--min
+		select
+			height: 32px
+			padding: 2px 12px
+			padding-right: 28px
+			background-position-x: calc(100% - 12px)
+
 .default-checkbox
 	display: flex
 	width: 100%

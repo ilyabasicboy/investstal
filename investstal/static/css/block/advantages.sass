@@ -5,6 +5,12 @@
 	&--slider
 		margin-right: -100px
 		overflow: visible
+		@media screen and (max-width: $md-max)
+			margin-right: -60px
+		@media screen and (max-width: $sm-max)
+			margin-right: -32px
+		@media screen and (max-width: $xs-max)
+			margin-right: -24px
 	&__item
 		width: 350px
 		margin-right: 100px
@@ -15,6 +21,20 @@
 		display: flex
 		align-items: flex-end
 		padding-left: 48px
+		@media screen and (max-width: $md-max)
+			margin-right: 60px
+		@media screen and (max-width: $sm-max)
+			margin-right: 32px
+			width: 300px
+			max-width: 300px
+			min-width: 300px
+			min-height: 90px
+		@media screen and (max-width: $xs-max)
+			margin-right: 24px
+			width: 280px
+			max-width: 280px
+			min-width: 280px
+			min-height: 80px
 		&-icon
 			height: 122px
 			width: 122px
@@ -22,6 +42,12 @@
 			position: absolute
 			bottom: 0px
 			left: 0px
+			@media screen and (max-width: $sm-max)
+				height: 90px
+				width: 90px
+			@media screen and (max-width: $xs-max)
+				height: 80px
+				width: 80px
 			img
 				height: 100%
 				width: auto
@@ -30,9 +56,18 @@
 			padding: 16px
 			padding-left: 86px
 			padding-right: 32px
+			flex-grow: 1
 			box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1)
 			border-radius: 20px
 			background-color: #fff
 			font-size: 14px
 			line-height: 20px
 			color: #333
+			@media screen and (max-width: $sm-max)
+				padding-left: 52px
+			@media screen and (max-width: $xs-max)
+				font-size: 13px
+				line-height: 16px
+				padding: 12px
+				padding-left: 42px
+				padding-right: 16px

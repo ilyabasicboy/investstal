@@ -6,9 +6,8 @@
     {% endif %}
 
     {% attach_images products as products %}
-    
     {% for product in products %}
-        <div class="{% if col4 %}catalog__grid-3 catalog__grid-4--sm catalog__grid-6--xs{% else %}catalog__grid-4 catalog__grid-6--md{% endif %} catalog__grid-12--custom product-card--check">
+        <div class="catalog__grid-4 catalog__grid-6--md catalog__grid-12--xs">
             {% include 'catalog/parts/product_card.html' %}
         </div>
     {% endfor %}

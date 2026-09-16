@@ -2,7 +2,7 @@
 {% load base_tags feedback_tags custom_attachment_tags attachment_tags %}
 
 {% block content_title %}
-    {{ object.long_title|default:object.title }} <span>({{ object.get_vendor_code }})</span>
+    {{ object.long_title|default:object.title }} <span class="title__info">({{ object.get_vendor_code }})</span>
 {% endblock %}
 
 {% block content %}

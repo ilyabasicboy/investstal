@@ -4,7 +4,7 @@
 	flex-direction: column
 	position: sticky
 	top: calc(60px + 90px + 16px)
-	max-height: calc(100vh - 60px - 90px  - 16px)
+	max-height: calc(100vh - 60px - 90px  - 16px - 16px)
 	@media screen and (max-width: $sm-max)
 		position: relative
 		top: auto
@@ -59,6 +59,12 @@
 		@media screen and (max-width: $sm-max)
 			flex-direction: row
 
+		&-load
+			> .sidebar__submenu-item:nth-child(n+6)
+				display: none
+				@media screen and (max-width: $md-max)
+					display: flex
+
 		&-item + &-item
 			margin-top: 8px
 			@media screen and (max-width: $sm-max)
@@ -82,3 +88,12 @@
 		&-count
 			color: #AAAAAA
 			font-size: 14px
+
+	&__more
+		&-btn
+			color: #BBBBBB
+			font-size: 14px
+			line-height: 20px
+			font-weight: 600
+			margin-top: 10px
+			cursor: pointer
