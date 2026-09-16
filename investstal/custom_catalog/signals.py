@@ -4,7 +4,9 @@ from django.db.models.signals import post_save, pre_delete
 from django.db import transaction
 from django.dispatch import receiver
 from django.core.cache import cache
+from django.contrib.contenttypes.models import ContentType
 from catalog.models import TreeItem
+from investstal.content_generator.models import ContentTemplate
 from investstal.custom_catalog.models import Category, Section, Product, Thermal
 
 
@@ -33,6 +35,8 @@ def update_parameters(sender, instance, created, **kwargs):
     """Обновляет наследуемые параметры товаров после сохранения товара, раздела или термодвери."""
     if isinstance(instance, Product):
         transaction.on_commit(lambda: instance.update_parameters())
+        if created:
+            transaction.on_commit(lambda: process_product_creation(instance))
     elif isinstance(instance, Section):
         def update_all_products():
             try:
@@ -53,3 +57,18 @@ def update_parameters(sender, instance, created, **kwargs):
                 product.update_parameters()
 
         transaction.on_commit(update_all_products)
+
+
+def process_product_creation(product):
+    """Создает SEO-тексты товара из шаблона родительского раздела."""
+    try:
+        parent = product.tree.get().parent.content_object
+        ct = ContentType.objects.get_for_model(parent)
+        content_template = ContentTemplate.objects.filter(object_id=parent.id, content_type=ct).first()
+        if content_template and content_template.autogen and (
+                content_template.title or content_template.description or content_template.keywords):
+            child_models = content_template.get_child_models()
+            if product.__class__.__name__.lower() in child_models:
+                content_template.apply_text_for_item(product)
+    except Exception:
+        pass
