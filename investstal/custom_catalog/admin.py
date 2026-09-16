@@ -36,7 +36,6 @@ class RootAdmin(CatalogItemBaseAdmin):
 
     model = Root
     form = RootAdminForm
-    fields = ['title', 'long_title']
 
 
 @admin.register(Product)

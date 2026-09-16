@@ -140,7 +140,10 @@ class Root(CatalogBase, CatalogMixin):
     slug = ''
     title = models.CharField(verbose_name=u'название', max_length=400)
     long_title = models.CharField(verbose_name=u'длинное название', max_length=400, blank=True, null=True)
-
+    main_content = HTMLField(
+        verbose_name=u'основной контент',
+        blank=True, null=True
+    )
     last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self, *args, **kwargs):
