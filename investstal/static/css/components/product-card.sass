@@ -7,6 +7,9 @@
 	padding-bottom: 40px
 	background-color: #fff
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05)
+	@media screen and (max-width: $sm-max)
+		padding: 12px
+		padding-bottom: 24px
 	&:hover
 		.product-card__title
 			text-decoration: none
@@ -15,6 +18,8 @@
 		display: flex
 		flex-direction: column
 		margin-bottom: 16px
+		@media screen and (max-width: $sm-max)
+			margin-top: 12px
 	&__preview
 		width: 100%
 		position: relative

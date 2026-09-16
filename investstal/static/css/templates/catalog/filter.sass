@@ -75,7 +75,6 @@
 				padding: 20px
 				flex-direction: column
 				align-items: flex-start
-				border-radius: 8px
 				transform: translateY(10px)
 				opacity: 0
 				pointer-events: none
@@ -133,6 +132,8 @@
 			font-family: inherit
 			box-shadow: none
 			border-radius: 0px
+			@media screen and (max-width: $sm-max)
+				width: 100%
 
 			&::-webkit-input-placeholder
 				color: #888888
@@ -161,7 +162,7 @@
 			margin-left: 12px
 			height: 42px
 			background-color: rgba(240, 240, 240, 0.7)
-			border: 1px solid rgba(203, 203, 203, 1)
+			border: none
 			color: #333
 			font-size: 14px
 			line-height: 20px
@@ -169,7 +170,6 @@
 			text-align: center
 			align-items: center
 			justify-content: center
-			border-radius: 100px
 			@media screen and (max-width: $sm-max)
 				display: block
 			@media screen and (max-width: $sm-max)

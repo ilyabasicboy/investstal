@@ -34,6 +34,8 @@
 		justify-content: flex-end
 		padding: 20px
 		z-index: 1
+		@media screen and (max-width: $xs-max)
+			padding: 12px
 		&:before
 			content: ''
 			width: 100%
@@ -57,8 +59,8 @@
 			font-size: 20px
 			line-height: 26px
 		@media screen and (max-width: $xs-max)
-			font-size: 18px
-			line-height: 24px
+			font-size: 16px
+			line-height: 22px
 	&__count
 		font-size: 13px
 		line-height: 15px

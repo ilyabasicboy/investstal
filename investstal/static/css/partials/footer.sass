@@ -6,13 +6,23 @@
 	margin-top: auto
 	padding: 60px 0
 	overflow: hidden
+	@media screen and (max-width: $xs-max)
+		padding: 40px 0
 	&__grid
 		grid-gap: 40px
 		display: grid
 		grid-template-columns: repeat(12, 1fr)
+		@media screen and (max-width: $md-max)
+			grid-gap: 32px
+		@media screen and (max-width: $xxs-max)
+			grid-gap: 32px 0
 		&-item
 			width: 100%
 			grid-column: 3 span
+			@media screen and (max-width: $sm-max)
+				grid-column: 6 span
+			@media screen and (max-width: $xxs-max)
+				grid-column: 12 span
 	&__menu
 		width: 100%
 		display: flex
@@ -41,6 +51,9 @@
 		flex-direction: column
 		align-items: flex-end
 		text-align: right
+		@media screen and (max-width: $sm-max)
+			text-align: left
+			align-items: flex-start
 		&-title
 			font-weight: 600
 			font-size: 16px
@@ -68,6 +81,10 @@
 		width: 100%
 		margin-top: 80px
 		text-align: center
+		@media screen and (max-width: $sm-max)
+			margin-top: 60px
+		@media screen and (max-width: $xs-max)
+			margin-top: 40px
 	&__links
 		width: calc(100% + 16px)
 		flex-wrap: wrap

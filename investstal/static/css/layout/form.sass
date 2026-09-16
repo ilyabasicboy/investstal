@@ -63,7 +63,13 @@
 			@media screen and (max-width: $xs-max)
 				margin-top: 16px
 		&--withprivacy
+			@media screen and (max-width: $sm-max)
+				flex-direction: column
 			.form__privacy
 				margin-top: 0px
+				margin-right: 20px
+				@media screen and (max-width: $sm-max)
+					margin-bottom: 20px
+					margin-right: 0px
 		.btn
 			min-width: 200px

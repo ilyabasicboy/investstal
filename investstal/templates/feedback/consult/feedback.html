@@ -8,14 +8,14 @@
     {{ form.flag }}
 
     <div class="form__grid">
-        <div class="form__item form__grid-6">
+        <div class="form__item form__grid-6 form__grid-xs-12">
             <label class="input__label {% if form.name.errors %}error{% endif %}">
                 <div class="input__content input input--white">
                     {{ form.name }}
                 </div>
             </label>
         </div>
-        <div class="form__item form__grid-6">
+        <div class="form__item form__grid-6 form__grid-xs-12">
             <label class="input__label {% if form.phone.errors %}error{% endif %}">
                 <div class="input__content input input--white">
                     {{ form.phone }}

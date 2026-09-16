@@ -1,36 +1,73 @@
 .section-stepsmargin
 	.about__content
 		padding-top: calc(80px + 60px)
+		@media screen and (max-width: $sm-max)
+			padding-top: calc(60px + 60px)
+		@media screen and (max-width: $xs-max)
+			padding-top: 0px
 	.about__right
 		margin-bottom: calc((80px + 60px) * -1)
+		@media screen and (max-width: $sm-max)
+			margin-bottom: calc((60px + 60px) * -1)
+		@media screen and (max-width: $xs-max)
+			margin-bottom: 0px
 
 .about
 	width: 100%
 	display: flex
 	justify-content: space-between
 	align-items: center
+	@media screen and (max-width: $xs-max)
+		flex-direction: column
 	&__left
 		width: calc(50% - 40px)
 		max-width: 520px
 		margin-right: 40px
+		@media screen and (max-width: $xs-max)
+			margin-right: 0px
+			width: 100%
+			max-width: 100%
 	&__content
 		display: flex
 		flex-direction: column
 		padding-top: 80px
+		@media screen and (max-width: $sm-max)
+			padding-top: 60px
+		@media screen and (max-width: $xs-max)
+			padding-top: 0px
 	&__title
 		font-size: 36px
 		line-height: 42px
 		color: #333
 		font-weight: 900
+		@media screen and (max-width: $md-max)
+			font-size: 32px
+			line-height: 38px
+		@media screen and (max-width: $sm-max)
+			font-size: 26px
+			line-height: 34px
+		@media screen and (max-width: $xs-max)
+			font-size: 22px
+			line-height: 28px
 	&__text
 		font-size: 16px
 		line-height: 25px
 		color: #333
 		margin-top: 16px
+		@media screen and (max-width: $sm-max)
+			font-size: 14px
+			line-height: 22px
 	&__right
 		width: 50%
 		display: flex
 		margin-bottom: -80px
+		@media screen and (max-width: $sm-max)
+			margin-top: -60px
+			margin-bottom: -60px
+		@media screen and (max-width: $xs-max)
+			margin-top: 24px
+			margin-bottom: 0px
+			width: 100%
 	&__preview
 		width: 100%
 		display: flex

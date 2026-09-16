@@ -120,4 +120,17 @@ $(function () {
         });
     });
 
+	//Filter Open/Close
+	$('.filter-open').on('click', function(event) {
+		event.preventDefault();
+		$('.filter__price-content').addClass('active');
+	});
+	$(document).click(function(e) {
+		let div = $('.filter-open');
+		let div2 = $('.filter__price-content');
+		if (!div.is(e.target) && div.has(e.target).length === 0 && !div2.is(e.target) && div2.has(e.target).length === 0) {
+			$('.filter__price-content').removeClass('active');
+		}
+	});
+
 });
