@@ -8,13 +8,21 @@
 {% block content_title %}Поиск по сайту{% endblock %}
 
 {% block content %}
+    <section class="section-default section-default--top search-min">
+        <div class="container">
+            <div class="search">
+                {% include 'service/parts/search_tabs.html' %}
+            </div>
 
-    {% if chunks.yandex_search_form.content %}
-        {{ chunks.yandex_search_form.content }}
-    {% endif %}
-
-    {% if chunks.yandex_search_results.content %}
-        {{ chunks.yandex_search_results.content }}
-    {% endif %}
-
+            {% if request.GET.vendor_code %}
+                {% include 'service/parts/search_vendor_code_result.html' %}
+            {% else %}
+                {% if chunks.yandex_search_results.content %}
+                    <div class="search-results">
+                        {{ chunks.yandex_search_results.content }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

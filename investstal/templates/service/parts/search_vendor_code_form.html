@@ -1,0 +1,11 @@
+<form class="article-custom" action="{% url 'search' %}">
+    <label class="article-custom__label">
+        <span class="article-custom__text">
+            Арт-
+        </span>
+        <input class="article-custom__input article-mask-js" type="text" name="vendor_code" placeholder="_ _ _" required {% if request.GET.vendor_code %}value="{{ request.GET.vendor_code }}"{% endif %}>
+    </label>
+    <button class="article-custom__btn" type="submit">
+        Найти
+    </button>
+</form>

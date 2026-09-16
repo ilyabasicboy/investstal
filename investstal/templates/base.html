@@ -142,6 +142,23 @@
                                 {% endif %}
                             </div>
                         {% endif %}
+
+
+                        <div class="header__search search-min">
+                            <button class="header__search-btn" type="button">
+                                Поиск
+                            </button>
+
+                            <div class="header__search-content">
+                                <button class="header__search-close" type="button">
+                                    Закрыть
+                                </button>
+
+                                <div class="search">
+                                    {% include 'service/parts/search_tabs.html' %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -505,7 +522,7 @@
             </div>
 
             {% block js %}
-                <script src="{% static 'bundle/bundle.251389340dbf09cd17e9.js' %}"></script>
+                <script src="{% static 'bundle/bundle.c27756d55d2ea3aa767e.js' %}"></script>
             {% endblock %}
 
             {{ chunks.end_of_body.content }}

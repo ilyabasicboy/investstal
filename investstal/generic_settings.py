@@ -304,3 +304,21 @@ SEO_FOR_MODELS = [
     'service.ErrorPage',
     'custom_catalog.Product',
 ]
+
+# ~======== CONTENT GENERATOR ==========~
+INSTALLED_APPS += ['investstal.content_generator']
+
+CONTENT_FOR_MODELS = [
+    {
+        "model": {
+            "app_name": "custom_catalog",
+            "name": "Section"
+        },
+        "allowed_child_models": [
+            {
+                "app_name": "custom_catalog",
+                "name": "Product",
+            },
+        ]
+    },
+]

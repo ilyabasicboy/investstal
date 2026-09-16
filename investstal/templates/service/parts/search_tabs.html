@@ -1,0 +1,28 @@
+<div class="search__header">
+    <div class="search__list">
+        <div class="search__list-title">
+            Найти:
+        </div>
+        <label class="toggle search__toggle {% if request.GET.vendor_code %}active{% endif %}">
+            <input class="toggle__input" type="checkbox" {% if request.GET.vendor_code %}checked="true"{% endif %}>
+            <span class="toggle__content"></span>
+        </label>
+        <div class="search__title">
+            {% if not request.GET.vendor_code %}На сайте{% endif %}
+            {% if request.GET.vendor_code %}Товар{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="search__wrapper">
+    <div class="search__item {% if not request.GET.vendor_code %}active{% endif %}" data-tabs-item="tabs-search-all">
+        <div class="search__form">
+            {% include 'service/parts/search_form.html' %}
+        </div>
+    </div>
+    <div class="search__item {% if request.GET.vendor_code %}active{% endif %}" data-tabs-item="tabs-search-article">
+        <div class="search__form">
+            {% include 'service/parts/search_vendor_code_form.html' %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{% load base_tags %}
+
+<div class="catalog__result">
+    <div class="catalog__result-title">
+        Найдено: {{ product_list.count }}
+    </div>
+    {% if product_list %}
+        <div class="catalog__grid">
+            {% for product in product_list %}
+                <div class="catalog__grid-3 catalog__grid-4--md catalog__grid-6--xs">
+                    {% include 'catalog/parts/product_card.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="catalog__result-notfound">
+            Товаров, соответствующих вашему запросу, не обнаружено.
+        </div>
+    {% endif %}
+</div>
