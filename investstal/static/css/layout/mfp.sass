@@ -188,11 +188,23 @@ button.mfp-arrow-right
 	.mfp-inline-holder
 		padding: 0
 		min-height: 100vh
+		@supports (height: 100dvh)
+			min-height: 100dvh
+			padding-top: env(safe-area-inset-top, 0px)
+			padding-bottom: env(safe-area-inset-bottom, 0px)
 		.mfp-content
 			height: 100vh
 			overflow: hidden
+			@supports (height: 100dvh)
+				height: 100dvh
+				padding-top: env(safe-area-inset-top, 0px)
+				padding-bottom: env(safe-area-inset-bottom, 0px)
 	.mfp-wrap
 		min-height: 100vh
+		@supports (height: 100dvh)
+			min-height: 100dvh
+			padding-top: env(safe-area-inset-top, 0px)
+			padding-bottom: env(safe-area-inset-bottom, 0px)
 
 .mfp-bg, .mfp-wrap
 	position: fixed!important
@@ -201,3 +213,7 @@ button.mfp-arrow-right
 		overflow: hidden!important
 		height: 100vh!important
 		bottom: 0px
+		@supports (height: 100dvh)
+			height: 100dvh!important
+			padding-top: env(safe-area-inset-top, 0px)
+			padding-bottom: env(safe-area-inset-bottom, 0px)

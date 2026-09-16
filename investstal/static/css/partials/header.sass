@@ -558,3 +558,77 @@
 		top: 50%
 		right: 15px
 		transform: translateY(-50%)
+
+	&__search
+		width: 38px
+		min-width: 38px
+		height: 100%
+		margin-left: 16px
+		display: flex
+		align-items: center
+		justify-content: center
+		position: relative
+		@media screen and (max-width: $xs-max)
+			margin-left: 0px
+			margin-top: 12px
+			width: 100%
+			min-width: 100%
+			max-width: 410px
+		&-btn
+			height: 38px
+			width: 100%
+			display: flex
+			align-items: center
+			justify-content: center
+			cursor: pointer
+			background-color: #333
+			@media screen and (max-width: $xs-max)
+				display: none
+		&-content
+			background-color: #333
+			width: 420px
+			padding: 40px 20px
+			position: absolute
+			top: 0px
+			right: 0px
+			transform: translateY(10px)
+			opacity: 0
+			pointer-events: none
+			transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out
+			@media screen and (max-width: $xs-max)
+				opacity: 1
+				transform: translateY(0)
+				pointer-events: auto
+				position: relative
+				top: auto
+				right: auto
+				width: 100%
+				box-shadow: none
+				padding: 0px
+
+			&.active
+				opacity: 1
+				transform: translateY(0)
+				pointer-events: auto
+
+			&:before
+				content: ''
+				width: 80px
+				height: 80px
+				opacity: 0.8
+				background-color: rgba(217, 4, 16, 1)
+				filter: blur(100px)
+				position: absolute
+				top: 50%
+				left: 50%
+				transform: translate(-50%, -50%)
+				pointer-events: none
+		&-close
+			width: 20px
+			height: 20px
+			position: absolute
+			top: 10px
+			right: 10px
+			cursor: pointer
+			@media screen and (max-width: $xs-max)
+				display: none

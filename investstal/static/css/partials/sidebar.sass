@@ -5,6 +5,12 @@
 	position: sticky
 	top: calc(60px + 90px + 16px)
 	max-height: calc(100vh - 60px - 90px  - 16px - 16px)
+	@supports (height: 100dvh)
+		max-height: calc(100dvh - 60px - 90px  - 16px - 16px)
+		padding-top: env(safe-area-inset-top, 0px)
+		padding-bottom: env(safe-area-inset-bottom, 0px)
+		@media screen and (max-width: $sm-max)
+			max-height: initial
 	@media screen and (max-width: $sm-max)
 		position: relative
 		top: auto

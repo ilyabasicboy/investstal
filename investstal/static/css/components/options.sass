@@ -262,6 +262,35 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
 		.default-checkbox__fake
 			border-color: #FF6B6B
 
+.toggle
+	display: flex
+	width: max-content
+	&__content
+		cursor: pointer
+		text-indent: -9999px
+		width: 32px
+		height: 16px
+		background-color: #D8D8D8
+		display: block
+		border-radius: 16px
+		position: relative
+		&:after
+			content: ''
+			position: absolute
+			top: 3px
+			left: 4px
+			width: 10px
+			height: 10px
+			background-color: #333
+			border-radius: 16px
+			transition: left 0.3s
+	&__input
+		height: 0
+		width: 0
+		visibility: hidden
+		&:checked + .toggle__content:after
+			left: calc(100% - 4px - 10px)
+
 .scroll-custom-y
 	padding-right: 20px
 	overflow: hidden

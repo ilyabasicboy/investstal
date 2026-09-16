@@ -34,47 +34,6 @@ $(function () {
 		$(this).parent().next().slideToggle();
 	});
 
-
-    // Header search Open/Close
-    $('.header__search-btn').on('click', function(event) {
-        event.preventDefault();
-        $('.header__search-content').addClass('active');
-    });
-
-    $('.header__search-close').on('click', function(event) {
-        event.preventDefault();
-        $('.header__search-content').removeClass('active');
-    });
-
-    $(document).on('click', function(event) {
-        let searchBtn = $('.header__search-btn');
-        let searchContent = $('.header__search-content');
-        if (!searchBtn.is(event.target) && searchBtn.has(event.target).length === 0 && !searchContent.is(event.target) && searchContent.has(event.target).length === 0) {
-            searchContent.removeClass('active');
-        }
-    });
-
-    // Tabs Search
-    $('.search').each(function() {
-        const tabsSearch = $(this);
-        tabsSearch.find('.search__toggle').on('click', function(event) {
-            event.preventDefault();
-            if (!$(this).hasClass('active')) {
-                tabsSearch.find('.search__title').text('Товар');
-                tabsSearch.find('.search__toggle').addClass('active');
-                tabsSearch.find('.search__toggle').find('.toggle__input').prop('checked', true);
-                tabsSearch.find('.search__item').hide();
-                tabsSearch.find('.search__item[data-tabs-item="tabs-search-article"]').fadeIn();
-            } else {
-                tabsSearch.find('.search__title').text('На сайте');
-                tabsSearch.find('.search__toggle').removeClass('active');
-                tabsSearch.find('.search__toggle').find('.toggle__input').prop('checked', false);
-                tabsSearch.find('.search__item').hide();
-                tabsSearch.find('.search__item[data-tabs-item="tabs-search-all"]').fadeIn();
-            }
-        });
-    });
-
 	//Check Anchor Margin
 	let headerFixedHeight = 0;
 	headerFixedHeight = $('.header').height();
@@ -173,5 +132,43 @@ $(function () {
 			$('.filter__price-content').removeClass('active');
 		}
 	});
+
+    //Header search Open/Close
+    $('.header__search-btn').on('click', function(event) {
+        event.preventDefault();
+        $('.header__search-content').addClass('active');
+    });
+    $('.header__search-close').on('click', function(event) {
+        event.preventDefault();
+        $('.header__search-content').removeClass('active');
+    });
+    $(document).on('click', function(event) {
+        let searchBtn = $('.header__search-btn');
+        let searchContent = $('.header__search-content');
+        if (!searchBtn.is(event.target) && searchBtn.has(event.target).length === 0 && !searchContent.is(event.target) && searchContent.has(event.target).length === 0) {
+            searchContent.removeClass('active');
+        }
+    });
+
+    //Tabs Search
+    $('.search').each(function() {
+        const tabsSearch = $(this);
+        tabsSearch.find('.search__toggle').on('click', function(event) {
+            event.preventDefault();
+            if (!$(this).hasClass('active')) {
+                tabsSearch.find('.search__title').text('Товар в каталоге');
+                tabsSearch.find('.search__toggle').addClass('active');
+                tabsSearch.find('.search__toggle').find('.toggle__input').prop('checked', true);
+                tabsSearch.find('.search__item').hide();
+                tabsSearch.find('.search__item[data-tabs-item="tabs-search-article"]').fadeIn();
+            } else {
+                tabsSearch.find('.search__title').text('На сайте');
+                tabsSearch.find('.search__toggle').removeClass('active');
+                tabsSearch.find('.search__toggle').find('.toggle__input').prop('checked', false);
+                tabsSearch.find('.search__item').hide();
+                tabsSearch.find('.search__item[data-tabs-item="tabs-search-all"]').fadeIn();
+            }
+        });
+    });
 
 });

@@ -14,6 +14,7 @@ $(function () {
 		let $rightMenu = $menu.find('.header__menu-right');
 		let $overflow = $menu.find('.menu-hidden');
 		let $moreCta = $menu.find('.menu-hidden-btn');
+		let $search = $rightMenu.children('.header__search');
 		let $rightItems = $rightMenu.children('.header__menu-item');
 		let $lastItem = $rightItems.last();
 
@@ -60,12 +61,20 @@ $(function () {
 				$moreCta.appendTo($rightMenu);
 			}
 
+			if ($search.length) {
+				$search.appendTo($rightMenu);
+			}
+
 			$overflow.empty();
 		};
 
 		let isOverflowing = function (withMore) {
 			let leftWidth = getWidth($leftMenu.children('.header__menu-item'));
 			let rightWidth = getWidth($rightMenu.children('.header__menu-item'));
+
+			if ($search.length) {
+				rightWidth += Math.ceil($search.outerWidth(true));
+			}
 
 			if (withMore) {
 				rightWidth += Math.ceil($moreCta.outerWidth(true));

@@ -102,9 +102,13 @@
 		width: 100%
 		margin-right: -24px
 		margin-bottom: -12px
+		@media screen and (max-width: $sm-max)
+			margin-right: -12px
 		&-item
 			margin-right: 24px
 			margin-bottom: 12px
+			@media screen and (max-width: $sm-max)
+				margin-right: 12px
 
 	&__price
 		padding: 10px 20px
@@ -121,19 +125,29 @@
 		font-size: 12px
 		line-height: 16px
 		color: #333
-		max-width: 190px
+		max-width: 162px
 
 	&__list
 		width: 100%
 		margin-top: 40px
 		display: flex
 		flex-direction: column
+		@media screen and (max-width: $sm-max)
+			margin-top: 32px
 		&-item + &-item
 			margin-top: 20px
+			@media screen and (max-width: $sm-max)
+				margin-top: 12px
 		&-item
 			font-size: 16px
 			line-height: 22px
 			color: #999999
+			@media screen and (max-width: $sm-max)
+				font-size: 15px
+				line-height: 21px
+			@media screen and (max-width: $xs-max)
+				font-size: 14px
+				line-height: 20px
 			a
 				color: #333
 				border-bottom: 1px dashed #333
@@ -146,5 +160,9 @@
 		margin-top: 40px
 		display: flex
 		flex-direction: column
+		@media screen and (max-width: $sm-max)
+			margin-top: 32px
+		.btn
+			width: 100%
 		.btn + .btn
 			margin-top: 10px
