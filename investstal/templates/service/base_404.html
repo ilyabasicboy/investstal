@@ -1,8 +1,31 @@
 {% extends 'base.html' %}
-{% load base_tags service_tags %}
+{% load base_tags service_tags seo_tags static %}
+
+{% block seo %}
+    {% seo object title_default='Страница не найдена' %}
+{% endblock %}
+
+{% block content_title %}Страница не найдена{% endblock %}
+
+{% block sidebar %}{% endblock %}
 
 {% block content %}
 
-    {% show_block_sitemap %}
+    <section class="section-default section-default--top">
+        <div class="container">
+            <div class="error-page">
+                <div class="error-page__img">
+                    <img src="{% static 'img/error-page.png' %}" alt="404">
+                </div>
+
+                <div class="placeholder">
+                    К сожалению запрашиваемая страница отсутствует на нашем сайте.<br>
+                    Перейдите на <a href="/">главную страницу</a> или воспользуйтесь картой сайта ниже.
+                </div>
+            </div>
+
+            {% show_block_sitemap %}
+        </div>
+    </section>
 
 {% endblock %}

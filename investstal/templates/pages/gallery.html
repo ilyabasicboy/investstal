@@ -1,6 +1,8 @@
 {% extends 'pages/base.html' %}
 {% load custom_pages_tags pages_tags base_tags custom_attachment_tags %}
 
+{% block sidebar %}{% endblock %}
+
 {% block content %}
     {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
     {% if main_content %}
@@ -67,6 +69,17 @@
                             {% include 'pages/parts/grouped_images_list.html' with gallery=current_page %}
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% placeholder bottom_content with TinyMCE label 'Контент внизу страницы' as bottom_content %}
+    {% if bottom_content %}
+        <section class="section-default section-default--top">
+            <div class="container">
+                <div class="placeholder">
+                    {{ bottom_content|safe }}
                 </div>
             </div>
         </section>

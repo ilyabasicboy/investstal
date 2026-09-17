@@ -78,25 +78,11 @@ def show_block_sitemap(context):
             'children': catalog_data
         })
 
-    news_root = NewsRoot.objects.all().first()
-    if news_root:
-        news_data = []
-        for new in News.objects.filter(show=True):
-            news_data.append({
-                'title': new.title,
-                'get_absolute_url': new.get_absolute_url(),
-                'children': []
-            })
+    for page in Page.objects.navigation().order_by("tree_id"):
         data.append({
-            'title': news_root.title,
-            'get_absolute_url': news_root.get_absolute_url(),
-            'children': news_data
+            'title': page.title(),
+            'get_absolute_url': page.get_absolute_url(),
+            'children': get_page_children_data(page)
         })
-
-    data.append({
-        'title': u'Поиск по сайту',
-        'get_absolute_url': reverse('search'),
-        'children': []
-    })
     context['object_list'] = data
     return context

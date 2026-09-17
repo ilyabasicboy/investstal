@@ -297,3 +297,50 @@ class CallBack(BaseForm):
             }
         ),
     )
+
+
+class PriceDetails(BaseForm):
+
+    """
+        Узнать цену
+    """
+
+    link = forms.CharField(
+        label='Ссылка на товар',
+        widget=forms.HiddenInput,
+        required=False
+    )
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваше имя'
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label=u'E-mail:',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Ваш E-mail'
+            }
+        ),
+        required=False
+    )
+    phone = forms.CharField(
+        label=u'Ваш телефон:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '+7 (___) ___-__-__',
+            }
+        ),
+    )
+    comment = forms.CharField(
+        label='Ваш комментарий:',
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'Ваш комментарий'
+            }
+        ),
+        required=False
+    )

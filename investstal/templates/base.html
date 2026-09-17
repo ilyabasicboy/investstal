@@ -535,6 +535,21 @@
                 </div>
             </div>
 
+            <div class="modal mfp-anim mfp-hide" id="pricedetails-modal">
+                <div class="modal__header">
+                    <div class="modal__title">
+                        Узнать цену
+                    </div>
+                    <div class="modal__subtitle"></div>
+                </div>
+
+                <div class="modal__body">
+                    <!--noindex-->
+                        {% show_feedback 'price_details' %}
+                    <!--/noindex-->
+                </div>
+            </div>
+
             {% block js %}
                 <script src="{% static 'bundle/bundle.f9344130a79264c7cbfb.js' %}"></script>
             {% endblock %}
