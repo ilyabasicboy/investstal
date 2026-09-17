@@ -171,4 +171,83 @@ $(function () {
         });
     });
 
+	//Toggle categories
+	function setupCategories($container, maxLines = 3) {
+		const $items = $container.find('.categories__item');
+		const $moreButton = $container.find('.categories__more');
+		let isExpanded = false;
+		let resizeTimer;
+
+		function getButtonWidth() {
+			const $clone = $moreButton.clone().css({
+				position: 'absolute', visibility: 'visible',
+				left: '-9999px', top: '-9999px', display: 'inline-block'
+			}).appendTo($container);
+			const width = $clone.outerWidth(true);
+			$clone.remove();
+			return width;
+		};
+
+		function layout() {
+			if (isExpanded) return;
+
+			$items.show();
+			$moreButton.hide();
+
+			const containerWidth = $container.innerWidth();
+			const buttonWidth = getButtonWidth();
+			const widths = $items.toArray().map(el => $(el).outerWidth(true));
+			let placed = 0;
+
+			for (let line = 0; line < maxLines && placed < widths.length; line++) {
+				let availableWidth = containerWidth;
+				if (line === maxLines - 1 && placed < widths.length) {
+					availableWidth -= buttonWidth;
+				}
+				let currentWidth = 0;
+				while (placed < widths.length && currentWidth + widths[placed] <= availableWidth) {
+					currentWidth += widths[placed++];
+				}
+			}
+
+			if (placed >= widths.length) {
+				$moreButton.hide();
+			} else {
+				$moreButton.show().find('span').text('Показать еще');
+				$items.each((idx, el) => $(el).toggle(idx < placed));
+			}
+
+			$container.removeClass('categories--hidden');
+		};
+
+		function toggleManual() {
+			if (isExpanded) {
+				isExpanded = false;
+				layout();
+			} else {
+				$items.show();
+				$moreButton.show();
+				$moreButton.find('span').text('Скрыть');
+				isExpanded = true;
+			}
+		};
+
+		$moreButton.off('click').on('click', toggleManual);
+
+		$(window).on('resize', () => {
+			clearTimeout(resizeTimer);
+			resizeTimer = setTimeout(() => {
+				if (isExpanded) isExpanded = false;
+				layout();
+			}, 150);
+		});
+
+		layout();
+	};
+	$('.categories').each(function() {
+		const $this = $(this);
+		const maxLines = parseInt($this.data('max-lines')) || 3;
+		setupCategories($this, maxLines);
+	});
+
 });

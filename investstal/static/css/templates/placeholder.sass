@@ -1,21 +1,6 @@
 .placeholder h1, .h1
 	margin-top: 40px
 	margin-bottom: 32px
-	font-size: 42px
-	line-height: 50px
-	color: #333
-	@media screen and (max-width: $sm-max)
-		margin-top: 24px
-		margin-bottom: 16px
-		font-size: 38px
-		line-height: 44px
-	@media screen and (max-width: $xs-max)
-		font-size: 26px
-		line-height: 32px
-
-.placeholder h2, .h2
-	margin-top: 40px
-	margin-bottom: 32px
 	font-size: 36px
 	line-height: 42px
 	color: #333
@@ -23,15 +8,15 @@
 		margin-top: 24px
 		margin-bottom: 16px
 		font-size: 32px
-		line-height: 38px
+		line-height: 40px
 	@media screen and (max-width: $xs-max)
-		font-size: 24px
-		line-height: 30px
+		font-size: 26px
+		line-height: 32px
 
-.placeholder h3, .h3
+.placeholder h2, .h2
 	margin-top: 40px
 	margin-bottom: 32px
-	font-size: 33px
+	font-size: 32px
 	line-height: 40px
 	color: #333
 	@media screen and (max-width: $sm-max)
@@ -40,21 +25,35 @@
 		font-size: 28px
 		line-height: 34px
 	@media screen and (max-width: $xs-max)
+		font-size: 24px
+		line-height: 30px
+
+.placeholder h3, .h3
+	margin-top: 40px
+	margin-bottom: 32px
+	font-size: 28px
+	line-height: 36px
+	color: #333
+	@media screen and (max-width: $sm-max)
+		margin-top: 24px
+		margin-bottom: 16px
+		font-size: 24px
+		line-height: 32px
+	@media screen and (max-width: $xs-max)
 		font-size: 20px
 		line-height: 26px
 
 .placeholder h4, .h4
 	margin-top: 40px
 	margin-bottom: 32px
-	font-size: 28px
-	line-height: 34px
+	font-size: 24px
+	line-height: 30px
 	color: #333
-	text-transform: uppercase
 	@media screen and (max-width: $sm-max)
 		margin-top: 24px
 		margin-bottom: 16px
-		font-size: 24px
-		line-height: 30px
+		font-size: 22px
+		line-height: 28px
 	@media screen and (max-width: $xs-max)
 		font-size: 18px
 		line-height: 24px
@@ -62,24 +61,8 @@
 .placeholder h5, .h5
 	margin-top: 40px
 	margin-bottom: 32px
-	font-size: 24px
-	line-height: 30px
-	color: #333
-	font-weight: 600
-	@media screen and (max-width: $sm-max)
-		margin-top: 24px
-		margin-bottom: 16px
-		font-size: 20px
-		line-height: 26px
-	@media screen and (max-width: $xs-max)
-		font-size: 16px
-		line-height: 22px
-
-.placeholder h6, .h6
-	margin-top: 40px
-	margin-bottom: 32px
 	font-size: 20px
-	line-height: 26px
+	line-height: 28px
 	color: #333
 	font-weight: 600
 	@media screen and (max-width: $sm-max)
@@ -87,6 +70,22 @@
 		margin-bottom: 16px
 		font-size: 18px
 		line-height: 24px
+	@media screen and (max-width: $xs-max)
+		font-size: 16px
+		line-height: 22px
+
+.placeholder h6, .h6
+	margin-top: 40px
+	margin-bottom: 32px
+	font-size: 18px
+	line-height: 24px
+	color: #333
+	font-weight: 900
+	@media screen and (max-width: $sm-max)
+		margin-top: 24px
+		margin-bottom: 16px
+		font-size: 16px
+		line-height: 22px
 	@media screen and (max-width: $xs-max)
 		font-size: 14px
 		line-height: 20px
@@ -101,11 +100,11 @@
 		font-size: 14px
 		line-height: 22px
 	a:not(.btn)
-		color: #FF6D00
-		text-decoration: none
+		color: #333
+		text-decoration: underline
 		@media screen and (min-width: $sm-min)
 			&:hover
-				text-decoration: underline
+				text-decoration: none
 
 	.btn
 		margin-top: 16px
@@ -192,15 +191,24 @@
 
 			& > *:last-child
 				margin-bottom: 0
+		caption
+			font-size: 12px
+			line-height: 16px
+			font-weight: 600
+			padding: 8px 24px
+			@media screen and (max-width: $xs-max)
+				padding: 8px 16px
 		td
 			text-align: left
-			color: #1A1A1A
+			color: #333
 			max-width: 400px
-			padding: 24px
+			padding: 8px 24px
+			font-size: 12px
+			line-height: 16px
 			@media screen and (max-width: $sm-max)
 				min-width: 250px
 			@media screen and (max-width: $xs-max)
-				padding: 14px
+				padding: 8px 16px
 			p
 				margin: 0
 			p + p
@@ -209,14 +217,15 @@
 					margin-top: 12px
 		th
 			text-align: left
-			color: #1A1A1A
+			color: #333
 			font-weight: 600
-			padding: 24px
+			padding: 8px 24px
 			max-width: 400px
-			background-color: #F3F3F3
-			font-family: 'ArialNarrow_'
+			background-color: #F7F7F7
+			font-size: 12px
+			line-height: 16px
 			@media screen and (max-width: $xs-max)
-				padding: 14px
+				padding: 8px 16px
 			p
 				margin: 0
 			p + p
@@ -225,7 +234,7 @@
 					margin-top: 12px
 
 		tr:nth-child(2n - 1)
-			background-color: #F3F3F3
+			background-color: #F7F7F7
 
 		img
 			max-width: 100% !important
@@ -254,7 +263,7 @@
 			width: 100%
 			display: block
 			padding-bottom: 56.25%
-		iframe, object, embed
+		iframe, object, embed, video
 			position: absolute
 			top: 0
 			left: 0
@@ -265,21 +274,21 @@
 		width: 100%
 		margin-top: 32px
 		margin-bottom: 32px
-		font-size: 24px
-		line-height: 32px
-		color: #fff
-		padding: 48px
+		font-size: 18px
+		line-height: 24px
+		color: #333
+		padding: 32px
 		position: relative
-		background-color: #ff6d00
+		background-color: #F7F7F7
 		@media screen and (max-width: $sm-max)
-			font-size: 20px
-			line-height: 26px
+			font-size: 16px
+			line-height: 24px
 			margin-top: 24px
 			margin-bottom: 24px
 			padding: 32px
 		@media screen and (max-width: $xs-max)
-			font-size: 18px
-			line-height: 24px
+			font-size: 14px
+			line-height: 20px
 			padding: 32px 24px
 		p + p
 			margin-top: 16px
@@ -296,19 +305,21 @@
 			list-style: none
 			display: block
 			position: relative
-			padding-left: 36px
+			padding-left: 32px
 			&::before
 				content: ''
-				background-color: #ff6d00
+				background-image: url('/static/img/list-star.svg')
+				background-repeat: no-repeat
+				background-position: center
+				background-size: contain
 				width: 10px
 				height: 10px
 				min-width: 10px
 				min-height: 10px
-				border-radius: 50%
 				margin: 0 10px 0 10px
 				display: inline-table
 				position: absolute
-				top: 8px
+				top: 3px
 				left: 0
 				@media screen and (max-width: $sm-max)
 					top: 5px
@@ -324,14 +335,11 @@
 		li
 			list-style: none
 			display: block
-			padding-left: 36px
 			position: relative
 			&:before
 				margin: 0 10px 0 10px
 				counter-increment: list
 				content: counter(list) "."
-				position: absolute
-				left: 0
 
 	ul
 		ol
@@ -359,7 +367,7 @@
 
 	hr
 		color: #000
-		background-color: #1A1A1A
+		background-color: #333
 		margin: 40px 0
 		opacity: 0.4
 		border: 0px none
@@ -371,7 +379,7 @@
 	pre
 		white-space: pre-wrap
 
-	strong
+	strong, b
 		font-weight: 600
 
 	em

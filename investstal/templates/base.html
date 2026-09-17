@@ -21,7 +21,7 @@
         {{ chunks.end_of_head.content }}
 
         {% block css %}
-            <link rel="stylesheet" href="{% static 'bundle/bundle.f9344130a79264c7cbfb.css' %}">
+            <link rel="stylesheet" href="{% static 'bundle/bundle.a9906a03c9b24e30fde3.css' %}">
         {% endblock %}
     </head>
 
@@ -320,28 +320,27 @@
                     </section>
                 {% endblock %}
 
+                {% block title_section %}
+                    <section class="section-title">
+                        <div class="container">
+                            <h1 class="title">
+                                {% block content_title %}
+                                    {{ object.title|default:"" }}
+                                {% endblock %}
+                            </h1>
+                        </div>
+                    </section>
+                {% endblock %}
+
                 {% block content_narrow %}
                     <section class="section-default section-default--top">
                         <div class="container">
                             <div class="default-page">
-                                {% block sidebar %}
-                                    <div class="default-page__sidebar">
-                                        {% include 'catalog/parts/left_menu.html' %}
-                                    </div>
-                                {% endblock %}
+                                <div class="default-page__sidebar">
+                                    {% include 'catalog/parts/left_menu.html' %}
+                                </div>
 
                                 <div class="default-page__content">
-                                    {% block title_section %}
-                                        <section class="section-title">
-                                            <div class="container">
-                                                <h1 class="title">
-                                                    {% block content_title %}
-                                                        {{ object.title|default:"" }}
-                                                    {% endblock %}
-                                                </h1>
-                                            </div>
-                                        </section>
-                                    {% endblock %}
                                     {% block content %}{% endblock %}
                                 </div>
                             </div>
@@ -551,7 +550,7 @@
             </div>
 
             {% block js %}
-                <script src="{% static 'bundle/bundle.f9344130a79264c7cbfb.js' %}"></script>
+                <script src="{% static 'bundle/bundle.a9906a03c9b24e30fde3.js' %}"></script>
             {% endblock %}
 
             {{ chunks.end_of_body.content }}

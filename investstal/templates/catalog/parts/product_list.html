@@ -7,7 +7,7 @@
 
     {% attach_images products as products %}
     {% for product in products %}
-        <div class="catalog__grid-4 catalog__grid-6--md catalog__grid-12--xs">
+        <div class="catalog__grid-4 catalog__grid-6--md catalog__grid-4--sm catalog__grid-12--xs">
             {% include 'catalog/parts/product_card.html' %}
         </div>
     {% endfor %}

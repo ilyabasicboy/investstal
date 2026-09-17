@@ -1,11 +1,9 @@
 {% extends 'pages/base.html' %}
 {% load custom_pages_tags pages_tags  base_tags %}
 
+{% block content_narrow %}{% endblock %}
 
-{% block sidebar %}{% endblock %}
-
-
-{% block content %}
+{% block content_wide %}
     {% placeholder main_content with TinyMCE label 'Контент страницы' as main_content %}
     {% if main_content %}
         <section class="section-default section-default--top">
