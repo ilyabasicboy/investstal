@@ -87,30 +87,6 @@ class BaseFileForm(forms.Form):
         self.after_mail(message=message, headers=headers)
 
 
-class CallForm(BaseForm):
-
-    """ Тестовая форма
-        аттрибут data-set применять для разделения полей формы по группам
-        Пример вывода группы полей в шаблоне:
-    """
-
-    name = forms.CharField(
-        label=u'Ф.И.О.',
-        widget=forms.TextInput(attrs={'data-set': 1}),
-    )
-    email = forms.EmailField(
-        label=u'Адрес электронной почты',
-        widget=forms.TextInput(attrs={'data-set': 1}),
-    )
-    phone = forms.CharField(
-        label=u'Контактный телефон:', required=False,
-        widget=forms.TextInput(attrs={'data-set': 1}),
-    )
-    message = forms.CharField(
-        label=u'Сообщение:', max_length=1000,
-        widget=forms.Textarea(attrs={'data-set': 2}),
-    )
-
 
 class Consult(BaseForm):
 
@@ -136,7 +112,7 @@ class Consult(BaseForm):
     )
 
 
-class Rackman(BaseFileForm, BaseForm):
+class Rackman(BaseForm):
 
     """
         Вызвать замерщика
@@ -253,6 +229,71 @@ class Order(BaseForm):
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'Адрес, комментарий'
+            }
+        ),
+    )
+
+
+class Metering(BaseFileForm, BaseForm):
+
+    """
+        Вызвать замерщика
+    """
+
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваше имя'
+            }
+        ),
+    )
+    phone = forms.CharField(
+        label=u'Ваш телефон:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'Телефон',
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label=u'E-mail:',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Ваш e-mail'
+            }
+        ),
+    )
+    comment = forms.CharField(
+        label=u'Комментарий менеджеру:',
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'Комментарий менеджеру'
+            }
+        ),
+    )
+
+
+class CallBack(BaseForm):
+
+    """
+        Заказать звонок
+    """
+
+    name = forms.CharField(
+        label=u'Ваше имя:*',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ваше имя'
+            }
+        ),
+    )
+    phone = forms.CharField(
+        label=u'Укажите Ваш телефон:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '+7 (___) ___-__-__'
             }
         ),
     )

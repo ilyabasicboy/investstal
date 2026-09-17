@@ -1,0 +1,57 @@
+{% load feedback_tags %}
+<form action="{% url 'ajax_feedback' key=form.get_settings_key %}"
+      method="post" id="id_feedback_form_{{ form.get_settings_key }}"
+      class="form feedback-form {{ form.get_settings_key }}" novalidate>
+
+    {% csrf_token %}
+    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+    {{ form.message_ }}
+
+    <div class="form__grid">
+        <div class="form__item form__grid-12">
+            <label class="input__label {% if form.name.errors %}error{% endif %}">
+                <div class="input__content input">
+                    {{ form.name }}
+                </div>
+            </label>
+        </div>
+        <div class="form__item form__grid-12">
+            <label class="input__label {% if form.phone.errors %}error{% endif %}">
+                <div class="input__content input">
+                    {{ form.phone }}
+                </div>
+            </label>
+        </div>
+    </div>
+
+    {% if chunks.form_politica.content %}
+        <div class="form__privacy">
+            <div class="default-checkbox {% if form.confirm.errors %}error{% endif %}">
+                <label class="default-checkbox__label">
+                    <input class="default-checkbox__input" type="checkbox" name="{{ form.get_settings_key }}-confirm" required="" id="id_{{ form.get_settings_key }}-confirm" {% if not form.confirm.errors %}checked{% endif %}>
+                    <div class="default-checkbox__content">
+                        <div class="default-checkbox__fake">
+                            <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <title>Выбрать</title>
+                                <path d="M1.5 5.5L5 9L13 1" stroke="#303030" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="default-checkbox__text form__privacy-text">
+                            {{ chunks.form_politica.content }}
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="form__switcher">
+        {% include 'parts/figures_captcha.html' %}
+    </div>
+
+    <div class="form__bottom">
+        <button class="btn btn--dark btn--full" type="submit">
+            Отправить
+        </button>
+    </div>
+</form>

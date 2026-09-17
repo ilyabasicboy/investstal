@@ -17,9 +17,8 @@
 
         <section class="section-default section-default--top">
             <div class="product">
-                {% get_images for object as images %}
                 {% if images %}
-                    {% with images=images %}
+                    {% with images=product_images %}
                         <div class="product__left">
                             <div class="product__gallery">
                                 <div class="product__thumb product--thumb swiper">

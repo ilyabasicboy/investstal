@@ -2,7 +2,6 @@
 {% load attachment_tags custom_attachment_tags feedback_tags custom_catalog_tags custom_pages_tags pages_tags base_tags %}
 
 {% block breadcrumbs_section %}{% endblock %}
-{% block title_section %}{% endblock %}
 {% block content_narrow %}{% endblock %}
 
 {% block content_wide %}
@@ -31,7 +30,7 @@
                                             <a class="btn btn--white" href="{% url 'catalog-root' %}">
                                                 Смотреть предложения
                                             </a>
-                                            <a class="btn btn--yellow modal-open" data-href="#">
+                                            <a class="btn btn--yellow modal-open" data-href="#metering-modal">
                                                 Запросить расчет стоимости
                                             </a>
                                         </div>

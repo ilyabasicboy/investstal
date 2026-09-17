@@ -222,17 +222,19 @@ FEEDBACK_PREFIX_KEY_FIELDS = True
 FEEDBACK_ADMIN_EXTRA_CLASS = {'all': 'large-input'}
 FEEDBACK_ADMIN_EXTRA_CSS = {'all': ['css/admin/common.css']}
 FEEDBACK_FORMS = {
-    'call': 'investstal.custom_feedback.forms.CallForm',
+    'callback': 'investstal.custom_feedback.forms.CallBack',
     'consult': 'investstal.custom_feedback.forms.Consult',
     'rackman': 'investstal.custom_feedback.forms.Rackman',
     'order': 'investstal.custom_feedback.forms.Order',
+    'metering': 'investstal.custom_feedback.forms.Metering'
 }
 
 FEEDBACK_FORMS_NAMES = {
-    'call': u'Написать нам',
+    'callback': u'Заказать звонок',
     'consult': u'Получить консультацию',
     'rackman': u'Вызвать замерщика',
-    'order': u'Заказать'
+    'order': u'Заказать',
+    'metering': u'Запросить расчет стомости'
 }
 
 # ~======== CHUNKS =================~
